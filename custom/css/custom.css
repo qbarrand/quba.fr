@@ -1,3 +1,17 @@
+article small
+{
+	font-weight: bold;
+	font-size: 14pt;
+	color: #888888;
+}
+
+article header small
+{
+	font-weight: bold;
+	font-size: 1em;
+	color: #888888;
+}
+
 .fa.featured.skills
 {
 	color: #61b8db;
@@ -7,3 +21,5 @@
 {
 	color: #EA8A95;
 }
+
+ul.social li.mail:hover					{ background-color: #fabd71; }
