@@ -12,7 +12,15 @@ article small
 
 .fa.featured.misc
 {
-	color: #EA8A95;
+	color: #50021B;
 }
 
-ul.social li.mail:hover					{ background-color: #fabd71; }
+ul.social li.mail:hover 
+{ 
+	background-color: #fabd71; 
+}
+
+.modal.fade
+{
+	margin-top: 70px;
+}
