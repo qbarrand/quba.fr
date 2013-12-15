@@ -50,9 +50,13 @@
     <script src="bootstrap/js/modal.js"></script>
     <script src="bootstrap/js/transition.js"></script>
 
+    <!-- OpenStreetMap stuff -->
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+
     <!-- Custom styles and js -->
     <link rel="stylesheet" href="custom/css/custom.css" />
-    <script src="custom/custom.js"></script>
+    <script src="custom/js/progSkills.js"></script>
+    <script src="custom/js/travels.js"></script>
 
   </head>
   <body>
@@ -160,7 +164,7 @@
                   <a href="http://cern.ch">CERN</a>
                 </h3>
                 <small>Summer 2013</small>
-                <p>I worked on moving a <a href="http://wlcg.web.cern.ch/">WLCG</a> testing system to CERN's OpenStack-based private cloud.</p>
+                <p>I worked on moving a <a href="http://wlcg.web.cern.ch/">WLCG</a> testing tool to CERN's OpenStack-based private cloud.</p>
                 <footer><a href="http://cds.cern.ch/record/1596257/files/Report.pdf">Read my report</a></footer>
               </article>
             </div>
@@ -254,14 +258,17 @@
               <section class="box box-style1">
                 <span class="fa featured misc fa-plane"></span>
                 <h3>Travels</h3>
-                <p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
+                <p>I was born and live in Paris, but I love traveling ! <a href="#contact">Contact me</a> if you have any opportunity to work abroad.</p>
+                <footer>
+                  <a href="" data-toggle="modal" data-target="#modal_travels">See where I've been</a>
+                </footer>
               </section>
             </div>
           </div>
         </div>
         <footer>
-          <p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p>
-          <a href="#contact" class="button button-big">Let's get in touch !</a>
+          <p> Interested by my profile ?</p>
+          <a href="#contact" class="button button-big">Drop me an email !</a>
         </footer>
       </article>
     </div>
@@ -357,19 +364,19 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title" id="myModalLabel">Programming skills</h4>
             </div>
-            <div class="modal-body">
-              <div id="tableProgSkills">
-                  <script>
-                    loadProgSkills();
-                  </script>
+              <div class="modal-body">
+                <div id="tableProgSkills">
+                    <script>
+                      loadProgSkills();
+                    </script>
+                </div>
               </div>
+            <div class="modal-footer">
+              <a href="#" data-dismiss="modal">Dismiss</a>
             </div>
-          <div class="modal-footer">
-            <a href="#" data-dismiss="modal">Dismiss</a>
           </div>
         </div>
       </div>
-    </div>
 
 
       <!-- HackGyver -->
@@ -382,13 +389,15 @@
             </div>
             <div class="modal-body">
               <p>Below is an interview I made with Besançon TV about HackGyver (in French) :</p>
-              <object id="player" width="640" height="360" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" name="player">
-                <param name="allowfullscreen" value="true" />
-                <param name="allowscriptaccess" value="always" />
-                <param name="flashvars" value="config=http%3A%2F%2Fwww.besancon.tv%2Fgetconfig.php%3Fid_prod%3D1169%26id_app%3D149%26embed%3D1" />
-                <param name="src" value="http://www.besancon.tv/mediaplayer5.swf" />
-                <embed id="player" width="640" height="360" type="application/x-shockwave-flash" src="http://www.besancon.tv/mediaplayer5.swf" allowfullscreen="true" allowscriptaccess="always" flashvars="config=http%3A%2F%2Fwww.besancon.tv%2Fgetconfig.php%3Fid_prod%3D1169%26id_app%3D149%26embed%3D1" name="player" />
-              </object>
+              <center>
+                <object id="player" width="640" height="360" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" name="player">
+                  <param name="allowfullscreen" value="true" />
+                  <param name="allowscriptaccess" value="always" />
+                  <param name="flashvars" value="config=http%3A%2F%2Fwww.besancon.tv%2Fgetconfig.php%3Fid_prod%3D1169%26id_app%3D149%26embed%3D1" />
+                  <param name="src" value="http://www.besancon.tv/mediaplayer5.swf" />
+                  <embed id="player" width="640" height="360" type="application/x-shockwave-flash" src="http://www.besancon.tv/mediaplayer5.swf" allowfullscreen="true" allowscriptaccess="always" flashvars="config=http%3A%2F%2Fwww.besancon.tv%2Fgetconfig.php%3Fid_prod%3D1169%26id_app%3D149%26embed%3D1" name="player" />
+                </object>
+              </center>
             </div>
             <div class="modal-footer">
               <a href="#" data-dismiss="modal">Dismiss</a>
@@ -396,6 +405,34 @@
           </div>
         </div>
       </div>
+
+
+      <!-- Travels -->
+      <div class="modal fade" id="modal_travels" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" id="modalTravels">
+          <div class="modal-content" id="modalTravelsContent">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myModalLabel">Travels</h4>
+            </div>
+              <div class="modal-body" id="modalTravelsBody">
+              </div>
+            <div class="modal-footer">
+              <a href="#" data-dismiss="modal">Dismiss</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      </div>
     </div>
+
+    <script>
+      $("#modal_travels").on('shown.bs.modal', function() {
+        loadTravelsMap();
+      });
+    </script>
   </body>
   </html>
