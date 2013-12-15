@@ -17,10 +17,25 @@ loadProgSkills(function(response) {
 
         table += "<td>";
 
-        var k = 0;
+        k = 0;
+        skill = data[i].languages[j].skill;
 
-        for(; k < data[i].languages[j].skill; k++)
+        half = false;
+        if(skill % 1 != 0) 
+        {
+            skill = Math.floor(skill);
+            half = true;
+        }
+
+        for(;k < skill; k++)
           table += "<i class=\"fa fa-star\"> </i>";
+
+
+        if(half == true)
+        {
+            table += "<i class=\"fa fa-star-half-o\"> </i>";
+            k += 1;
+        }
 
         for(; k < 5; k++)
           table += "<i class=\"fa fa-star-o\"> </i>";
