@@ -1,0 +1,75 @@
+[
+	{
+		"name":"OO programming",
+		"languages":
+		[
+			{
+				"name":"C# / .NET",
+				"skill":3
+			},
+
+			{
+				"name":"C / C++",
+				"skill":3
+			},
+
+			{
+				"name":"Java",
+				"skill":2.5
+			}
+		]
+	},
+
+	{
+		"name":"Databases",
+		"languages":
+		[
+			{
+				"name":"MySQL",
+				"skill":3
+			},
+
+			{
+				"name":"Oracle",
+				"skill":2
+			}
+		]
+	},
+
+	{
+		"name":"Scripting",
+		"languages":
+		[
+			{
+				"name":"Python",
+				"skill":3
+			},
+
+			{
+				"name":"PHP",
+				"skill":3
+			},
+
+			{
+				"name":"Bash",
+				"skill":3
+			}
+		]
+	},
+
+	{
+		"name":"Web",
+		"languages":
+		[
+			{
+				"name":"JavaScript",
+				"skill":3
+			},
+
+			{
+				"name":"CSS3",
+				"skill":3
+			}
+		]
+	}
+]

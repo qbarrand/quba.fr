@@ -52,6 +52,7 @@
 
     <!-- Custom styles and js -->
     <link rel="stylesheet" href="custom/css/custom.css" />
+    <script src="custom/custom.js"></script>
 
   </head>
   <body>
@@ -92,7 +93,7 @@
       <article id="skills">
         <header>
           <h2>I am keen on managing virtualized systems and cloud infrastructures.</h2>
-          <span>I am also an open-source enthusiast and an API lover.</span>
+          <span>Random text here</span>
         </header>
         <div class="container">
           <div class="row">
@@ -100,7 +101,7 @@
               <section class="box box-style1">
                 <span class="fa featured skills fa-terminal"></span>
                 <h3>System administration</h3>
-                <p>I manage two dedicated servers that run PHP / Python / Ruby on Rails applications, OpenVPN gateways, Gitolite repos...</p>
+                <p>I manage two dedicated servers that run PHP / Python / Ruby on Rails applications, OpenVPN gateways, Gitolite repos, distributed filesystems...</p>
               </section>
             </div>
             <div class="4u">
@@ -207,7 +208,7 @@
                     <a href="http://iut-bm.univ-fcomte.fr">IUT Belfort-Montbéliard</a>
                   </h3>
                   <small>2011 - 2013</small>
-                  <p>I obtained a DUT Informatique, which is equivalent to a BSc in Computer Science.</p>
+                  <p>I obtained a DUT Informatique, which is the French equivalent to a BSc in Computer Science.</p>
                 </article>
               </div>
             </div>
@@ -350,58 +351,17 @@
     <div>
       <!-- Programming skills -->
       <div class="modal fade" id="modal_prog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" id="modalProgSkills">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title" id="myModalLabel">Programming skills</h4>
             </div>
             <div class="modal-body">
-
-              <div class="container">
-                <div class="row">
-                  <div class="-1u 3u">
-                    <ul>
-                      <li><strong>OO programming</strong></li>
-                      <li>C# / .NET</li>
-                      <li>C / C++</li>
-                      <li>Java</li>
-
-                      <li><strong>Databases</strong></li>
-                      <li>MySQL</li>
-                      <li>Oracle</li>
-
-                      <li><strong>Scripting</strong></li>
-                      <li>Python</li>
-                      <li>PHP</li>
-                      <li>Bash</li>
-
-                      <li><strong>Web</strong></li>
-                      <li>JavaScript</li>
-                      <li>CSS3</li>
-                    </ul>
-                  </div>
-
-                  <div class="1u"></div>
-
-                  <div class="1u">
-                    <ul>
-                      <li>&nbsp;</li>
-                      <li>3 stars</li>
-                      <li>3 stars</li>
-                      <li>2 stars</li>
-
-                      <li>&nbsp;</li>
-                      <li>3 stars</li>
-                      <li>2 stars</li>
-
-                      <li>&nbsp;</li>
-                      <li>3 stars</li>
-                      <li>3 stars</li>
-                      <li>3 stars</li>
-                    </ul>
-                  </div>
-                </div>
+              <div id="tableProgSkills">
+                  <script>
+                    loadProgSkills();
+                  </script>
               </div>
             </div>
           <div class="modal-footer">

@@ -36,3 +36,16 @@ ul.social li.mail:hover
 .modal.in .modal-dialog {
 
 }
+
+#modalProgSkills
+{
+  width:400px;
+}
+
+#tableProgSkills td
+{
+  width: 200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+}
