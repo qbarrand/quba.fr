@@ -1,7 +1,24 @@
-// Call to function with anonymous callback
-loadProgSkills(function(response) {
+/* Get the data from JSON */
+function modal_skills_loadSkills() {  
+
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'custom/data/skills.json', true);
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            modal_skills_printTable(xobj.responseText);
+        }
+    }
+    xobj.send(null);
+}
+
+
+/* Actually print the table into the modal */
+function modal_skills_printTable(response) {
 
     data = JSON.parse(response);
+
+    // console.log(data)
 
     var table;
     table = "<center><table>";
@@ -51,21 +68,4 @@ loadProgSkills(function(response) {
     table += "</table></center>";
 
     document.getElementById("tableProgSkills").innerHTML = table;
-});
-
-
-function loadProgSkills(callback) {  
-
-    var xobj = new XMLHttpRequest();
-    xobj.overrideMimeType("application/json");
-    xobj.open('GET', 'custom/data/skills.json', true);
-    xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-           
-            // .open will NOT return a value but simply returns undefined in async mode so use a callback
-            callback(xobj.responseText);
-     
-        }
-    }
-    xobj.send(null);
 }

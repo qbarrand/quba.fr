@@ -1,3 +1,4 @@
+/* Get the data from the JSON file */
 function modal_travels_loadMap() {  
 
     var xobj = new XMLHttpRequest();
@@ -5,14 +6,12 @@ function modal_travels_loadMap() {
     xobj.open('GET', 'custom/data/travels.json', true);
     xobj.onreadystatechange = function () {
         if (xobj.readyState == 4 && xobj.status == "200") {
-           
-            // .open will NOT return a value but simply returns undefined in async mode so use a callback
-            //callback(xobj.responseText);
             modal_travels_printMap(xobj.responseText);
         }
     }
     xobj.send(null);
 }
+
 
 /* Actually prints the map */
 function modal_travels_printMap(response)

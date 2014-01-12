@@ -22,7 +22,7 @@ ul.social li.mail:hover
 
 .modal
 {
-  margin-top: 70px;
+  margin-top: 1.85em;
 }
 
 /****************************
@@ -50,11 +50,9 @@ ul.social li.mail:hover
 /***************
  * Travels modal
  ***************/
-
 #map
 {
   height:400px;
-  width:600px;
 }
 
 #wait-osm {

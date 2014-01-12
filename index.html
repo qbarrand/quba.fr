@@ -211,63 +211,63 @@
             <a href="#misc" class="button button-big">Learn more about me</a>
           </footer>
         </article>
-    </div>
+      </div>
 
-    <!-- Misc -->
-    <div class="wrapper wrapper-style2">
-      <article id="misc">
-        <header>
-          <h2>I design and build amazing things.</h2>
-          <span>Odio turpis amet sed consequat eget posuere consequat.</span>
-        </header>
-        <div class="container">
-          <div class="row">
-            <div class="4u">
-              <section class="box box-style2">
-                <a href="http://hackgyver.org" class="image image-full">
-                  <img src="images/hg_transparent_bg.png" alt="SNCF logo" />
-                </a>
-                <h3>HackGyver</h3>
-                <p>
-                  A fellow BSc friend and I funded HackGyver, Belfort's hackerspace, in May 2012.
-                </p>
-                <footer>
-                  <a href="" data-toggle="modal" data-target="#modal_hackgyver">Learn more</a>
-                </footer>
-              </section>
-            </div>
-            <div class="4u">
-              <section class="box box-style2">
-                <a class="image image-full">
-                  <img src="images/astronomy.png" alt="Airport" />
-                </a>
-                <h3>Astronomy & Sciences</h3>
-                <p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
-              </section>
-            </div>
-            <div class="4u">
-              <section class="box box-style2">
-                <a class="image image-full">
-                  <img src="images/travel.png" alt="Airport" />
-                </a>
-                <h3>Travels</h3>
-                <p>I was born and live in Paris, but I love traveling ! <a href="#contact">Contact me</a> if you have any opportunity to work abroad.</p>
-                <footer>
-                  <a href="" data-toggle="modal" data-target="#modal_travels">See where I've been</a>
-                </footer>
-              </section>
+      <!-- Misc -->
+      <div class="wrapper wrapper-style2">
+        <article id="misc">
+          <header>
+            <h2>I design and build amazing things.</h2>
+            <span>Odio turpis amet sed consequat eget posuere consequat.</span>
+          </header>
+          <div class="container">
+            <div class="row">
+              <div class="4u">
+                <section class="box box-style2">
+                  <a href="http://hackgyver.org" class="image image-full">
+                    <img src="images/hg_transparent_bg.png" alt="SNCF logo" />
+                  </a>
+                  <h3>HackGyver</h3>
+                  <p>
+                    A fellow BSc friend and I funded HackGyver, Belfort's hackerspace, in May 2012.
+                  </p>
+                  <footer>
+                    <a href="" data-toggle="modal" data-target="#modal_hackgyver">Learn more</a>
+                  </footer>
+                </section>
+              </div>
+              <div class="4u">
+                <section class="box box-style2">
+                  <a class="image image-full">
+                    <img src="images/astronomy.png" alt="Airport" />
+                  </a>
+                  <h3>Astronomy & Sciences</h3>
+                  <p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
+                </section>
+              </div>
+              <div class="4u">
+                <section class="box box-style2">
+                  <a class="image image-full">
+                    <img src="images/travel.png" alt="Airport" />
+                  </a>
+                  <h3>Travels</h3>
+                  <p>I was born and live in Paris, but I love traveling ! <a href="#contact">Contact me</a> if you have any opportunity to work abroad.</p>
+                  <footer>
+                    <a href="" data-toggle="modal" data-target="#modal_travels">See where I've been</a>
+                  </footer>
+                </section>
+              </div>
             </div>
           </div>
-        </div>
-        <footer>
-          <p> Interested by my profile ?</p>
-          <a href="#contact" class="button button-big">Drop me an email !</a>
-        </footer>
-      </article>
-    </div>
+          <footer>
+            <p> Interested by my profile ?</p>
+            <a href="#contact" class="button button-big">Drop me an email !</a>
+          </footer>
+        </article>
+      </div>
 
-    <!-- Contact -->
-    <div class="wrapper wrapper-style4">
+      <!-- Contact -->
+      <div class="wrapper wrapper-style4">
         <article id="contact" class="container small">
           <header>
             <h2>Let's get in touch !</h2>
@@ -350,20 +350,16 @@
     <!-- Modals -->
     <div>
       <!-- Programming skills -->
-      <div class="modal fade" id="modal_prog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal fade" id="modal_skills" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" id="modalProgSkills">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">Programming skills</h4>
             </div>
-              <div class="modal-body">
-                <div id="tableProgSkills">
-                    <script>
-                      loadProgSkills();
-                    </script>
-                </div>
-              </div>
+            <div class="modal-body">
+              <div id="tableProgSkills"></div>
+            </div>
             <div class="modal-footer">
               <a href="#" data-dismiss="modal">Dismiss</a>
             </div>
@@ -422,21 +418,37 @@
     </div>
   </body>
 
-    <!-- OpenStreetMap stuff -->
-    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-    <script src="custom/js/modal_travels.js"></script>
-    <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" />
+  <!-- OpenStreetMap stuff -->
+  <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+  <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" />
 
-    <!-- Bootstrap stuff -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
-    <script src="bootstrap/js/modal.js"></script>
-    <script src="bootstrap/js/transition.js"></script>
+  <!-- Bootstrap stuff -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+  <script src="bootstrap/js/modal.js"></script>
+  <script src="bootstrap/js/transition.js"></script>
 
-    <!-- Custom styles and js -->
-    <link rel="stylesheet" href="custom/css/custom.css" />
-    <script src="custom/js/modal_skills.js"></script>
+  <!-- Custom styles and js -->
+  <link rel="stylesheet" href="custom/css/custom.css" />
+  <script src="custom/js/modal_skills.js"></script>
+  <script src="custom/js/modal_travels.js"></script>
 
-    <!-- Register events -->
-    <script src="custom/js/register.js"></script>
+  <!-- Register events -->
+  <script>
+  /* Skills */
+  modal_skills_loadSkills();
 
-</html>
+  /* OpenLayers */
+  $("#modal_travels").on('shown.bs.modal', function() {
+    modal_travels_loadMap();
+  });
+
+  $("#modal_travels").on('hidden.bs.modal', function() {
+    document.getElementById("map").innerHTML = "";
+  });
+
+  /* Load Hackgyver modal */
+  $("#modal_hackgyver").on('shown.bs.modal', function() {
+    loadHackGyverModal();
+  });
+  </script>
+  </html>
