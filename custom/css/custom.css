@@ -25,7 +25,9 @@ ul.social li.mail:hover
   margin-top: 70px;
 }
 
-/* Programming skills modal */
+/****************************
+ * Programming skills modal *
+ ****************************/
 
 #modalProgSkills
 {
@@ -45,7 +47,9 @@ ul.social li.mail:hover
   width:auto;
 }
 
-/* Travels modal */
+/***************
+ * Travels modal
+ ***************/
 
 #map
 {
@@ -53,13 +57,12 @@ ul.social li.mail:hover
   width:600px;
 }
 
-/* .modal-dialog {
-  width:100%;
-  left:0;
-  right:0;
-  padding-top: 30px;
-  padding-bottom: 30px;
-  margin-left:0;
-} */
-
-div.olControlAttribution { bottom:3px; }
+#wait-osm {
+  margin: auto;
+  left:0; right:0;
+  top:0; bottom:0;
+  position: absolute;
+  width: 400px;
+  height: 30px;
+  text-align: center;
+}

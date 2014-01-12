@@ -1,25 +1,43 @@
 [
 	{
-		"place":"Paris",
-		"lat":48.8589, 
-		"lon":2.3469
+		"place": "Paris",
+		"when": "born",
+		"lat": 48.8589, 
+		"lon": 2.3469
 	},
 
 	{
-		"place":"London",
-		"lat":51.4898, 
-		"lon":-0.0882
+		"place": "London",
+		"when": "1999",
+		"lat": 51.4898, 
+		"lon": -0.0882
 	},
 
 	{
-		"place":"New York",
-		"lat":40.6978,
-		"lon":-74.0657
+		"place": "New York",
+		"when":"2001, 2014",
+		"lat": 40.6978,
+		"lon": -74.0657
 	},
 
 	{
-		"place":"Miami",
-		"lat":25.7824,
-		"lon":-80.2295
+		"place": "Miami",
+		"when": "2001",
+		"lat": 25.7824,
+		"lon": -80.2295
+	},
+
+	{
+		"place": "Cuba",
+		"when": "2009",
+		"lat":21.7340,
+		"lon":-79.0988
+	},
+
+	{
+		"place": "Crete",
+		"when": "2009",
+		"lat": 35.3093,
+		"lon": 24.9169
 	}
 ]
