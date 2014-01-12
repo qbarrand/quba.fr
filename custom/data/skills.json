@@ -1,0 +1,116 @@
+[
+	{
+		"name":"OO programming",
+		"languages":
+		[
+			{
+				"name":"C# / .NET",
+				"skill":3.5
+			},
+
+			{
+				"name":"C / C++",
+				"skill":3
+			},
+
+			{
+				"name":"Python",
+				"skill":3
+			},
+
+			{
+				"name":"Java",
+				"skill":2.5
+			}
+		]
+	},
+
+	{
+		"name":"Databases",
+		"languages":
+		[
+			{
+				"name":"MySQL",
+				"skill":3
+			},
+
+			{
+				"name":"PostGreSQL",
+				"skill":2
+			},
+
+			{
+				"name":"Oracle",
+				"skill":2
+			}
+		]
+	},
+	
+	{
+		"name":"Web",
+		"languages":
+		[
+			{
+				"name":"PHP & frameworks",
+				"skill":3.5
+			},
+
+			{
+				"name":"JavaScript",
+				"skill":3
+			},
+
+			{
+				"name":"CSS3",
+				"skill":3
+			}
+		]
+	},
+
+	{
+		"name":"Virtualization",
+		"languages":
+		[
+			{
+				"name":"Proxmox VE",
+				"skill":3.5
+			},
+
+			{
+				"name":"OpenStack",
+				"skill":3
+			},
+
+			{
+				"name":"VMware ESXi",
+				"skill":3
+			}
+		]
+	},
+	
+	{
+		"name":"System administration",
+		"languages":
+		[
+			{
+				"name":"Linux shell",
+				"skill":3
+			},
+
+			{
+				"name":"Debian",
+				"skill":3.5
+			},
+
+			{
+				"name":"Red Hat Entreprise Linux",
+				"skill":3
+			},
+
+			{
+				"name":"Windows 7+",
+				"skill":3.5
+			}
+		]
+	}
+]

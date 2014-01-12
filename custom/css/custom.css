@@ -29,20 +29,37 @@ ul.social li.mail:hover
 
 #modalProgSkills
 {
-  width:400px;
+  width:500px;
 }
 
 #tableProgSkills td
 {
-  width: 200px;
+  width: 300px;
   padding-left: 15px;
   padding-right: 15px;
   text-align: center;
 }
 
+#modalHackGyverBody
+{
+  width:auto;
+}
+
 /* Travels modal */
 
-#modalTravelsBody
+#map
 {
   height:400px;
+  width:600px;
 }
+
+/* .modal-dialog {
+  width:100%;
+  left:0;
+  right:0;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  margin-left:0;
+} */
+
+div.olControlAttribution { bottom:3px; }

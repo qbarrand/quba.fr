@@ -11,6 +11,9 @@
     <meta name="description" content="I am a french student learning computing at ENSIIE Paris with a work placement position at SNCF. I love virtualization, travels and raspberries." />
     <meta name="keywords" content="French IT computer science student cloud openstack docker coreos cern" />
 
+    <link rel="favicon"       href="/images/favicon.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
+    
     <!-- Google meta -->
     <link rel="author" href="https://plus.google.com/104631434183753697282/posts"/>
 
@@ -44,20 +47,6 @@
     <!--[if lte IE 9]><link rel="stylesheet" href="css/ie9.css" /><![endif]-->
     <!--[if lte IE 8]><script src="js/html5shiv.js"></script><link rel="stylesheet" href="css/ie8.css" /><![endif]-->
     <!--[if lte IE 7]><link rel="stylesheet" href="css/ie7.css" /><![endif]-->
-
-    <!-- Bootstrap stuff -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
-    <script src="bootstrap/js/modal.js"></script>
-    <script src="bootstrap/js/transition.js"></script>
-
-    <!-- OpenStreetMap stuff -->
-    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-
-    <!-- Custom styles and js -->
-    <link rel="stylesheet" href="custom/css/custom.css" />
-    <script src="custom/js/progSkills.js"></script>
-    <script src="custom/js/travels.js"></script>
-
   </head>
   <body>
 
@@ -105,7 +94,7 @@
               <section class="box box-style1">
                 <span class="fa featured skills fa-terminal"></span>
                 <h3>System administration</h3>
-                <p>I manage two dedicated servers that run PHP / Python / Ruby on Rails applications, OpenVPN gateways, Gitolite repos, distributed filesystems...</p>
+                <p>I manage two dedicated servers that run PHP / Python / Ruby on Rails applications, VPN gateways, Gitolite repos, distributed filesystems...</p>
               </section>
             </div>
             <div class="4u">
@@ -127,7 +116,7 @@
           </div>
         </div>
         <footer>
-          <p>Of course, I also have <a href="" data-toggle="modal" data-target="#modal_prog">programming skills</a>.</p>
+          <p>Get the <a href="" data-toggle="modal" data-target="#modal_prog">full list</a> of my skills.</p>
           <a href="#work" class="button button-big">See where I work(ed)</a>
         </footer>
       </article>
@@ -248,15 +237,19 @@
               </section>
             </div>
             <div class="4u">
-              <section class="box box-style1">
-                <span class="fa featured misc fa-rocket"></span>
-                <h3>Astronomy</h3>
+              <section class="box box-style2">
+                <a class="image image-full">
+                  <img src="images/astronomy.png" alt="Airport" />
+                </a>
+                <h3>Astronomy & Sciences</h3>
                 <p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
               </section>
             </div>
             <div class="4u">
-              <section class="box box-style1">
-                <span class="fa featured misc fa-plane"></span>
+              <section class="box box-style2">
+                <a class="image image-full">
+                  <img src="images/travel.png" alt="Airport" />
+                </a>
                 <h3>Travels</h3>
                 <p>I was born and live in Paris, but I love traveling ! <a href="#contact">Contact me</a> if you have any opportunity to work abroad.</p>
                 <footer>
@@ -387,7 +380,7 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">About HackGyver</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="modalHackGyverBody">
               <p>Below is an interview I made with Besançon TV about HackGyver (in French) :</p>
               <object id="player" width="640" height="360" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" name="player">
                 <param name="allowfullscreen" value="true" />
@@ -413,8 +406,9 @@
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title">Travels</h4>
             </div>
-              <div class="modal-body" id="modalTravelsBody">
-              </div>
+
+            <div id="map" class="modal-body"></div>
+            
             <div class="modal-footer">
               <a href="#" data-dismiss="modal">Dismiss</a>
             </div>
@@ -422,11 +416,22 @@
         </div>
       </div>
     </div>
-
-    <script> /* We need to load OSM here */
-      $("#modal_travels").on('shown.bs.modal', function() {
-        loadTravelsMap();
-      });
-    </script>
   </body>
-  </html>
+
+    <!-- OpenStreetMap stuff -->
+    <!-- <script src="http://www.openlayers.org/api/OpenLayers.js"></script> -->
+    <link rel="stylesheet" href="http://openlayers.org/dev/theme/default/style.css" />
+
+    <!-- Bootstrap stuff -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+    <script src="bootstrap/js/modal.js"></script>
+    <script src="bootstrap/js/transition.js"></script>
+
+    <!-- Custom styles and js -->
+    <link rel="stylesheet" href="custom/css/custom.css" />
+    <script src="custom/js/modal_skills.js"></script>
+
+    <!-- Register events -->
+    <script src="custom/js/register.js"></script>
+
+</html>
