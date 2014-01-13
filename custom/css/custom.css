@@ -28,17 +28,10 @@ ul.social li.mail:hover
 /****************************
  * Programming skills modal *
  ****************************/
-
-#modalProgSkills
-{
-  width:500px;
-}
-
 #tableProgSkills td
 {
-  width: 300px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   text-align: center;
 }
 

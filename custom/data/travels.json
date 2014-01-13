@@ -1,23 +1,16 @@
 [
 	{
-		"place": "Paris",
+		"place": "Paris, France",
 		"when": "born",
 		"lat": 48.8589, 
 		"lon": 2.3469
 	},
 
 	{
-		"place": "London",
+		"place": "London, UK",
 		"when": "1999",
 		"lat": 51.4898, 
 		"lon": -0.0882
-	},
-
-	{
-		"place": "New York",
-		"when":"2001, 2014",
-		"lat": 40.6978,
-		"lon": -74.0657
 	},
 
 	{
@@ -28,6 +21,27 @@
 	},
 
 	{
+		"place": "Ennis, Ireland",
+		"when": "2006",
+		"lat": 52.8506,
+		"lon": -8.9262
+	},
+
+	{
+		"place": "Canary Islands",
+		"when": "2007",
+		"lat": 27.9701,
+		"lon": -16.2817
+	},
+
+	{
+		"place": "Crete, Grece",
+		"when": "2008",
+		"lat": 35.3093,
+		"lon": 24.9169
+	},
+
+	{
 		"place": "Cuba",
 		"when": "2009",
 		"lat":21.7340,
@@ -35,9 +49,16 @@
 	},
 
 	{
-		"place": "Crete",
-		"when": "2009",
-		"lat": 35.3093,
-		"lon": 24.9169
+		"place": "Geneva, Switzerland",
+		"when": "2013",
+		"lat": 46.2048,
+		"lon": 6.143
+	},
+
+	{
+		"place": "New York City, NY, USA",
+		"when": "2001, 2014",
+		"lat": 40.6978,
+		"lon": -74.0657
 	}
 ]

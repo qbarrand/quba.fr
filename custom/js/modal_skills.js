@@ -18,8 +18,6 @@ function modal_skills_printTable(response) {
 
     data = JSON.parse(response);
 
-    // console.log(data)
-
     var table;
     table = "<center><table>";
 
@@ -68,4 +66,6 @@ function modal_skills_printTable(response) {
     table += "</table></center>";
 
     document.getElementById("tableProgSkills").innerHTML = table;
+
+    console.log("loaded")
 }
