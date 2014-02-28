@@ -31,7 +31,7 @@
     <meta property="og:title" content="Quentin Barrand | French IT student" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://quba.fr/" />
-    <meta property="og:image" content="ttp://www-dev.quba.fr/images/quentinbarrand.jpg" />
+    <meta property="og:image" content="http://www-dev.quba.fr/images/quentinbarrand.jpg" />
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,600,700" rel="stylesheet" />
 
@@ -437,13 +437,9 @@
   /* Skills */
   modal_skills_loadSkills();
 
-  /* OpenLayers */
+  /* LeafletJS */
   $("#modal_travels").on('shown.bs.modal', function() {
     modal_travels_loadMap();
-  });
-
-  $("#modal_travels").on('hidden.bs.modal', function() {
-    document.getElementById("map").innerHTML = "";
   });
 
   /* Load Hackgyver modal */
