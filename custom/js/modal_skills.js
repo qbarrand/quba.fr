@@ -66,6 +66,4 @@ function modal_skills_printTable(response) {
     table += "</table></center>";
 
     document.getElementById("tableProgSkills").innerHTML = table;
-
-    console.log("loaded")
 }

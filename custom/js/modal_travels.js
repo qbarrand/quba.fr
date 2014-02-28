@@ -13,36 +13,26 @@ function modal_travels_loadMap() {
 }
 
 
-/* Actually prints the map */
-function modal_travels_printMap(response)
-{
+function modal_travels_printMap(response) {
     data = JSON.parse(response);
 
-    map = new OpenLayers.Map("map");
-    var mapnik = new OpenLayers.Layer.OSM();
-    map.addLayer(mapnik);
+    var map = L.map('map').setView([32.84,-24.43], 2);
 
-    var zoom = 0;
+    L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+    }).addTo(map);
 
-    var markers = new OpenLayers.Layer.Markers( "Markers" );
-    map.addLayer(markers);
-    
-    main_marker = new OpenLayers.Marker(
-            new OpenLayers.LonLat(data[0].lon, data[0].lat).transform(
-                new OpenLayers.Projection("EPSG:4326"),
-                new OpenLayers.Projection("EPSG:900913")
-    ));
+    /* Initial marker */
+    L.marker([data[0].lat, data[0].lon]).addTo(map)
+        .bindPopup("<b>" + data[0].place + "</b><br />" + data[0].when)
 
-    markers.addMarker(main_marker);
 
     for(var i = 1; i < data.length; i++)
     {
-        markers.addMarker(new OpenLayers.Marker(
-            new OpenLayers.LonLat(data[i].lon, data[i].lat).transform(
-                new OpenLayers.Projection("EPSG:4326"),
-                new OpenLayers.Projection("EPSG:900913")
-        )));
+        L.marker([data[i].lat, data[i].lon]).addTo(map)
+            .bindPopup("<b>" + data[i].place + "</b><br />" + data[i].when)
     }
 
-    map.setCenter(main_marker, zoom);
+    var popup = L.popup();
 }

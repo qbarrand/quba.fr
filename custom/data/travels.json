@@ -14,8 +14,8 @@
 	},
 
 	{
-		"place": "Miami",
-		"when": "2001",
+		"place": "Miami, FL, USA",
+		"when": "2000",
 		"lat": 25.7824,
 		"lon": -80.2295
 	},
@@ -35,7 +35,7 @@
 	},
 
 	{
-		"place": "Crete, Grece",
+		"place": "Crete, Greece",
 		"when": "2008",
 		"lat": 35.3093,
 		"lon": 24.9169
@@ -57,7 +57,7 @@
 
 	{
 		"place": "New York City, NY, USA",
-		"when": "2001, 2014",
+		"when": "2000, 2014",
 		"lat": 40.6978,
 		"lon": -74.0657
 	}
