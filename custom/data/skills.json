@@ -4,23 +4,23 @@
 		"languages":
 		[
 			{
-				"name":"C# / .NET",
-				"skill":3.5
+				"name": "Python",
+				"skill": 3.5
 			},
 
 			{
-				"name":"C / C++",
-				"skill":3
+				"name": "C# / .NET",
+				"skill": 3.5
 			},
 
 			{
-				"name":"Python",
-				"skill":3
+				"name": "C / C++",
+				"skill": 3
 			},
 
 			{
-				"name":"Java",
-				"skill":2.5
+				"name": "Java",
+				"skill": 2.5
 			}
 		]
 	},
@@ -30,18 +30,23 @@
 		"languages":
 		[
 			{
-				"name":"MySQL",
-				"skill":3
+				"name": "MySQL",
+				"skill": 3.5
 			},
 
 			{
-				"name":"PostGreSQL",
-				"skill":2
+				"name": "Oracle",
+				"skill": 2.5
 			},
 
 			{
-				"name":"Oracle",
-				"skill":2
+				"name": "MongoDB",
+				"skill": 2.5
+			},
+
+			{
+				"name": "PostGreSQL",
+				"skill": 2
 			}
 		]
 	},
@@ -51,18 +56,23 @@
 		"languages":
 		[
 			{
-				"name":"PHP & frameworks",
-				"skill":3.5
+				"name": "Python / Django",
+				"skill": 3.5
 			},
 
 			{
-				"name":"JavaScript",
-				"skill":3
+				"name": "PHP / frameworks",
+				"skill": 3.5
 			},
 
 			{
-				"name":"CSS3",
-				"skill":3
+				"name": "JavaScript",
+				"skill": 3
+			},
+
+			{
+				"name": "CSS3",
+				"skill": 3
 			}
 		]
 	},
@@ -73,7 +83,7 @@
 		[
 			{
 				"name":"Proxmox VE",
-				"skill":3.5
+				"skill":4
 			},
 
 			{
@@ -93,23 +103,23 @@
 		"languages":
 		[
 			{
-				"name":"Linux shell",
-				"skill":3
-			},
-
-			{
 				"name":"Debian",
-				"skill":3.5
-			},
-
-			{
-				"name":"Red Hat Entreprise Linux",
-				"skill":3
+				"skill":4
 			},
 
 			{
 				"name":"Windows 7+",
 				"skill":3.5
+			},
+
+			{
+				"name":"/bin/bash",
+				"skill":3
+			},
+
+			{
+				"name":"Red Hat Entreprise Linux",
+				"skill":3
 			}
 		]
 	}
