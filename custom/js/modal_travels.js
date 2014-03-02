@@ -16,7 +16,7 @@ function modal_travels_loadMap() {
 function modal_travels_printMap(response) {
     data = JSON.parse(response);
 
-    var map = L.map('map').setView([32.84,-24.43], 2);
+    var map = L.map('map').setView([36.6, 13.0], 2);
 
     L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 18,

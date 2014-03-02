@@ -35,25 +35,10 @@ ul.social li.mail:hover
   text-align: center;
 }
 
-#modalHackGyverBody
-{
-  width:auto;
-}
-
 /***************
  * Travels modal
  ***************/
 #map
 {
   height:400px;
-}
-
-#wait-osm {
-  margin: auto;
-  left:0; right:0;
-  top:0; bottom:0;
-  position: absolute;
-  width: 400px;
-  height: 30px;
-  text-align: center;
 }
