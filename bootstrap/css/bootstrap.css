@@ -47,6 +47,7 @@ button.close {
   left: 0;
   z-index: 1040;
 }
+/*
 .modal.fade .modal-dialog {
   -webkit-transform: translate(0, -25%);
   -ms-transform: translate(0, -25%);
@@ -61,6 +62,7 @@ button.close {
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
 }
+*/
 .modal-dialog {
   position: relative;
   width: auto;

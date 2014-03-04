@@ -4,10 +4,6 @@ article small {
 	color: #888888;
 }
 
-#nav a {
-  /* padding: 0.5em;*/
-}
-
 .fa.featured.skills {
 	color: #61b8db;
 }
@@ -22,27 +18,21 @@ ul.social li.mail:hover {
 
 .modal {
   margin-top: 1.85em;
-}
+}x²w
 
-/****************************
- * Programming skills modal *
- ****************************/
+/* Programming skills modal */
 #tableProgSkills td {
   padding-left: 0.5em;
   padding-right: 0.5em;
   text-align: center;
 }
 
-/***************
- * Travels modal
- ***************/
+/* Travels modal */
 #map {
   height:400px;
 }
 
-/*****************************
- * nav padding top on mobile *
- ****************************/
+/* nav padding top on mobile */
 @media (max-width: 360px) {
   .wrapper-first {
     padding-top: 7em;
