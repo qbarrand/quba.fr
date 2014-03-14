@@ -445,9 +445,9 @@
 
     function send_fail() {
       $('#buttons').html("<h2>Something wrong happened.</h2> \
-          <h4>Please use \
+          <span>Please use \
           <a href=\"mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr\"\
-          target=\"_blank\">this link</a>.</h4>");  
+          target=\"_blank\">this link</a>.</span>");  
     }
 
     $.ajax({
@@ -463,7 +463,7 @@
 
       if(data['status'] == true)
         $('#buttons').html("<h2>Thanks !</h2>\
-          <h4>We'll be in touch soon.</h4>")
+          <span>We'll be in touch soon.</span>")
       else
         send_fail();  
     }).fail(function() {
