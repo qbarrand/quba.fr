@@ -227,24 +227,28 @@
               <div class="4u">
                 <section class="box box-style2">
                   <a href="http://hackgyver.org" class="image image-full">
-                    <img src="images/hackgyver.png" alt="SNCF logo" />
+                    <img src="images/hackgyver.png" alt="Public meeting at HackGyver" />
                   </a>
                   <h3>HackGyver</h3>
                   <p>
                     A fellow BSc friend and I funded HackGyver, Belfort's hackerspace, in May 2012.
                   </p>
                   <footer>
-                    <a href="" data-toggle="modal" data-target="#modal_hackgyver">Learn more</a>
+                    <a href="" data-toggle="modal" data-target="#modal_hackgyver">Quick presentation</a>
                   </footer>
                 </section>
               </div>
               <div class="4u">
                 <section class="box box-style2">
                   <a class="image image-full">
-                    <img src="images/astronomy.png" alt="Airport" />
+                    <img src="images/astronomy.png" alt="V838 Monocerotis Nebulae" />
                   </a>
                   <h3>Astronomy & Sciences</h3>
-                  <p>Ornare nulla proin odio consequat sapien vestibulum ipsum primis sed amet consequat lorem dolore.</p>
+                  <p>
+                    I'm a big fan of science in general, and of Astronomy, Cosmology and other physics-oriented disciplines (like CERN's) in particular.
+                    <br>
+                    new p ?<br>lol
+                  </p>
                 </section>
               </div>
               <div class="4u">
@@ -278,7 +282,7 @@
           <div>
             <div class="row">
               <div class="12u">
-                <form method="post" action="#">
+                <form method="post" action="/api/1.0/drop_email">
                   <div>
                     <div class="row half">
                       <div class="6u">
@@ -288,20 +292,22 @@
                         <input type="text" name="email" id="email" placeholder="Email" />
                       </div>
                     </div>
+                    <!-- 
                     <div class="row half">
                       <div class="12u">
                         <input type="text" name="subject" id="subject" placeholder="Subject" />
                       </div>
                     </div>
+                  -->
                     <div class="row half">
                       <div class="12u">
                         <textarea name="message" id="message" placeholder="Message"></textarea>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" id="buttons">
                       <div class="12u">
-                        <a href="#" class="button form-button-submit">Send Message</a>
-                        <a href="#" class="button button-alt form-button-reset">Clear Form</a>
+                        <a class="button button-alt form-button-reset">Clear Form</a>
+                        <a class="button form-button-submit">Send Message</a>
                       </div>
                     </div>
                   </div>
@@ -406,7 +412,6 @@
   <script src="leaflet/leaflet.js"></script>
   <link rel="stylesheet" href="leaflet/leaflet.css" />
 
-
   <!-- Bootstrap stuff -->
   <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
   <script src="bootstrap/js/modal.js"></script>
@@ -433,6 +438,39 @@
     css = "custom/css/modalsNoFix.css";
 
   $('head').append('<link rel="stylesheet" href="' + css + '" type="text/css" />');
+
+  /* Send mail button */
+  $('form .form-button-submit').click(function(e) {
+    e.preventDefault(); 
+
+    function send_fail() {
+      $('#buttons').html("<h2>Something wrong happened.</h2> \
+          <h4>Please use \
+          <a href=\"mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr\"\
+          target=\"_blank\">this link</a>.</h4>");  
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: 'http://api.quentinbarrand.com/1.0/drop_email',
+      data: {
+        name: $('#name').val(),
+        email: $('#email').val(),
+        body: $('#message').val()
+      }
+    }).done(function(response) {
+      data = JSON.parse(response)
+
+      if(data['status'] == true)
+        $('#buttons').html("<h2>Thanks !</h2>\
+          <h4>We'll be in touch soon.</h4>")
+      else
+        send_fail();  
+    }).fail(function() {
+        send_fail();
+    });
+  });
+
   </script>
 
   <!-- Piwik -->
@@ -451,6 +489,7 @@
   </script>
   <noscript><p><img src="http://demerzel.su7.info/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
   <!-- End Piwik Code -->
+
 
 
   
