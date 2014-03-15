@@ -47,6 +47,15 @@ ul.social li.mail:hover {
   text-align: center;
 }
 
+/* HackGyver modal */
+.img-align-right{
+  display: inline;
+  float: right;
+  height: 200px;
+  width: 200px;
+  margin-left: 30px;
+}
+
 /* Travels modal */
 #map {
   height:400px;

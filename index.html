@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-    Miniport 2.5 by HTML5 UP
-    html5up.net | @n33co
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
-  -->
   <html>
   <head>
     <title>Quentin Barrand | French IT student</title>
@@ -292,13 +287,6 @@
                         <input type="text" name="email" id="email" placeholder="Email" />
                       </div>
                     </div>
-                    <!-- 
-                    <div class="row half">
-                      <div class="12u">
-                        <input type="text" name="subject" id="subject" placeholder="Subject" />
-                      </div>
-                    </div>
-                  -->
                     <div class="row half">
                       <div class="12u">
                         <textarea name="message" id="message" placeholder="Message"></textarea>
@@ -369,7 +357,14 @@
               <h4 class="modal-title">About HackGyver</h4>
             </div>
             <div class="modal-body" id="modalHackGyverBody">
-              <p>Below is an interview I made with Besançon TV about HackGyver (in French) :</p>
+              <img class="img-align-right" src="images/hg_transparent_bg.png"></img>
+              <p>
+                In May 2012, <a href="https://twitter.com/maijin212">@maijin212</a> and I funded <a href="http://hackgyver.org/">HackGyver</a>, Belfort's hackerspace.
+                <br>
+                From May 2012 to March 2013, we organized several public events and weekly meetings at <a href="http://lusineabelfort.fr">L'Usine à Belfort</a>, promoted the association, and deployed a website and a wiki.
+                <br>
+                I was personnally in charge of the management of the association's treasury and websites. Below is an interview I made with Besançon TV about HackGyver (in French) :
+              </p>
               <center>
                 <object id="player" width="640" height="360" classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" name="player">
                   <param name="allowfullscreen" value="true" />
@@ -379,6 +374,10 @@
                   <embed id="player" width="640" height="360" type="application/x-shockwave-flash" src="http://www.besancon.tv/mediaplayer5.swf" allowfullscreen="true" allowscriptaccess="always" flashvars="config=http%3A%2F%2Fwww.besancon.tv%2Fgetconfig.php%3Fid_prod%3D1169%26id_app%3D149%26embed%3D1" name="player" />
                 </object>
               </center>
+              <p>
+                <br>
+                You can visit them every Wednesday night at L'Usine, or say hello on <a href="irc://irc.freenode.net/hackgyver">#hackgyver @ Freenode</a>.
+              </p>
             </div>
             <div class="modal-footer">
               <a href="#" data-dismiss="modal">Dismiss</a>
@@ -444,9 +443,11 @@
     e.preventDefault(); 
 
     function send_fail() {
-      $('#buttons').html("<h2>Something wrong happened.</h2> \
+      $('#buttons').html("<h2>Something went wrong.</h2> \
           <span>Please use \
-          <a href=\"mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr\"\
+          <a href=\"mailto:quentin@quba.fr?\
+subject=Fallback mailing method - quba.fr&\
+body=" + $('#message').val() + "\"\
           target=\"_blank\">this link</a>.</span>");  
     }
 
@@ -462,15 +463,13 @@
       data = JSON.parse(response)
 
       if(data['status'] == true)
-        $('#buttons').html("<h2>Thanks !</h2>\
-          <span>We'll be in touch soon.</span>")
+        $('#buttons').html("<h2>Thanks !</h2><span>We'll be in touch soon.</span>")
       else
         send_fail();  
     }).fail(function() {
         send_fail();
     });
   });
-
   </script>
 
   <!-- Piwik -->
@@ -490,7 +489,4 @@
   <noscript><p><img src="http://demerzel.su7.info/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
   <!-- End Piwik Code -->
 
-
-
-  
-  </html>
+</html>
