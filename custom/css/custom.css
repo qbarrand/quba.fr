@@ -56,6 +56,14 @@ ul.social li.mail:hover {
   margin-left: 30px;
 }
 
+@media (max-width: 360px) {
+  .img-align-right{
+    height: 100px;
+    width: 100px;
+    margin-left: 10px;
+  }
+}
+
 /* Travels modal */
 #map {
   height:400px;
