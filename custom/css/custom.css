@@ -68,6 +68,19 @@ ul.social li.mail:hover {
   height:400px;
 }
 
+/* Privacy */
+#piwik {
+  height: 200px;
+  width: 560px;
+}
+
+@media (max-width: 360px) {
+  #piwik {
+    height: 305px;
+    width: 275px;
+  }
+}
+
 /* nav padding top on mobile */
 @media (max-width: 360px) {
   .wrapper-first {
