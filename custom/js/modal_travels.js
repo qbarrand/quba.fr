@@ -23,15 +23,21 @@ function modal_travels_printMap(response) {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
     }).addTo(map);
 
-    /* Initial marker */
-    L.marker([data[0].lat, data[0].lon]).addTo(map)
-        .bindPopup("<b>" + data[0].place + "</b><br />" + data[0].when)
-
-
-    for(var i = 1; i < data.length; i++)
+    for(var i = 0; i < data.length; i++)
     {
+        var desc = "<b>" + data[i].place + "</b>";
+        
+        for(var j = 0; j < data[i].trips.length; j++) {
+            desc += "<br />" + data[i].trips[j].when;
+
+            if(data[i].trips[j].why != null)
+            {
+                desc += " - " + data[i].trips[j].why;
+            }
+        }
+
         L.marker([data[i].lat, data[i].lon]).addTo(map)
-            .bindPopup("<b>" + data[i].place + "</b><br />" + data[i].when)
+            .bindPopup(desc)
     }
 
     var popup = L.popup();

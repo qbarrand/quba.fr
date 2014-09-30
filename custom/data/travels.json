@@ -1,78 +1,147 @@
 [
-	{
-		"place": "Paris, France",
-		"when": "born",
-		"lat": 48.8589, 
-		"lon": 2.3469
-	},
+    {
+        "place": "Paris, France",
+        "lat": 48.8589, 
+        "lon": 2.3469,
+        "trips":
+        [
+            {
+                "when": "Born"
+            }
+        ]
+    },
 
-	{
-		"place": "London, UK",
-		"when": "1999",
-		"lat": 51.4898, 
-		"lon": -0.0882
-	},
+    {
+        "place": "London, UK",
+        "lat": 51.4898, 
+        "lon": -0.0882,
+        "trips":
+        [
+            {
+                "when": "1999",
+                "why": "Tourism"
+            }
+        ]
+    },
 
-	{
-		"place": "Miami, FL, USA",
-		"when": "2000",
-		"lat": 25.7824,
-		"lon": -80.2295
-	},
+    {
+        "place": "Miami, FL, USA",
+        "lat": 25.7824,
+        "lon": -80.2295,
+        "trips":
+        [
+            {
+                "when": "2000",
+                "why": "Tourism"
+            }
+        ]
+    },
 
-	{
-		"place": "Ennis, Ireland",
-		"when": "2006",
-		"lat": 52.8506,
-		"lon": -8.9262
-	},
+    {
+        "place": "Ennis, Ireland",
+        "lat": 52.8506,
+        "lon": -8.9262,
+        "trips":
+        [
+            {
+                "when": "2006",
+                "why": "Tourism"
+            }
+        ]
+    },
 
-	{
-		"place": "Canary Islands",
-		"when": "2007",
-		"lat": 27.9701,
-		"lon": -16.2817
-	},
+    {
+        "place": "Canary Islands",
+        "lat": 27.9701,
+        "lon": -16.2817,
+        "trips":
+        [
+            {
+                "when": "2007",
+                "why": "Tourism"
+            }
+        ]
+    },
 
-	{
-		"place": "Crete, Greece",
-		"when": "2008",
-		"lat": 35.3093,
-		"lon": 24.9169
-	},
+    {
+        "place": "Crete, Greece",
+        "lat": 35.3093,
+        "lon": 24.9169,
+        "trips":
+        [
+            {
+                "when": "2008",
+                "why": "Tourism"
+            }
+        ]
+    },
 
-	{
-		"place": "Cuba",
-		"when": "2009",
-		"lat":21.7340,
-		"lon":-79.0988
-	},
+    {
+        "place": "Cuba",
+        "lat":21.7340,
+        "lon":-79.0988,
+        "trips":
+        [
+            {
+                "when": "2009",
+                "why": "Tourism"
+            }
+        ]
+    },
 
-	{
-		"place": "Geneva, Switzerland",
-		"when": "2013",
-		"lat": 46.2048,
-		"lon": 6.143
-	},
+    {
+        "place": "Geneva, Switzerland",
+        "lat": 46.2048,
+        "lon": 6.143,
+        "trips":
+        [
+            {
+                "when": "2013",
+                "why": "CERN Summer Students Programme"
+            }
+        ]
+    },
 
-	{
-		"place": "New York City, NY, USA",
-		"when": "2000, 2014",
-		"lat": 40.6978,
-		"lon": -74.0657
-	},
-
-	{
-		"place": "Beijing, China",
-		"when": "2014",
-		"lat": 40.2554,
-		"lon": 116.4618
-	},
-
-        {
-                "place": "Shenzhen, China",
+    {
+        "place": "New York City, NY, USA",
+        "lat": 40.6978,
+        "lon": -74.0657,
+        "trips":
+        [
+            {
+                "when": "2000",
+                "why": "Tourism"
+            },
+            {
                 "when": "2014",
-                "lat": 22.5340,
-                "lon": 114.0710
-        }
+                "why": "Tourism"
+            }
+        ]
+    },
+
+    {
+        "place": "Beijing, China",
+        "lat": 40.2554,
+        "lon": 116.4618,
+        "trips":
+        [
+            {
+                "when": "2014",
+                "why" : "Huawei Telecom Seeds for the Future"
+            }
+        ]
+    },
+
+    {
+        "place": "Shenzhen, China",
+        "lat": 22.5340,
+        "lon": 114.0710,
+        "trips":
+        [
+            {
+                "when": "2014",
+                "why" : "Huawei Telecom Seeds for the Future"
+            }
+        ]
+    }
 ]
