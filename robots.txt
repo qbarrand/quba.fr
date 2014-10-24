@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: bootstrap/
+Disallow: css/
+Disallow: custom/
+Disallow: js/
+Disallow: leaflet/
