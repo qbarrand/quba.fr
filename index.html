@@ -477,7 +477,7 @@ target=\"_blank\">this link</a>.</span>");
 
   $.ajax({
     type: 'POST',
-    url: 'http://api.quentinbarrand.com/1.0/drop_email',
+    url: '/mail.php',
     data: {
       name: $('#name').val(),
       email: $('#email').val(),
