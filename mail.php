@@ -18,5 +18,4 @@ else {
 	$response["status"] = false;
 }
 
-header("Content-type:application/json");
 echo(json_encode($response));
