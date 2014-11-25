@@ -1,0 +1,12 @@
+#header-caption {
+	z-index: 9;
+	position: absolute;
+    text-align: left;
+    margin-top: 1em;
+    margin-left: 1em;
+    font-size: 0.9em;
+}
+	
+	#header-caption strong {
+		color: #ffffff;
+	}

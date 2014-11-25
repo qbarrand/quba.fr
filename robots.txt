@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: old/
 Disallow: bootstrap/
 Disallow: css/
 Disallow: custom/
