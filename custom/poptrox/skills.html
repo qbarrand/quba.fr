@@ -1,0 +1,178 @@
+<script>
+var data = [
+    {
+      'name':'OO programming',
+      'languages':
+      [
+        {
+          'name': 'Python',
+          'skill': 3.5
+        },
+
+        {
+          'name': 'C# / .NET',
+          'skill': 3.5
+        },
+
+        {
+          'name': 'C / C++',
+          'skill': 3
+        },
+
+        {
+          'name': 'Java',
+          'skill': 2.5
+        }
+      ]
+    },
+
+    {
+      'name':'Databases',
+      'languages':
+      [
+        {
+          'name': 'MySQL',
+          'skill': 3.5
+        },
+
+        {
+          'name': 'Oracle',
+          'skill': 2.5
+        },
+
+        {
+          'name': 'MongoDB',
+          'skill': 2.5
+        },
+
+        {
+          'name': 'PostGreSQL',
+          'skill': 2
+        }
+      ]
+    },
+    
+    {
+      'name':'Web',
+      'languages':
+      [
+        {
+          'name': 'Python / Django',
+          'skill': 3.5
+        },
+
+        {
+          'name': 'PHP / frameworks',
+          'skill': 3.5
+        },
+
+        {
+          'name': 'JavaScript',
+          'skill': 3
+        },
+
+        {
+          'name': 'CSS3',
+          'skill': 3
+        }
+      ]
+    },
+
+    {
+      'name':'Virtualization',
+      'languages':
+      [
+        {
+          'name':'Proxmox VE',
+          'skill':4
+        },
+
+        {
+          'name':'OpenStack',
+          'skill':3
+        },
+
+        {
+          'name':'VMware ESXi',
+          'skill':3
+        }
+      ]
+    },
+    
+    {
+      'name':'System administration',
+      'languages':
+      [
+        {
+          'name':'Debian',
+          'skill':4
+        },
+
+        {
+          'name':'Windows 7+',
+          'skill':3.5
+        },
+
+        {
+          'name':'/bin/bash',
+          'skill':3
+        },
+
+        {
+          'name':'Entreprise Linux (RHEL / SL)',
+          'skill':3
+        }
+      ]
+    }
+  ]
+
+var content = '';
+
+for(var i in data)
+{
+    content += '<h2>' + data[i].name + '</h2>';
+    content += '<table class="table-skills">';
+
+    for(var j in data[i].languages)
+    {
+        content += '<tr>';
+        content += '<td>' + data[i].languages[j].name + '</td>'
+
+        content += '<td>';
+
+        k = 0;
+        skill = data[i].languages[j].skill;
+
+        half = false;
+        if(skill % 1 != 0) 
+        {
+            skill = Math.floor(skill);
+            half = true;
+        }
+
+        for(;k < skill; k++)
+            content += '<i class=\'fa fa-star\'> </i>';
+
+
+        if(half == true)
+        {
+            content += '<i class=\'fa fa-star-half-o\'> </i>';
+            k += 1;
+        }
+
+        for(; k < 5; k++)
+          content += '<i class=\'fa fa-star-o\'> </i>';
+
+        content += '</td>';
+        content += '</tr>';
+    }
+
+    content += '</table>';
+
+}
+
+$('#skills-table').html(content);
+
+</script>
+
+<span id='skills-table'></span>

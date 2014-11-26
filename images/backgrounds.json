@@ -1,19 +1,25 @@
 [
 	{
-		"filename": "images/bg/newyork_1.jpg",
+		"filename": "newyork_1.jpg",
 		"location": "New York, USA",
 		"date": "February 2014"
 	},
 
 	{
-		"filename": "images/bg/hongkong_1.jpg",
+		"filename": "hongkong_1.jpg",
 		"location": "Hong Kong, China",
 		"date": "August 2014"
 	},
 
 	{
-		"filename": "images/bg/beijing_1.jpg",
+		"filename": "beijing_1.jpg",
 		"location": "Beijing, China",
 		"date": "August 2014"
+	},
+
+	{
+		"filename": "geneva_1.jpg",
+		"location": "Geneva, Switzerland",
+		"date": "September 2014"
 	}
 ]

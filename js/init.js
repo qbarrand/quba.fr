@@ -106,7 +106,7 @@
 		// Main Sections: Two.
 		
 			// Lightbox gallery.
-				$('#two').poptrox({
+				$('#work').poptrox({
 					caption: function($a) { return $a.next('h3').text(); },
 					overlayColor: '#2c2c2c',
 					overlayOpacity: 0.85,
@@ -120,12 +120,37 @@
 					windowMargin: (skel.isActive('small') ? 0 : 50)
 				});
 
+		// Skills popup
+			$('#skills-poptrox').poptrox({
+				overlayColor: '#2c2c2c',
+				overlayOpacity: 0.85,
+				popupCloserText: '',
+				popupLoaderText: '',
+				// selector: '.work-item a',
+				usePopupCaption: false,
+				usePopupDefaultStyling: false,
+				usePopupEasyClose: false,
+				usePopupNav: true,
+				windowMargin: (skel.isActive('small') ? 0 : 50)
+			});
+
+		// Privacy poptrox
+			$('#privacy-poptrox').poptrox({
+				usePopupCloser: true,
+				windowMargin: (skel.isActive('small') ? 0 : 50)
+			});
+
 		// Smooth scrolling
 			$('a').click(function(e) {
 				var	_bh = $('body, html'),
 					_nav = $('#nav');	
 
 				var t = $(this), h = t.attr('href'), article;
+
+				if(h == undefined)
+				{
+					return;
+				}
 
 				if (h.charAt(0) == '#' && h.length > 1 && (section = $('section#' + h.substring(1))).length > 0)
 				{

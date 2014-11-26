@@ -1,6 +1,6 @@
 <?php
 
-$data = file_get_contents("../../images/bg/backgrounds.json");
+$data = file_get_contents("images/backgrounds.json");
 
 $images = json_decode($data);
 

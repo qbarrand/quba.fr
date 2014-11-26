@@ -43,10 +43,17 @@
 	<body id="top">
 
 		<!-- Header -->			
-			<div id="header-caption"></div>
+			<div id="header-caption">
+				<p>
+					<i class="fa fa-arrows-alt"></i>
+					<a id="header-caption-location"></a>
+					|
+					<span id="header-caption-date"></span>
+				</p>
+			</div>
 
 			<header id="header">			
-				<!--<a href="#" class="image avatar">--><img class="image avatar" src="images/quentinbarrand.jpg" alt="" /><!--</a> -->
+				<img class="image avatar" src="images/quentinbarrand.jpg" alt="" />
 				<h1>I am <strong>Quentin Barrand</strong>,<br />
 				a French IT student learning CS at <a href="#education">ENSIIE</a><br />
 				with a work placement position at <a href="#work">SNCF</a>.<br /></h1>
@@ -60,7 +67,6 @@
 						<header class="major">
 							<h2>I am keen on managing virtualized systems and cloud infrastructures.</h2>
 						</header>
-						<a href="#work">let's test smthg</a>
 						<p>Accumsan orci faucibus id eu lorem semper. Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.</p>
 						<ul class="actions">
 							<li><a href="http://cv.quba.fr/" target="_blank" class="button icon fa-download">Get my CV</a></li>
@@ -71,86 +77,56 @@
 				<!-- Skills -->
 					<section id="skills">
 						<h1>Skills</h1>
+
 						<div class="row">
-							<article class="6u 12u$(3) work-item">
-								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>
-								<h3>Magna sed consequat tempus</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u$ 12u$(3) work-item">
-								<a href="images/fulls/02.jpg" class="image fit thumb"><img src="images/thumbs/02.jpg" alt="" /></a>
-								<h3>Ultricies lacinia interdum</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u 12u$(3) work-item">
-								<a href="images/fulls/03.jpg" class="image fit thumb"><img src="images/thumbs/03.jpg" alt="" /></a>
-								<h3>Tortor metus commodo</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u$ 12u$(3) work-item">
-								<a href="images/fulls/04.jpg" class="image fit thumb"><img src="images/thumbs/04.jpg" alt="" /></a>
-								<h3>Quam neque phasellus</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u 12u$(3) work-item">
-								<a href="images/fulls/05.jpg" class="image fit thumb"><img src="images/thumbs/05.jpg" alt="" /></a>
-								<h3>Nunc enim commodo aliquet</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u$ 12u$(3) work-item">
-								<a href="images/fulls/06.jpg" class="image fit thumb"><img src="images/thumbs/06.jpg" alt="" /></a>
-								<h3>Risus ornare lacinia</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
+							<div class="3u 12u$(2) bigicon">
+								<span class="not-small fa fa-terminal on fa-square fa-5x"></span>
+							</div>
+							<div class="9u$ 12u$(2)">
+								<h3>
+									<span class="only-small smallicon fa fa-terminal on fa-square fa-lg"></span>
+									System administration
+								</h3>
+								<p>I manage several dedicated servers that run PHP / Python / Ruby on Rails applications, VPN gateways, Gitolite repos, distributed filesystems...</p>
+							</div>
+
+							<div class="3u 12u$(2) bigicon">
+								<span class="not-small fa fa-cloud fa-5x"></span>
+							</div>
+							<div class="9u$ 12u$(2)">
+								<h3>
+									<span class="only-small smallicon fa fa-cloud fa-lg"></span>
+									Virtualization and cloud
+								</h3>
+								<p>I use <a href="http://pve.proxmox.com/" target="_blank">Proxmox VE</a> and closely follow emerging technologies like <a href="http://www.openstack.org/" target="_blank">OpenStack</a>, <a href="http://docker.io" target="_blank">Docker</a> and <a href="http://coreos.com/" target="_blank">CoreOS</a>.</p>
+							</div>
+
+							<div class="3u 12u$(2) bigicon">
+								<span class="not-small fa fa-linux fa-5x"></span>
+							</div>
+							<div class="9u$ 12u$(2)">
+								<h3>
+									<span class="only-small smallicon fa fa-linux fa-lg"></span>
+									Open-Source Software
+								</h3>
+								<p>I am a Linux power user committed to using and producing open-source software. See my <a href="http://git.quba.fr" target="_blank">public Git repos</a> or <a href="https://github.com/QuentinBarrand" target="_blank">fork me on Github</a> !</p>
+							</div>
 						</div>
-						<ul class="actions">
-							<li><a href="#" class="button">Full Portfolio</a></li>
+						
+						<ul id="skills-poptrox" class="actions">
+							<li>
+<!-- 								<span id="skills-poptrox">
+									<a href="custom/skills.html" class="button" data-poptrox="ajax,600x400">See a more comprehensive list</a>
+								</span> -->
+								<a href="custom/skills.html" class="button" data-poptrox="ajax,600x400">See a more comprehensive list</a>
+							</li>
+							<li><a href="#work" class="button special" data-poptrox="ignore">Continue to work</a></li>
 						</ul>
 					</section>
-					<!-- 
-					<section id="two">
-						<h2>Recent Work</h2>
-						<div class="row">
-							<article class="6u 12u$(3) work-item">
-								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>
-								<h3>Magna sed consequat tempus</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u$ 12u$(3) work-item">
-								<a href="images/fulls/02.jpg" class="image fit thumb"><img src="images/thumbs/02.jpg" alt="" /></a>
-								<h3>Ultricies lacinia interdum</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u 12u$(3) work-item">
-								<a href="images/fulls/03.jpg" class="image fit thumb"><img src="images/thumbs/03.jpg" alt="" /></a>
-								<h3>Tortor metus commodo</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u$ 12u$(3) work-item">
-								<a href="images/fulls/04.jpg" class="image fit thumb"><img src="images/thumbs/04.jpg" alt="" /></a>
-								<h3>Quam neque phasellus</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u 12u$(3) work-item">
-								<a href="images/fulls/05.jpg" class="image fit thumb"><img src="images/thumbs/05.jpg" alt="" /></a>
-								<h3>Nunc enim commodo aliquet</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-							<article class="6u$ 12u$(3) work-item">
-								<a href="images/fulls/06.jpg" class="image fit thumb"><img src="images/thumbs/06.jpg" alt="" /></a>
-								<h3>Risus ornare lacinia</h3>
-								<p>Lorem ipsum dolor sit amet nisl sed nullam feugiat.</p>
-							</article>
-						</div>
-						<ul class="actions">
-							<li><a href="#" class="button">Full Portfolio</a></li>
-						</ul>
-					</section>
-					-->
-					
-				<!-- Education -->
-					<section id="education">
-						<h1>Education</h1>
+
+				<!-- Work -->
+					<section id="work">
+						<h1>Work</h1>
 						<div class="row">
 							<article class="6u 12u$(3) work-item">
 								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>
@@ -188,9 +164,9 @@
 						</ul>
 					</section>
 
-				<!-- Work -->
-					<section id="work">
-						<h1>Work</h1>
+				<!-- Education -->
+					<section id="education">
+						<h1>Education</h1>
 						<div class="row">
 							<article class="6u 12u$(3) work-item">
 								<a href="images/fulls/01.jpg" class="image fit thumb"><img src="images/thumbs/01.jpg" alt="" /></a>
@@ -242,8 +218,8 @@
 									</div>
 								</form>
 								<ul class="actions">
-									<li><a class="button icon fa-eraser">Clear</a></li>
-									<li><a class="button special icon fa-send">Send Message</a></li>
+									<li><a id="form-clear" class="button icon fa-eraser">Clear</a></li>
+									<li><a id="form-send" class="button special icon fa-send">Send Message</a></li>
 								</ul>
 							</div>
 							<div class="4u$ 12u$(2)">
@@ -597,7 +573,11 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 				<ul class="copyright">
 					<li>&copy; Quentin Barrand</li>
 					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-					<li><a href=""></a>Privacy</li>
+					<li>
+						<span id="privacy-poptrox">
+							<a href="http://venabili.su7.info/piwik/index.php?module=CoreAdminHome&action=optOut&language=fr" data-poptrox="iframe,600x200">Privacy</a>
+						</span>
+					</li>
 				</ul>
 			</footer>
 
@@ -614,13 +594,44 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 		<!-- Background -->
 		<script>
 $.ajax({
-	url: "./custom/server/getbackground.php"
+	url: "./getbackground.php"
 })
 	.done(function(data) {
-		$("#header").css("background-image", "url(css/images/overlay.png), url(" + data.filename + ")")
-		$("#header-caption").html("<strong>" + data.location + "</strong> | " + data.date)
+		$("#header").css("background-image", "url(css/images/overlay.png), url(images/bg/" + data.filename + ")");
+		
+		$("#header-caption-location").html(data.location);
+		$("#header-caption-location").attr('href', 'images/fulls/' + data.filename);
+		$("#header-caption-date").html(data.date);
+
+		var poptrox_caption = data.location + ' - ' + data.date + ' - <i class="fa fa-cc"></i> BY';
+
+		$("#header-caption").poptrox({
+			caption: function($a) {
+				return '<strong>' + $a.text() + '</strong> - ' + $a.next('span').text() + ' - <i class="fa fa-cc"></i> BY Quentin Barrand';
+			},
+			preload: true,
+			usePopupCaption: true,
+			usePopupForceClose: true,
+			windowMargin: (skel.isActive('small') ? 0 : 50)
+		});
 	})
 		</script>
+
+		<!-- Piwik -->
+		<script type="text/javascript">
+var _paq = _paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function() {
+  var u="//venabili.su7.info/piwik/";
+  _paq.push(['setTrackerUrl', u+'piwik.php']);
+  _paq.push(['setSiteId', 3]);
+  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+})();
+		</script>
+		<noscript><p><img src="//venabili.su7.info/piwik/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
+		<!-- End Piwik Code -->
 
 	</body>
 </html>

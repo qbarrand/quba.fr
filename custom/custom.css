@@ -7,6 +7,23 @@
     font-size: 0.9em;
 }
 	
-	#header-caption strong {
+	#header-caption i a {
 		color: #ffffff;
+        font-size: 1em;
+        text-decoration: none;
 	}
+
+.bigicon {
+	text-align: center;
+	color: #49bf9d;
+	margin-bottom: 1em;
+}
+
+.smallicon {
+    color: #49bf9d;
+    margin-right: 1em;
+}
+
+.table-skills {
+    
+}
