@@ -106,31 +106,33 @@
 		// Main Sections: Two.
 		
 			// Lightbox gallery.
-				$('#work').poptrox({
-					caption: function($a) { return $a.next('h3').text(); },
-					overlayColor: '#2c2c2c',
-					overlayOpacity: 0.85,
-					popupCloserText: '',
-					popupLoaderText: '',
-					selector: '.work-item a',
-					usePopupCaption: true,
-					usePopupDefaultStyling: false,
-					usePopupEasyClose: false,
-					usePopupNav: true,
-					windowMargin: (skel.isActive('small') ? 0 : 50)
-				});
+				// $('#work').poptrox({
+				// 	caption: function($a) { return $a.next('h3').text(); },
+				// 	overlayColor: '#2c2c2c',
+				// 	overlayOpacity: 0.85,
+				// 	popupCloserText: '',
+				// 	popupLoaderText: '',
+				// 	selector: '.work-item a',
+				// 	usePopupCaption: true,
+				// 	usePopupDefaultStyling: false,
+				// 	usePopupEasyClose: false,
+				// 	usePopupNav: true,
+				// 	windowMargin: (skel.isActive('small') ? 0 : 50)
+				// });
 
 		// Skills popup
 			$('#skills-poptrox').poptrox({
 				overlayColor: '#2c2c2c',
 				overlayOpacity: 0.85,
-				popupCloserText: '',
+				//popupCloserText: '',
 				popupLoaderText: '',
-				// selector: '.work-item a',
+				popupTextColor: '#a2a2a2<',
 				usePopupCaption: false,
-				usePopupDefaultStyling: false,
+				usePopupCloser: true,
 				usePopupEasyClose: false,
+				usePopupForceClose: true,
 				usePopupNav: true,
+				usePopupStyling : true,
 				windowMargin: (skel.isActive('small') ? 0 : 50)
 			});
 
@@ -152,11 +154,18 @@
 					return;
 				}
 
-				if (h.charAt(0) == '#' && h.length > 1 && (section = $('section#' + h.substring(1))).length > 0)
+				if (h.charAt(0) == '#' && h.length > 1)
 				{
-					var pos = Math.max(section.offset().top - _nav.height() + 15, 0);
-					e.preventDefault();
-					_bh.animate({ scrollTop: pos }, 'slow', 'swing');
+					if((section = $('section#' + h.substring(1))).length > 0) {
+						var pos = Math.max(section.offset().top - _nav.height() + 15, 0);
+						e.preventDefault();
+						_bh.animate({ scrollTop: pos }, 'slow', 'swing');
+					}
+
+					if(h == "#top") {
+						_bh.animate({ scrollTop: 0 }, 'slow', 'swing');
+					}
+
 				}
 			});
 	});

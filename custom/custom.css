@@ -1,29 +1,113 @@
+/*
+ * Common
+ */
+
+.item-title {
+    display: inline;
+    /*font-weight: bold*/
+}
+
+.item-subtitle {
+    /*display: inline;*/    
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+.actions {
+    padding-top: 2em;
+}
+
+.actions p {
+    color: #787878 !important;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 400;
+    height: calc(2.75em + 6px);
+    line-height: 2.75em;
+    padding-right: 1.5em; 
+    padding-top: 3px;
+    text-align: left;
+
+    margin-bottom: 0px;
+}
+
+    .actions .only-small p {
+        padding-right: 0; 
+        padding-left: 0; 
+
+        text-align: center;
+    }
+
+.section-title h1 {
+    display: inline;
+}
+
+/*
+ * Header
+ */
+
 #header-caption {
 	z-index: 9;
 	position: absolute;
     text-align: left;
     margin-top: 1em;
     margin-left: 1em;
-    font-size: 0.9em;
 }
 	
-	#header-caption i a {
+	#header-caption i,
+    #header-caption a,
+    #header-caption a:hover {
 		color: #ffffff;
         font-size: 1em;
         text-decoration: none;
 	}
 
+    #header-caption i {
+        font-size: 0.9em;
+    }
+
+    #header-caption span {
+        color: #d2d0d2;
+        font-size: 0.9em;
+    }
+
+/* 
+ * Skills
+ */
+
 .bigicon {
 	text-align: center;
-	color: #49bf9d;
-	margin-bottom: 1em;
 }
+
+    .bigicon span {
+        margin-top: 0.1em;
+        color: #49bf9d;
+    }
 
 .smallicon {
     color: #49bf9d;
     margin-right: 1em;
 }
 
-.table-skills {
-    
+/*
+ * Work
+ */
+
+.work-desc {
+    margin-bottom: 0.8em;
+}
+
+.logo:before {
+    opacity: 0;
+}
+
+/*
+ * Education
+ */
+
+
+/* Popups */
+
+.table-skills td {
+    width: 50%;
 }

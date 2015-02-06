@@ -6,16 +6,21 @@ var data = [
       [
         {
           'name': 'Python',
-          'skill': 3.5
+          'skill': 4
         },
 
         {
           'name': 'C# / .NET',
+          'skill': 4
+        },
+
+        {
+          'name': 'C',
           'skill': 3.5
         },
 
         {
-          'name': 'C / C++',
+          'name': 'Java',
           'skill': 3
         },
 
@@ -154,7 +159,7 @@ for(var i in data)
             content += '<i class=\'fa fa-star\'> </i>';
 
 
-        if(half == true)
+        if(half)
         {
             content += '<i class=\'fa fa-star-half-o\'> </i>';
             k += 1;
