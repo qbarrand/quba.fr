@@ -2,6 +2,7 @@
 var data = [
     {
       'name':'OO programming',
+      'icon': 'code',
       'languages':
       [
         {
@@ -28,6 +29,7 @@ var data = [
 
     {
       'name':'Databases',
+      'icon':'database',
       'languages':
       [
         {
@@ -54,6 +56,7 @@ var data = [
     
     {
       'name':'Web',
+      'icon': 'sitemap',
       'languages':
       [
         {
@@ -79,7 +82,8 @@ var data = [
     },
 
     {
-      'name':'Virtualization',
+      'name':'Virtualization & Cloud',
+      'icon': 'cloud',
       'languages':
       [
         {
@@ -89,7 +93,7 @@ var data = [
 
         {
           'name':'OpenStack',
-          'skill':3
+          'skill':3.5
         },
 
         {
@@ -101,26 +105,27 @@ var data = [
     
     {
       'name':'System administration',
+      'icon': 'terminal',
       'languages':
       [
         {
-          'name':'Debian',
+          'name':'Arch Linux',
+          'skill':4
+        },
+
+        {
+          'name':'Debian / Ubuntu',
+          'skill':4
+        },
+
+        {
+          'name':'Entreprise Linux (RHEL / SL)',
           'skill':4
         },
 
         {
           'name':'Windows 7+',
           'skill':3.5
-        },
-
-        {
-          'name':'/bin/bash',
-          'skill':3
-        },
-
-        {
-          'name':'Entreprise Linux (RHEL / SL)',
-          'skill':3
         }
       ]
     }
@@ -130,14 +135,15 @@ var content = '';
 
 for(var i in data)
 {
-    content += '<h2>' + data[i].name + '</h2>';
+    content += '<h2>'
+    content += '<i class="fa fa-' + data[i].icon + ' small-skills-icon"></i>';
+    content += data[i].name + '</h2>';
     content += '<table class="table-skills">';
 
     for(var j in data[i].languages)
     {
         content += '<tr>';
         content += '<td>' + data[i].languages[j].name + '</td>'
-
         content += '<td>';
 
         k = 0;
@@ -151,17 +157,17 @@ for(var i in data)
         }
 
         for(;k < skill; k++)
-            content += '<i class=\'fa fa-star\'> </i>';
+            content += '<i class="fa fa-star"> </i>';
 
 
         if(half)
         {
-            content += '<i class=\'fa fa-star-half-o\'> </i>';
+            content += '<i class="fa fa-star-half-o"> </i>';
             k += 1;
         }
 
         for(; k < 5; k++)
-          content += '<i class=\'fa fa-star-o\'> </i>';
+          content += '<i class="fa fa-star-o"> </i>';
 
         content += '</td>';
         content += '</tr>';

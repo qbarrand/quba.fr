@@ -83,6 +83,16 @@
 
 					skel.change(function() {
 						
+						// Set the header's caption position
+						var position = 'fixed';
+
+						if(skel.isActive("xsmall") || skel.isActive("small") || skel.isActive("medium")) {
+							position = 'absolute';
+						}
+
+						$('#header-caption').css('position', position);
+
+
 						if (skel.isActive('medium')) {
 							
 							$window.off('scroll.strata_parallax');
