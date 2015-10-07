@@ -42,6 +42,16 @@
     display: inline;
 }
 
+.logo {
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+}
+
+.row {
+    margin-bottom: 1em;
+}
+
 /*
  * Header
  */

@@ -34,7 +34,7 @@
     <meta property='og:url' content='http://quba.fr/' />
     <meta property='og:image' content='http://quba.fr/images/quentinbarrand.jpg' />
   </head>
-  <body id='top'>
+  <body id='top' onload="loadBackground()">
 
     <!-- Header -->     
     <div id='header-caption'>
@@ -113,39 +113,48 @@
         <li>
           <a href='custom/poptrox/skills.html' class='button icon fa-align-justify' data-poptrox='ajax,600x400'>See a more comprehensive list</a>
         </li>
-        <li><a href='#work' class='button special' data-poptrox='ignore'>Continue to work</a></li>
+        <li><a href='#work' class='button special' data-poptrox='ignore'>Continue to Work</a></li>
       </ul>
     </section>
 
     <!-- Work -->
     <section id='work' class="section-title">
       <h1>Work</h1>
+      
+      <!-- Intro -->
       <p>
-        <strong>I am currently working at SNCF, the French national railway company.</strong>
+        <strong>I am currently working at SNCF Group, the French national railway company.</strong>
         <br />
         During Summer 2013, I was a Summer Student at CERN, the European Organization for Nuclear Research. 
       </p>
+
+      <!-- SNCF -->
       <div class="row">
-        <div class='5u 12u$(2)'>
-          <span class='image fit logo'><img src='images/sncf_transparent_bg.png' alt='' /></span>
+        <div class='5u 12u$(2) img-container'>
+          <span class='image fit logo'><img src='images/sncf2_transparent_bg.png' alt='' /></span>
         </div>
         <div class='7u$ 12u$(2)'>
-          <h3 class="item-title">SNCF</h3>
+          <h3 class="item-title">SNCF Réseau</h3>
           <h4 class="item-subtitle">since September 2013</h4>
           <p class="work-desc">
-            I work on modernizing the computing system of IRIS 320, a special high-speed train for railway maintenance.
+            SNCF Réseau is the government-owned company responsible for France's national rail network maintenance. 
+            I work on modernizing the computing system of IRIS 320, a special high-speed train customized for railway inspection purposes.
           </p>
           <a href='http://www.sncf.com/en/businesses/iris-320' class="button small icon fa-arrow-circle-right" target="_blank">Learn more about IRIS 320</a>
         </div>
+      </div>
 
+      <!-- CERN -->
+      <div class="row">
         <div class='5u 12u$(2)'>
-          <span class='image fit logo'><img src='images/cern_transparent_bg.png' alt='' /></span>
+          <span class='image fit logo'><img src='images/cern2_transparent_bg.png' alt='' /></span>
         </div>
         <div class='7u$ 12u$(2)'>
           <h3 class="item-title">CERN</h3>
           <h4 class="item-subtitle">Summer 2013</h4>
           <p class="work-desc">
             As a Summer Student, I worked on moving a <a href="http://wlcg.web.cern.ch/" target="_blank">WLCG</a> testing tool to CERN's new OpenStack-based private cloud infrastructure.
+            It was the first occasion for me to put my hands on a very large computing infrastructure, and a great opportunity to discover a lot of different cultures gathered in the heart of Europe.
           </p>
           <a href="http://cds.cern.ch/record/1596257/files/Report.pdf" class="button small icon fa-arrow-circle-right" target="_blank">Read my report</a>
         </div>
@@ -159,27 +168,33 @@
     <!-- Education -->
     <section id='education' class="section-title">
       <h1>Education</h1>
+
+      <!-- Intro -->
       <p>
         <strong>I am currently studying Computer Science at ENSIIE Paris.</strong>
         <br />
         From September 2011 to June 2013, I have been doing my BSc in Belfort, France.
       </p>
 
+      <!-- ENSIIE / TSP -->
       <div class="row">
         <div class='5u 12u$(2)'>
-          <span class='image fit logo'><img src='images/ensiie_tsp_transparent_bg.png' alt='' /></span>
+          <span class='image fit logo'><img src='images/ensiie_tsp2_transparent_bg.png' alt='' /></span>
         </div>
         <div class='7u$ 12u$(2)'>
           <h3 class="item-title">ENSIIE Paris / Télécom SudParis</h3>
           <h4 class="item-subtitle">since September 2013</h4>
           <p class="work-desc">
-            I did my first two years of engineering studies in <a href="http://www.ensiie.fr/" target="_blank">ENSIIE Paris</a>. On the last semester, from September 2015 to January 2016, I followed a specialized course in <a href="http://www.telecom-sudparis.eu" target="_blank">Télécom SudParis</a> focusing on mobile cellular networks (LTE / 5G) and software-defined networking (SDN).
+            I did my first two years of engineering studies in <a href="http://www.ensiie.fr/" target="_blank">ENSIIE Paris</a>. On the last semester, from September 2015 to January 2016, I followed a specialized course at <a href="http://www.telecom-sudparis.eu" target="_blank">Télécom SudParis</a> focusing on mobile cellular networks (LTE / 5G) and software-defined networking (SDN / NFV).
             Graduation expected in August 2016.
           </p>
         </div>
-        
+      </div>
+
+      <!-- IUT-BM -->
+      <div class="row">
         <div class='5u 12u$(2)'>
-          <span class='image fit logo'><img src='images/iutbm_transparent_bg.png' alt='' /></span>
+          <span class='image fit logo'><img src='images/iutbm2_transparent_bg.png' alt='' /></span>
         </div>
         <div class='7u$ 12u$(2) item-description'>
           <h3 class="item-title">IUT Belfort-Montbéliard</h3>
@@ -334,6 +349,7 @@
 
     <!-- Background -->
     <script>
+    function loadBackground() {
       $.ajax({
         url: './getbackground.php'
       })
@@ -358,6 +374,7 @@
             windowMargin: (skel.isActive('small') ? 0 : 50)
           });
         })
+    }
     </script>
 
     <!-- Form -->
