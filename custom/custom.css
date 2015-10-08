@@ -44,8 +44,9 @@
 
 .logo {
     position: relative;
-    top: 50%;
-    transform: translateY(50%);
+    padding-top: 5em;
+    max-width:11em;
+    margin: 0 auto 1em !important;
 }
 
 .row {
@@ -97,6 +98,11 @@
 .smallicon {
     color: #49bf9d;
     margin-right: 1em;
+}
+
+.small-skills-icon {
+    font-size: 0.9em;
+    margin-right: 0.4em;
 }
 
 /*

@@ -90,6 +90,24 @@
 							position = 'absolute';
 						}
 
+						console.log('xsmall : ' + skel.isActive('xsmall'));
+						console.log('small : ' + skel.isActive('small'));
+						console.log('medium : ' + skel.isActive('medium'));
+						console.log('large : ' + skel.isActive('large'));
+						console.log('xlarge : ' + skel.isActive('xlarge'));
+
+						if(skel.isActive('xsmall')) {
+
+							if($('.item-desc-container').hasClass('-1u')) {
+								$('.item-desc-container').removeClass('-1u');	
+							}
+						}
+						else {
+							if(! $('.item-desc-container').hasClass('-1u')) {
+								$('.item-desc-container').addClass('-1u');
+							}
+						}
+
 						$('#header-caption').css('position', position);
 
 
@@ -134,7 +152,7 @@
 			$('#skills-poptrox').poptrox({
 				overlayColor: '#2c2c2c',
 				overlayOpacity: 0.85,
-				//popupCloserText: '',
+				popupCloserText: 'close',
 				popupLoaderText: '',
 				popupTextColor: '#a2a2a2<',
 				usePopupCaption: false,
