@@ -2,55 +2,62 @@
  * Common
  */
 
-.item-title {
-    display: inline;
-    /*font-weight: bold*/
-}
-
-.item-subtitle {
-    /*display: inline;*/    
-    text-transform: uppercase;
-    font-size: 0.9em;
-}
-
 .actions {
-    padding-top: 2em;
+  padding-top: 2em;
 }
 
-.actions p {
+  .actions p {
     color: #787878 !important;
-    cursor: pointer;
+    cursor: auto;
     display: inline-block;
     font-weight: 400;
     height: calc(2.75em + 6px);
     line-height: 2.75em;
-    padding-right: 1.5em; 
+    padding-right: 1.5em;
     padding-top: 3px;
     text-align: left;
-
     margin-bottom: 0px;
+  }
+
+  .actions .only-small p {
+    padding-right: 0;
+    padding-left: 0;
+
+    text-align: center;
+  }
+
+.item-title {
+  display: inline;
+  /*font-weight: bold*/
 }
 
-    .actions .only-small p {
-        padding-right: 0; 
-        padding-left: 0; 
-
-        text-align: center;
-    }
-
-.section-title h1 {
-    display: inline;
+.item-subtitle {
+  /*display: inline;*/
+  text-transform: uppercase;
+  font-size: 0.9em;
 }
 
 .logo {
-    position: relative;
-    padding-top: 5em;
-    max-width:11em;
-    margin: 0 auto 1em !important;
+  position: relative;
+  padding-top: 5em;
+  max-width:11em;
+  margin: 0 auto 1em !important;
+}
+
+  .logo img {
+    border-radius: 0;
+  }
+
+.nodisplay {
+  display: none;
 }
 
 .row {
-    margin-bottom: 1em;
+  margin-bottom: 1em;
+}
+
+.section-title h1 {
+  display: inline;
 }
 
 /*
@@ -60,29 +67,29 @@
 #header-caption {
 	z-index: 9;
 	position: absolute;
-    text-align: left;
-    margin-top: 1em;
-    margin-left: 1em;
+  text-align: left;
+  margin-top: 1em;
+  margin-left: 1em;
 }
-	
+
 	#header-caption i,
     #header-caption a,
     #header-caption a:hover {
 		color: #ffffff;
-        font-size: 1em;
-        text-decoration: none;
+    font-size: 1em;
+    text-decoration: none;
 	}
 
     #header-caption i {
-        font-size: 0.9em;
+      font-size: 0.9em;
     }
 
     #header-caption span {
-        color: #d2d0d2;
-        font-size: 0.9em;
+      color: #d2d0d2;
+      font-size: 0.9em;
     }
 
-/* 
+/*
  * Skills
  */
 
@@ -90,19 +97,19 @@
 	text-align: center;
 }
 
-    .bigicon span {
-        margin-top: 0.1em;
-        color: #49bf9d;
-    }
+  .bigicon span {
+    margin-top: 0.1em;
+    color: #49bf9d;
+  }
 
 .smallicon {
-    color: #49bf9d;
-    margin-right: 1em;
+  color: #49bf9d;
+  margin-right: 1em;
 }
 
 .small-skills-icon {
-    font-size: 0.9em;
-    margin-right: 0.4em;
+  font-size: 0.9em;
+  margin-right: 0.4em;
 }
 
 /*
@@ -110,11 +117,11 @@
  */
 
 .work-desc {
-    margin-bottom: 0.8em;
+  margin-bottom: 0.8em;
 }
 
 .logo:before {
-    opacity: 0;
+  opacity: 0;
 }
 
 /*
@@ -122,8 +129,26 @@
  */
 
 
-/* Popups */
+/* Hackgyver poptrox */
+
+.img-align-right{
+  display: inline;
+  float: right;
+  height: 200px;
+  width: 200px;
+  margin-left: 30px;
+}
+
+#hackgyver-poptrox-body {
+  margin: 2em;
+}
+
+  #hackgyver-poptrox-body p {
+    text-align: left;
+  }
+
+/* Skills poptrox */
 
 .table-skills td {
-    width: 50%;
+  width: 45%;
 }
