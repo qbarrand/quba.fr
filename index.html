@@ -255,7 +255,7 @@
         <div class="row">
           <article id="china-poptrox" class="6u 12u$(3) work-item">
             <a href="images/poptrox/china/china_forbidden_city.jpg" class="image fit thumb">
-              <img src="images/poptrox/china/china_forbidden_city.jpg" title="Outdoor barbecue in Shenzhen" alt="" />
+              <img src="images/poptrox/china/china_forbidden_city_small.jpg" title="Outdoor barbecue in Shenzhen" alt="" />
             </a>
 
             <!-- These images will only display in the poptrox. -->
@@ -290,12 +290,13 @@
 
           <article id="hackgyver-poptrox" class="6u 12u$(3) work-item">
             <a href="custom/poptrox/hackgyver.html" class="image fit thumb" data-poptrox="ajax">
-              <img src="images/hackgyver.png" alt="" />
+              <img src="images/hackgyver.jpg" alt="" />
             </a>
             <h3>HackGyver</h3>
             <p>
               I co-founded HackGyver, Belfort's hackerspace, in March 2012.
-              The members particularly focus on computer security, reverse engineering and electronics.
+              <br />
+              Its members particularly focus on computer security, reverse engineering and electronics.
             </p>
           </article>
         </div>
@@ -416,16 +417,19 @@
     <script>
     function loadBackground() {
       $.ajax({
-        url: './getbackground.php'
+        url: 'images/backgrounds.json'
       })
       .done(function(data) {
-        $('#header').css('background-image', 'url(css/images/overlay.png), url(images/bg/' + data.filename + ')');
+        // Pick a random image
+        var image = data[Math.floor(Math.random() * data.length)];
 
-        $('#header-caption-location').html(data.location);
-        $('#header-caption-location').attr('href', 'images/fulls/' + data.filename);
-        $('#header-caption-date').html(data.date);
+        // Set it as the background
+        $('#header').css('background-image', 'url(css/images/overlay.png), url(images/bg/' + image.filename + ')');
+        $('#header-caption-location').html(image.location);
+        $('#header-caption-location').attr('href', 'images/fulls/' + image.filename);
+        $('#header-caption-date').html(image.date);
 
-        var poptrox_caption = data.location + ' - ' + data.date + ' - <i class="fa fa-cc"></i> BY';
+        var poptrox_caption = image.location + ' - ' + image.date + ' - <i class="fa fa-cc"></i> BY';
 
         $('#header-caption').poptrox({
           caption: function($a) {
