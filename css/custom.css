@@ -100,6 +100,7 @@
   .bigicon span {
     margin-top: 0.1em;
     color: #49bf9d;
+    cursor: default;
   }
 
 .smallicon {
@@ -125,19 +126,25 @@
 }
 
 /*
- * Education
+ * Contact
  */
 
+#contact .icon {
+  cursor: default;
+}
 
 /* Hackgyver poptrox */
 
-.img-align-right{
-  display: inline;
-  float: right;
-  height: 200px;
-  width: 200px;
-  margin-left: 30px;
+.img-ajax-poptrox {
+  width: 10em;
+  /*width: 200px;*/
 }
+
+  .img-ajax-poptrox-right {
+    display: inline;
+    float: right;
+    margin-left: 30px;
+  }
 
 #hackgyver-poptrox-body {
   margin: 2em;
@@ -147,8 +154,6 @@
     text-align: left;
   }
 
-/* Skills poptrox */
-
-.table-skills td {
-  width: 45%;
+.player-wrapper {
+  float: inherit;
 }
