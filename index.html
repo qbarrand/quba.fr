@@ -585,12 +585,10 @@
             <h3 class="item-title">IUT Belfort-Montbéliard</h3>
             <h4 class="item-subtitle">2011 - 2013</h4>
             <p class="work-desc">
-              I obtained a DUT Informatique, which is the French equivalent to a BSc in Computer Science.
-              <!-- TODO -->
-              Accumsan orci faucibus id eu lorem semper.
-              Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis
-              tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at
-              amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.
+              I obtained a DUT Informatique in 2013, which is the French equivalent to a BSc in Computer Science.
+              My main academic project consisted in the design and development of a web services platform for <a href="http://www.lusineabelfort.fr/" target="_blank">l'Usine à Belfort</a>, a local coworking space.
+              <br/>
+              During this cursus, I also co-founded <a href="#hobbies">HackGyver</a>, Belfort's hackerspace.
             </p>
           </div>
         </div>
@@ -791,62 +789,6 @@
     <script src="js/util.js"></script>
     <!--[if lte IE 8]><script src="js/ie/respond.min.js"></script><![endif]-->
     <script src="js/main.js"></script>
-
-    <!-- Form -->
-    <script>
-      function sendForm() {
-        $.ajax({
-          url: 'mail.php',
-          data: {
-            name: $('#contact-name').val(),
-            email: $('#contact-email').val(),
-            body: $('#contact-body').val()
-          }
-        })
-          .done(function(response) {
-            data = JSON.parse(response)
-            if(data.status == true) {
-              $('#contact-actions').html("<h2>Thanks !</h2><span>We'll be in touch soon.</span>")
-            } else {
-              $('#contact-actions').html(
-"<h2>Something went wrong.</h2> \
-<p>Please use <a href=\"mailto:quentin@quba.fr?\
-subject=Fallback mailing method - quba.fr&\
-body=" + $('#contact-body').val() + "\"\
-target=\"_blank\">this link</a>.</p>");
-            }
-
-            $('#contact-actions').css('text-align', 'center');
-          });
-      }
-
-      $('input, textarea').each(function(elem) {
-        $(this).tooltipster({
-          trigger: 'custom',
-          onlyOne: false
-        })
-      })
-
-      var validator = $('#contact-form').validate({
-        submitHandler: sendForm,
-        errorPlacement: function (error, element) {
-            $(element).tooltipster('update', $(error).text());
-            $(element).tooltipster('show');
-        },
-        success: function (label, element) {
-            $(element).tooltipster('hide');
-        }
-      });
-
-      $('#form-send').click(function() {
-          $('#contact-form').submit()
-      });
-
-      $('#form-clear').click(function() {
-        $('input, textarea').tooltipster('hide')
-        $('#contact-form')[0].reset()
-      });
-    </script>
 
     <!-- Piwik -->
     <script type="text/javascript">

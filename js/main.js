@@ -86,6 +86,35 @@
 				}
 			});
 		}
+
+		// -------------------------------------------------------------------------
+		// Header
+		// -------------------------------------------------------------------------
+		skel.on('change', function setHeaderPosition() {
+			var headerPos = 'fixed';
+
+			if(skel.breakpoint('xsmall').active
+			|| skel.breakpoint('small').active
+			|| skel.breakpoint('medium').active) {
+				headerPos = 'absolute';
+			}
+
+			$('#header-caption').css('position', headerPos);
+
+			if(skel.vars.stateId) {
+				var m = skel.breakpoint('small').active ? 10 : 50;
+
+				$('#china-poptrox').poptrox({
+					preload: false,
+					usePopupCaption: true,
+					usePopupDefaultStyling: false,
+					usePopupEasyClose: false,
+					usePopupNav: true,
+					windowMargin: m
+				});
+			}
+		});
+
 		// -------------------------------------------------------------------------
 		// Background
 		// -------------------------------------------------------------------------
@@ -208,57 +237,76 @@
 		});
 	});
 
-	// When skel is ready
-	skel.on('ready', function() {
-		// -------------------------------------------------------------------------
-		// Header
-		// -------------------------------------------------------------------------
-		skel.on('change', function setHeaderPosition() {
-			var headerPos = 'fixed';
-
-			if(skel.breakpoint('xsmall').active
-			|| skel.breakpoint('small').active
-			|| skel.breakpoint('medium').active) {
-				headerPos = 'absolute';
+	// -------------------------------------------------------------------------
+	// Contact form
+	// -------------------------------------------------------------------------
+	// Ajax call to send the form's content
+	function sendForm() {
+		$.ajax({
+			url: 'mail.php',
+			data: {
+				name: $('#contact-name').val(),
+				email: $('#contact-email').val(),
+				body: $('#contact-body').val()
 			}
+		})
+		.done(function(response) {
+			data = JSON.parse(response)
+			if(data.status == true) {
+				$('#contact-actions')
+					.append('<h2>Thanks !</h2>')
+					.append('<p>We\'ll be in touch soon.</p>');
+			} else {
+				var this_link = '<a href="mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr';
+				this_link += '&body=' + $('#contact-body').val() + '" target="_blank">this link</a>';
 
-			$('#header-caption').css('position', headerPos);
+				$('#contact-actions')
+					.append('<h2>Something went wrong.</h2>')
+					.append('<p>Please use ' + this_link + '.</p>');
+				}
 
-			console.log('stateId: ' + skel.vars.stateId)
-
-			if(skel.vars.stateId) {
-				var m = skel.breakpoint('small').active ? 10 : 50;
-
-				$('#china-poptrox').poptrox({
-					preload: false,
-					usePopupCaption: true,
-					usePopupDefaultStyling: false,
-					usePopupEasyClose: false,
-					usePopupNav: true,
-					windowMargin: m
-				});
-			}
+			$('#contact-actions').css('text-align', 'center');
 		});
+	}
 
-		// -------------------------------------------------------------------------
-		// China poptrox
-		// -------------------------------------------------------------------------
-		// $('#china-poptrox').poptrox({
-		// 	preload: false,
-		// 	usePopupCaption: true,
-		// 	usePopupDefaultStyling: false,
-		// 	usePopupEasyClose: false,
-		// 	usePopupNav: true,
-		// 	windowMargin: skel.breakpoint('small').active ? 2 : 50
-		// });
+	// Tooltipster initialization
+	$('input, textarea').each(function(elem) {
+		$(this).tooltipster({
+			trigger: 'custom',
+			onlyOne: false
+		});
+	});
 
-		console.log(skel.vars.stateId)
+	// Validator initialization
+	var validator = $('#contact-form').validate({
+		submitHandler: sendForm,
+		errorPlacement: function (error, element) {
+				$(element).tooltipster('update', $(error).text());
+				$(element).tooltipster('show');
+		},
+		success: function (label, element) {
+				$(element).tooltipster('hide');
+		}
+	});
 
-		// -------------------------------------------------------------------------
-		// Privacy poptrox
-		// -------------------------------------------------------------------------
-		$('#privacy-poptrox').poptrox();
-	})
+	$('#form-send').click(function() {
+			$('#contact-form').submit();
+	});
+
+	$('#form-clear').click(function() {
+		$('input, textarea').tooltipster('hide');
+		$('#contact-form')[0].reset();
+	});
+
+	// -------------------------------------------------------------------------
+	// Privacy poptrox
+	// -------------------------------------------------------------------------
+	$('#privacy-poptrox').poptrox();
+
+
+	// -------------------------------------------------------------------------
+	// Misc
+	// -------------------------------------------------------------------------
 
 	// Smooth scrolling for links
 	function smooth_scroll(id, speed, callback) {
