@@ -122,7 +122,16 @@ h1.section-title {
 
 .skill-slider-triggerer {
   margin-bottom: 3em;
+  margin-right: 0.8em;
 }
+
+.prog-skills-link {
+  margin-left: 0.3em;
+}
+
+  .prog-skills-link span {
+    font-size: 1.1em;
+  }
 
 .skill-desc {
   margin-bottom: 1em;
