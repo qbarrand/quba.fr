@@ -26,6 +26,10 @@
     text-align: center;
   }
 
+.center {
+  text-align: center;
+}
+
 .item-title {
   display: inline;
   /*font-weight: bold*/
@@ -56,8 +60,8 @@
   margin-bottom: 1em;
 }
 
-.section-title h1 {
-  display: inline;
+h1.section-title {
+  margin: 0 0 0 0;
 }
 
 /*
@@ -92,7 +96,6 @@
 /*
  * Skills
  */
-
 .bigicon {
 	text-align: center;
 }
@@ -111,6 +114,23 @@
 .small-skills-icon {
   font-size: 0.9em;
   margin-right: 0.4em;
+}
+
+.table-skills {
+  display: none;
+}
+
+.skill-slider-triggerer {
+  margin-bottom: 3em;
+}
+
+.skill-desc {
+  margin-bottom: 1em;
+}
+
+#skills table tbody tr td:nth-child(2) {
+  text-align: right;
+  white-space: nowrap;
 }
 
 /*
@@ -135,25 +155,8 @@
 
 /* Hackgyver poptrox */
 
-.img-ajax-poptrox {
-  width: 10em;
-  /*width: 200px;*/
-}
-
-  .img-ajax-poptrox-right {
-    display: inline;
-    float: right;
-    margin-left: 30px;
-  }
-
-#hackgyver-poptrox-body {
-  margin: 2em;
-}
-
-  #hackgyver-poptrox-body p {
-    text-align: left;
-  }
-
-.player-wrapper {
-  float: inherit;
+.image.fit.player-wrapper {
+  /*float: inherit;*/
+  /*width: 100%;*/
+  /*height: 26em;*/
 }

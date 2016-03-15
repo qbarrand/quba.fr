@@ -8,6 +8,10 @@
   <head>
     <title>Quentin Barrand | French IT student</title>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
     <meta name="description" content="I am a French student learning computing at ENSIIE Paris with an apprenticeship at SNCF. I love virtualization, travels and raspberries." />
     <meta name="keywords" content="French IT computer science student cloud openstack docker coreos proxmox cern sncf iris320" />
 
@@ -33,9 +37,15 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="http://quba.fr/" />
     <meta property="og:image" content="http://quba.fr/images/quentinbarrand.jpg" />
+
+    <link rel="stylesheet" href="css/tooltipster.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+
+    <!-- <link rel="stylesheet" href="css/bundle.min.css" /> -->
   </head>
 
-  <body id="top" onload="loadBackground()">
+  <body id="top">
 
     <!-- Header -->
     <div id="header-caption">
@@ -61,22 +71,23 @@
       <!-- One -->
       <section id="one">
         <header class="major">
-          <h2>I am keen on designing and optimizing large-scale web services using open-source stacks.</h2>
+          <h2>I am keen on building large-scale web services using open-source stacks.</h2>
         </header>
         <p>
-          I am now completing my studies at <a href="#education">ENSIIE Paris</a> and <a href="#education">TELECOM SudParis</a>, two IT engineering schools.
+          I am now completing my engineering studies at <a href="#education">ENSIIE Paris</a> and <a href="#education">TELECOM SudParis</a>.
           <br />
-          I will graduate in September 2016.
+          I will graduate in <strong>September 2016</strong>.
           <br/>
-          During this cursus, from 2013 to 2016, I held a Junior Systems &amp; Networks Engineer position at <a href="#work">SNCF Réseau</a>, the french national railway company, as part of my apprenticeship.
-          I was especially responsible of the overhaul of the embedded information system of IRIS 320, a special high speed train dedicated to railway measurement.
+          During this cursus, from 2013 to 2016, I held a <strong>Junior Systems &amp; Networks Engineer</strong> position at <a href="#work">SNCF Réseau</a>, the french national railway company, as part of my apprenticeship.
+          I especially worked on the overhaul of the embedded information system of <strong>IRIS 320</strong>, a special high speed train dedicated to railway measurement.
           <br />
-          I am also closely following the OpenStack project, on which I had my first experience during my Summer Student internship at <a href="#work">CERN</a> in 2013.
+          I am also closely following the <strong>OpenStack</strong> project, on which I had my first experience during my <strong>Summer Student</strong> internship at <a href="#work">CERN</a> in 2013.
           Since then, I have been studying the Nova scheduler and the implementation of Software-Defined Networking in OpenStack; my last semester of studies particularly focused on telecommunications, with a full course on <abbr title="Software-Defined Networking">SDN</abbr> and <abbr title="Network Functions Virtualization">NFV</abbr>.
         </p>
         <ul class="actions">
           <li><a href="http://cv.quba.fr/" target="_blank" class="button icon fa-download">Get my CV</a></li>
-          <li><a href="#skills" class="button special">See what I do</a></li>
+          <li><a href="http://git.quba.fr/" target="_blank" class="button icon fa-code-fork">Fork my code</a></li>
+          <li><a href="#skills" class="button special icon fa-arrow-circle-o-down">See what I do</a></li>
         </ul>
       </section>
 
@@ -85,71 +96,414 @@
         <h1>Skills</h1>
 
         <div class="row">
-          <div class="3u 12u$(2) bigicon">
+          <!-- Sysadmin -->
+          <div class="3u 12u$(small) bigicon">
             <span class="not-small fa fa-terminal on fa-square fa-5x"></span>
           </div>
-          <div class="9u$ 12u$(2)">
+          <div class="9u$ 12u$(small)">
             <h3>
               <span class="only-small smallicon fa fa-terminal on fa-square fa-lg"></span>
               System administration
             </h3>
-            <p>
-              I manage several dedicated servers that run PHP / Python / Ruby on Rails applications, VPN gateways, Gitolite repos, distributed filesystems...
+            <p class="skill-desc">
+              My primary operating system is <strong>Arch Linux</strong>.
+              <br/>
+              I manage several dedicated servers that run <strong>PHP</strong> / <strong>Python</strong> / <strong>Ruby on Rails</strong> applications, <strong>VPN</strong> gateways and <strong>distributed filesystems</strong>, among others.
             </p>
+
+            <a class="button small icon fa-plus-circle skill-slider-triggerer">See a list</a>
+
+            <table class="table table-skills">
+              <tr>
+                <td>ArchLinux</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-half-o"></i></td>
+              </tr>
+              <tr>
+                <td>Debian / Ubuntu</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>Entreprise Linuces</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>Windows 7 and later</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+            </table>
           </div>
 
-          <div class="3u 12u$(2) bigicon">
+          <!-- Virt / cloud -->
+          <div class="3u 12u$(small) bigicon">
             <span class="not-small fa fa-cloud fa-5x"></span>
           </div>
-          <div class="9u$ 12u$(2)">
+          <div class="9u$ 12u$(small)">
             <h3>
               <span class="only-small smallicon fa fa-cloud fa-lg"></span>
               Virtualization and cloud
             </h3>
-            <p>
-              I use <a href="http://pve.proxmox.com/" target="_blank">Proxmox VE</a> and closely follow emerging technologies like <a href="http://www.openstack.org/" target="_blank">OpenStack</a>, <a href="http://docker.io" target="_blank">Docker</a> and <a href="http://coreos.com/" target="_blank">CoreOS</a>.
+            <p class="skill-desc">
+              I use <strong>Proxmox VE</strong> and closely follow infrastructure technologies such as <strong>OpenStack</strong>, <strong>Docker</strong> and <strong>CoreOS</strong>.
             </p>
+
+            <a class="button small icon fa-plus-circle skill-slider-triggerer">See a list</a>
+
+            <table class="table table-skills">
+              <tr>
+                <td>Proxmox VE (KVM + QEMU)</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>
+                  OpenStack (Nova, Swift, Neutron)
+                </td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>Docker</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>VMware ESXi</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+            </table>
           </div>
 
-          <div class="3u 12u$(2) bigicon">
-            <span class="not-small fa fa-linux fa-5x"></span>
+          <!-- Programming -->
+          <div class="3u 12u$(small) bigicon">
+            <span class="not-small fa fa-code fa-5x"></span>
           </div>
-          <div class="9u$ 12u$(2)">
+          <div class="9u$ 12u$(small)">
             <h3>
-              <span class="only-small smallicon fa fa-linux fa-lg"></span>
-              Open-Source Software
+              <span class="only-small smallicon fa fa-code fa-lg"></span>
+              Programming languages
             </h3>
-            <p>
-              I am a Linux power user committed to using and producing open-source software.
-              See my <a href="http://git.quba.fr" target="_blank">public Git repos</a> or <a href="https://github.com/QuentinBarrand" target="_blank">fork me on Github</a> !
+            <p class="skill-desc">
+              <strong>Python 3</strong> and <strong>Node.js</strong> are my prefered platforms for developping cross-platform applications.
+              <br/>
+              On Windows, I have a good experience developping <strong>Windows Forms</strong> and <strong>ASP.NET</strong> / <strong>Nancy</strong> web apps.
+              <br/>
+              I used <strong>C</strong> on numerous occasions, mostly when performance was the key.
             </p>
+
+            <a href="https://git.quba.fr/" class="button small icon fa-code-fork" target="_blank">See my code</a>
+            <a href="https://github.com/QuentinBarrand/" class="button small icon fa-github" target="_blank">GitHub profile</a>
+            <!-- <br/> -->
+            <a class="button small icon fa-plus-circle skill-slider-triggerer">See a list</a>
+
+            <table class="table table-skills">
+              <tr>
+                <td>Python</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>JavaScript</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>C# / .NET</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>C</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>Java</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star-o"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>C++</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+            </table>
           </div>
 
-          <div class="3u 12u$(2) bigicon">
+          <!-- Web -->
+          <div class="3u 12u$(small) bigicon">
+              <span class="not-small fa fa-bolt fa-5x"></span>
+          </div>
+          <div class="9u$ 12u$(small)">
+            <h3>
+              <span class="only-small smallicon fa fa-bolt fa-lg"></span>
+              Web
+            </h3>
+            <p class="skill-desc">
+              I am keen on building <strong>high-performance</strong> web services.
+              Micro-frameworks in <strong>Python 3</strong> and <strong>Node.js</strong> are my prefered environments, but I have an experience in PHP and C# / .NET too.
+              I am familiar with <strong>jQuery</strong>, <strong>AngularJS</strong> and <strong>CSS</strong> on the client-side.
+            </p>
+
+            <a class="button small icon fa-plus-circle skill-slider-triggerer">See a list</a>
+
+            <div class="table-skills">
+              <h4>Runtimes</h4>
+              <table class="table">
+                  <tr>
+                  <td>Express.js / Koa.js</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>Flask (Python)</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>PHP micro frameworks</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>Django (Python)</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+              </table>
+
+              <h4>Servers</h4>
+              <table class="table">
+                <tr>
+                  <td>NGINX</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>Apache 2</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>uwsgi</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star-half-o"></i><i class="fa fa-star-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+              </table>
+
+              <h4>Client-side</h4>
+              <table class="table">
+                <tr>
+                  <td>AngularJS</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>jQuery</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>HTML</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-half-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+                <tr>
+                  <td>CSS</td>
+                  <td>
+                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                  "fa fa-star"></i><i class="fa fa-star-o"></i><i class=
+                  "fa fa-star-o"></i></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <!-- Databases -->
+          <div class="3u 12u$(small) bigicon">
+            <span class="not-small fa fa-database fa-5x"></span>
+          </div>
+          <div class="9u$ 12u$(small)">
+            <h3>
+              <span class="only-small smallicon fa fa-database fa-lg"></span>
+              Databases
+            </h3>
+            <p class="skill-desc">
+              I learnt SQL with <strong>MySQL</strong> and <strong>Postgres</strong> and am now proficient at <strong>MongoDB</strong>.
+            </p>
+
+            <a class="button small icon fa-plus-circle skill-slider-triggerer">See a list</a>
+
+            <table class="table table-skills">
+              <tr>
+                <td>PostgreSQL</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>MySQL, MariaDB</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>MongoDB</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+              <tr>
+                <td>CouchDB</td>
+                <td>
+                  <i class="fa fa-star"></i><i class="fa fa-star"></i><i class=
+                "fa fa-star-o"></i><i class="fa fa-star-o"></i><i class=
+                "fa fa-star-o"></i></td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Networks -->
+          <div class="3u 12u$(small) bigicon">
               <span class="not-small fa fa-exchange fa-5x"></span>
           </div>
-          <div class="9u$ 12u$(2)">
+          <div class="9u$ 12u$(small)">
             <h3>
               <span class="only-small smallicon fa fa-exchange fa-lg"></span>
               Networks
             </h3>
-            <p>TODO</p>
+            <p class="skill-desc">
+              <!-- TODO -->
+              I have a good knowledg
+              My last semester of studies focused on <strong>cellular networks</strong> and SDN protocols, mostly <strong>OpenFlow</strong>.
+            </p>
+
+            <a class="button small icon fa-plus-circle skill-slider-triggerer">See a list</a>
+
+            <table class="table table-skills">
+              <tr>
+                <td>IP / TCP / UDP</td>
+                <td>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                </td>
+              </tr>
+              <tr>
+                <td>REST architecture w/ HTTP</td>
+                <td>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                </td>
+              </tr>
+              <tr>
+                <td>GPRS / UMTS / LTE</td>
+                <td>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  VLANs, LAG (LACP), STP (HP switches)
+                </td>
+                <td>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  OpenFlow
+                </td>
+                <td>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star"></i>
+                  <i class="fa fa-star-half-o"></i>
+                  <i class="fa fa-star-o"></i>
+                  <i class="fa fa-star-o"></i>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
 
-        <ul id="skills-poptrox" class="actions">
+        <ul class="actions">
           <li>
-            <a href="/custom/poptrox/skills.html" class="button icon fa-align-justify" data-poptrox="ajax">See a more comprehensive list</a>
-          </li>
-          <li>
-            <a href="#work" class="button special" data-poptrox="ignore">Continue to Work</a>
+            <a href="#work" class="button special icon fa-arrow-circle-o-down">Continue to Work</a>
           </li>
         </ul>
       </section>
 
       <!-- Work -->
-      <section id="work" class="section-title">
-        <h1>Work</h1>
+      <section id="work">
+        <h1 class="section-title">Work</h1>
 
         <!-- Intro -->
         <p>
@@ -160,10 +514,10 @@
 
         <!-- SNCF -->
         <div class="row">
-          <div class="3u 12u$(3)">
+          <div class="3u 12u$(xsmall)">
             <span class="image fit logo"><img src="images/sncf_transparent_bg.png" alt="" /></span>
           </div>
-          <div class="item-desc-container 8u$ -1u 12u$(3)">
+          <div class="item-desc-container 8u$ -1u(medium) 12u$(xsmall)">
             <h3 class="item-title">SNCF Réseau</h3>
             <h4 class="item-subtitle">since September 2013</h4>
             <p class="work-desc">
@@ -176,10 +530,10 @@
 
         <!-- CERN -->
         <div class="row">
-          <div class="3u 12u$(3)">
+          <div class="3u 12u$(xsmall)">
             <span class="image fit logo"><img src="images/cern_transparent_bg.png" alt="" /></span>
           </div>
-          <div class="item-desc-container 8u$ -1u 12u$(3)">
+          <div class="item-desc-container 8u$ -1u(medium) 12u$(xsmall)">
             <h3 class="item-title">CERN</h3>
             <h4 class="item-subtitle">Summer 2013</h4>
             <p class="work-desc">
@@ -191,13 +545,13 @@
         </div>
 
         <ul class="actions">
-          <li><a href="#education" class="button special">See where I studied</a></li>
+          <li><a href="#education" class="button special icon fa-arrow-circle-o-down">See where I studied</a></li>
         </ul>
       </section>
 
       <!-- Education -->
-      <section id="education" class="section-title">
-        <h1>Education</h1>
+      <section id="education">
+        <h1 class="section-title">Education</h1>
 
         <!-- Intro -->
         <p>
@@ -208,10 +562,10 @@
 
         <!-- ENSIIE / TSP -->
         <div class="row">
-          <div class="3u 12u$(3)">
+          <div class="3u 12u$(xsmall)">
             <span class="image fit logo"><img src="images/ensiie_tsp_transparent_bg.png" alt="" /></span>
           </div>
-          <div class="item-desc-container 7u$ -1u 12u$(3)">
+          <div class="item-desc-container 8u$ -1u(medium) 12u$(xsmall)">
             <h3 class="item-title">ENSIIE Paris / TELECOM SudParis</h3>
             <h4 class="item-subtitle">since September 2013</h4>
             <p class="work-desc">
@@ -224,28 +578,26 @@
 
         <!-- IUT-BM -->
         <div class="row">
-          <div class="3u 12u$(3)">
+          <div class="3u 12u$(xsmall)">
             <span class="image fit logo"><img src="images/iutbm_transparent_bg.png" alt="" /></span>
           </div>
-          <div class="item-desc-container 7u$ -1u 12u$(3)">
+          <div class="item-desc-container 8u$ -1u(medium) 12u$(xsmall)">
             <h3 class="item-title">IUT Belfort-Montbéliard</h3>
             <h4 class="item-subtitle">2011 - 2013</h4>
             <p class="work-desc">
               I obtained a DUT Informatique, which is the French equivalent to a BSc in Computer Science.
-              <p>
-                <!-- TODO -->
-                Accumsan orci faucibus id eu lorem semper.
-                Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis
-                tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at
-                amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.</p>
+              <!-- TODO -->
+              Accumsan orci faucibus id eu lorem semper.
+              Eu ac iaculis ac nunc nisi lorem vulputate lorem neque cubilia ac in adipiscing in curae lobortis
+              tortor primis integer massa adipiscing id nisi accumsan pellentesque commodo blandit enim arcu non at
+              amet id arcu magna. Accumsan orci faucibus id eu lorem semper nunc nisi lorem vulputate lorem neque cubilia.
             </p>
           </div>
         </div>
 
         <ul class="actions">
-          <li class="not-small"><p>But everything isn't about work and training !</p></li>
-          <li class="only-small"><p>But everything isn't about work and training !</p></li>
-          <li><a href="#hobbies" class="button special">Learn more about me</a></li>
+          <li><p>But everything isn't about work and training !</p></li>
+          <li><a href="#hobbies" class="button special icon fa-arrow-circle-o-down">Learn more about me</a></li>
         </ul>
       </section>
 
@@ -253,9 +605,9 @@
       <section id="hobbies">
         <h1>Side projects, hobbies and stuff I am proud of</h1>
         <div class="row">
-          <article id="china-poptrox" class="6u 12u$(3) work-item">
+          <article id="china-poptrox" class="6u 12u$(xsmall) work-item">
             <a href="images/poptrox/china/china_forbidden_city.jpg" class="image fit thumb">
-              <img src="images/poptrox/china/china_forbidden_city_small.jpg" title="Outdoor barbecue in Shenzhen" alt="" />
+              <img src="images/poptrox/china/china_forbidden_city_small.jpg" title="The Forbidden City in Beijing" alt="" />
             </a>
 
             <!-- These images will only display in the poptrox. -->
@@ -288,8 +640,8 @@
             </p>
           </article>
 
-          <article id="hackgyver-poptrox" class="6u 12u$(3) work-item">
-            <a href="custom/poptrox/hackgyver.html" class="image fit thumb" data-poptrox="ajax">
+          <article class="6u 12u$(xsmall) work-item">
+            <a id="hackgyver-slider-button" class="image fit thumb" data-slider="hackgyver-slider" data-slider-scroll="true">
               <img src="images/hackgyver.jpg" alt="" />
             </a>
             <h3>HackGyver</h3>
@@ -300,25 +652,55 @@
             </p>
           </article>
         </div>
+
+        <!-- HackGyver Slider -->
+        <div id="hackgyver-slider" class="slider nodisplay">
+          <h2>About HackGyver</h2>
+          <div class="row">
+            <div class="9u 12u$(xsmall)">
+              <p>
+                In May 2012, <a target="_blank" href="https://twitter.com/maijin212">@maijin212</a> and I funded <a target="_blank" href="http://hackgyver.org/">HackGyver</a>, Belfort's hackerspace.
+                <br>
+                From May 2012 to March 2013, we organized several public events and weekly meetings at <a target="_blank" href="http://lusineabelfort.fr">L'Usine à Belfort</a>, promoted the association, and deployed a website and a wiki.
+                <br>
+                I was personnally in charge of the management of the association's treasury and websites. Below is an interview I made with Besançon TV about HackGyver (in French) :
+              </p>
+            </div>
+            <div class="3u 12u$(xsmall)">
+              <img class="image fit" src="images/hg_transparent_bg.png" alt="HackGyver logo">
+            </div>
+          </div>
+
+          <div class="row">
+            <iframe class="image fit player-wrapper" src="https://www.youtube.com/embed/sH7gx7I1Juw" frameborder="0" allowfullscreen></iframe>
+            <p class="center">
+              You can visit them every Wednesday night at L'Usine, or say hello on <a target="_blank" href="irc://irc.freenode.net/hackgyver">#hackgyver @ Freenode</a>.
+            </p>
+          </div>
+
+          <!-- <a class="button">Collapse</a> -->
+        </div>
+
         <ul class="actions">
-          <li class="not-small"><p>Interested by my profile ?</p></li>
-          <li class="only-small"><p>Interested by my profile ?</p></li>
-          <li><a href="#contact" class="button special">Let's get in touch !</a></li>
+          <li><p>Interested by my profile ?</p></li>
+          <li><a href="#contact" class="button special icon fa-arrow-circle-o-down">Let's get in touch !</a></li>
         </ul>
       </section>
 
       <!-- Contact -->
       <section id="contact">
-        <h2>Get In Touch</h2>
-        <p>Please use the following form to send me an email.</p>
+        <h1 class="section-title">Get In Touch</h1>
+        <p>
+          <strong>Please use the following form to send me an email.</strong>
+        </p>
         <div class="row">
-          <div class="8u 12u$(2)">
+          <div class="8u 12u$(small)">
             <form id="contact-form" method="post" action="#">
               <div class="row uniform 50%">
-                <div class="6u 12u$(3)">
+                <div class="6u 12u$(xsmall)">
                   <input class="tooltip" type="text" name="name" id="contact-name" placeholder="Name" required />
                 </div>
-                <div class="6u$ 12u$(3)">
+                <div class="6u$ 12u$(xsmall)">
                   <input class="tooltip" type="email" name="email" id="contact-email" placeholder="Email" required />
                 </div>
                 <div class="12u$">
@@ -333,7 +715,7 @@
               </ul>
             </span>
           </div>
-          <div class="4u$ 12u$(2)">
+          <div class="4u$ 12u$(small)">
             <ul class="labeled-icons">
               <li>
                 <h3 class="icon fa-home"><span class="label">Address</span></h3>
@@ -393,56 +775,22 @@
     </footer>
 
     <!--[if lte IE 8]><script src="css/ie/html5shiv.js"></script><![endif]-->
+
+    <!-- Minified JS -->
+    <!-- <script src="js/bundle.min.js"></script> -->
+
+    <!-- jQuery -->
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.poptrox.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
     <script src="js/jquery.tooltipster.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+
+    <!-- html5up -->
     <script src="js/skel.min.js"></script>
-    <script src="js/init.js"></script>
-
-    <!-- Tooltipster CSS -->
-    <link rel="stylesheet" href="css/tooltipster.css" />
-
-    <!-- Noscript -->
-    <noscript>
-      <link rel="stylesheet" href="css/skel.css" />
-      <link rel="stylesheet" href="css/style.css" />
-      <link rel="stylesheet" href="css/style-xlarge.css" />
-    </noscript>
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="custom/custom.css" />
-
-    <!-- Background -->
-    <script>
-    function loadBackground() {
-      $.ajax({
-        url: 'images/backgrounds.json'
-      })
-      .done(function(data) {
-        // Pick a random image
-        var image = data[Math.floor(Math.random() * data.length)];
-
-        // Set it as the background
-        $('#header').css('background-image', 'url(css/images/overlay.png), url(images/bg/' + image.filename + ')');
-        $('#header-caption-location').html(image.location);
-        $('#header-caption-location').attr('href', 'images/fulls/' + image.filename);
-        $('#header-caption-date').html(image.date);
-
-        var poptrox_caption = image.location + ' - ' + image.date + ' - <i class="fa fa-cc"></i> BY';
-
-        $('#header-caption').poptrox({
-          caption: function($a) {
-            return '<strong>' + $a.text() + ' - ' + $a.next('span').text() + ' - <i class="fa fa-cc"></i> BY Quentin Barrand</strong>';
-          },
-          preload: true,
-          usePopupCaption: true,
-          usePopupDefaultStyling: false,
-          usePopupEasyClose: false,
-        });
-      });
-    }
-    </script>
+    <script src="js/skel-layout.min.js"></script>
+    <script src="js/util.js"></script>
+    <!--[if lte IE 8]><script src="js/ie/respond.min.js"></script><![endif]-->
+    <script src="js/main.js"></script>
 
     <!-- Form -->
     <script>
@@ -515,6 +863,5 @@ target=\"_blank\">this link</a>.</p>");
     </script>
     <noscript><p><img src="//venabili.su7.info/piwik/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
     <!-- End Piwik Code -->
-
   </body>
 </html>
