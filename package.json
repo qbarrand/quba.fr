@@ -1,0 +1,22 @@
+{
+  "name": "quba.fr",
+  "version": "1.0.0",
+  "description": "quba.fr public website.",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-cssmin": "^0.14.0",
+    "grunt-contrib-uglify": "^0.11.0",
+    "grunt-contrib-concat": "^0.5.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "gitolite@git.quba.fr:quba.fr/www.git"
+  },
+  "author": "Quentin Barrand <quentin@quba.fr>",
+  "license": "ISC"
+}
