@@ -7,15 +7,6 @@ module.exports = function(grunt) {
       //   shorthandCompacting: false,
       //   roundingPrecision: -1
       // },
-      // noscript: {
-      //   files: {
-      //     'css/noscript.min.css': [
-      //       'css/skel.css',
-      //       // 'css/style.css',
-      //       'css/style-xlarge.css'
-      //     ]
-      //   }
-      // },
       custom: {
         files: {
           'css/bundle.min.css': [
@@ -39,7 +30,7 @@ module.exports = function(grunt) {
 
             // skel and plugins
             'js/skel.min.js',
-            'js/skel.layout.min.js',
+            'js/skel-layout.min.js',
             'js/util.js',
             'js/main.js'
           ]
