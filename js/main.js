@@ -118,30 +118,51 @@
 		// -------------------------------------------------------------------------
 		// Background
 		// -------------------------------------------------------------------------
-		$.ajax({
-			url: 'images/backgrounds.json'
-		})
-		.done(function(data) {
-			// Pick a random image
-			var image = data[Math.floor(Math.random() * data.length)];
+		var backgrounds = [
+			{
+				"filename": "newyork_1.jpg",
+				"location": "New York, USA",
+				"date": "February 2014"
+			},
 
-			// Set it as the background
-			$('#header').css('background-image', 'url(css/images/overlay.png), url(images/bg/' + image.filename + ')');
-			$('#header-caption-location').html(image.location);
-			$('#header-caption-location').attr('href', 'images/fulls/' + image.filename);
-			$('#header-caption-date').html(image.date);
+			{
+				"filename": "hongkong_1.jpg",
+				"location": "Hong Kong, China",
+				"date": "August 2014"
+			},
 
-			var poptrox_caption = image.location + ' - ' + image.date + ' - <i class="fa fa-cc"></i> BY';
+			{
+				"filename": "beijing_1.jpg",
+				"location": "Beijing, China",
+				"date": "August 2014"
+			},
 
-			$('#header-caption').poptrox({
-				caption: function($a) {
-					return '<strong>' + $a.text() + ' - ' + $a.next('span').text() + ' - <i class="fa fa-cc"></i> BY Quentin Barrand</strong>';
-				},
-				preload: true,
-				usePopupCaption: true,
-				usePopupDefaultStyling: false,
-				usePopupEasyClose: false,
-			});
+			{
+				"filename": "geneva_1.jpg",
+				"location": "Geneva, Switzerland",
+				"date": "September 2014"
+			}
+		];
+
+		// Pick a random image
+		var image = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+		// Set it as the background
+		$('#header').css('background-image', 'url(css/images/overlay.png), url(images/bg/' + image.filename + ')');
+		$('#header-caption-location').html(image.location);
+		$('#header-caption-location').attr('href', 'images/fulls/' + image.filename);
+		$('#header-caption-date').html(image.date);
+
+		var poptrox_caption = image.location + ' - ' + image.date + ' - <i class="fa fa-cc"></i> BY';
+
+		$('#header-caption').poptrox({
+			caption: function($a) {
+				return '<strong>' + $a.text() + ' - ' + $a.next('span').text() + ' - <i class="fa fa-cc"></i> BY Quentin Barrand</strong>';
+			},
+			preload: true,
+			usePopupCaption: true,
+			usePopupDefaultStyling: false,
+			usePopupEasyClose: false,
 		});
 
 		// -------------------------------------------------------------------------
