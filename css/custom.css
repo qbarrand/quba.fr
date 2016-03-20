@@ -120,6 +120,9 @@ h1.section-title {
 /*
  * Header
  */
+#header {
+  background-image: none;
+}
 
 #header-caption {
 	z-index: 9;
