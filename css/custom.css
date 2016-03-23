@@ -218,7 +218,7 @@ h1.section-title {
   cursor: default;
 }
 
-  #contact a .button {
+  #contact a.button {
     cursor: pointer;
   }
 
