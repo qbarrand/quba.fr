@@ -265,6 +265,7 @@
 	function sendForm() {
 		$.ajax({
 			url: 'mail.php',
+			method: 'POST',
 			data: {
 				name: $('#contact-name').val(),
 				email: $('#contact-email').val(),
