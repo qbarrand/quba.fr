@@ -218,6 +218,10 @@ h1.section-title {
   cursor: default;
 }
 
+  #contact a .button {
+    cursor: pointer;
+  }
+
 #contact-link-wrapper {
   display: none;
 }
