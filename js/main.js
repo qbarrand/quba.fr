@@ -273,21 +273,26 @@
 			}
 		})
 		.done(function(response) {
-			data = JSON.parse(response)
+			data = JSON.parse(response);
+
+			var resultDiv = $('#contact-actions');
+			resultDiv.empty();
+
 			if(data.status == true) {
-				$('#contact-actions')
+				resultDiv
 					.append('<h2>Thanks !</h2>')
 					.append('<p>We\'ll be in touch soon.</p>');
 			} else {
 				var this_link = '<a href="mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr';
 				this_link += '&body=' + $('#contact-body').val() + '" target="_blank">this link</a>';
 
-				$('#contact-actions')
+				resultDiv
 					.append('<h2>Something went wrong.</h2>')
 					.append('<p>Please use ' + this_link + '.</p>');
 				}
 
-			$('#contact-actions').css('text-align', 'center');
+			resultDiv
+				.css('text-align', 'center');
 		});
 	}
 
