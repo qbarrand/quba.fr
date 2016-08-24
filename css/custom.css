@@ -80,6 +80,7 @@
   }
 
 .center {
+  float: inherit;
   text-align: center;
 }
 
@@ -96,7 +97,7 @@
 
 .logo {
   position: relative;
-  padding-top: 4.5em;
+  padding-top: 2.5em;
   max-width:11em;
   margin: 0 auto 1em !important;
 }
@@ -202,6 +203,10 @@ h1.section-title {
  * Work
  */
 
+.work-item-desc-container {
+  margin-bottom: 2em;
+}
+
 .work-desc {
   margin-bottom: 0.8em;
 }
@@ -226,10 +231,8 @@ h1.section-title {
   display: none;
 }
 
-/* Hackgyver poptrox */
+/* Hackgyver slider */
 
 .image.fit.player-wrapper {
-  /*float: inherit;*/
-  /*width: 100%;*/
-  /*height: 26em;*/
+  height: 26em;
 }
