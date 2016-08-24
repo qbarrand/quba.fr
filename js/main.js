@@ -261,7 +261,7 @@
 		$(this).replaceWith('\
 			<iframe \
 				class="image fit player-wrapper" \
-				src="https://www.youtube.com/embed/sH7gx7I1Juw" \
+				src="https://www.youtube.com/embed/sH7gx7I1Juw?autoplay=1" \
 				frameborder="0" \
 				allowfullscreen> \
 			</iframe>');
