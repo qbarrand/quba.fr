@@ -125,11 +125,11 @@
 				"date": "February 2014"
 			},
 
-			{
-				"filename": "hongkong_1.jpg",
-				"location": "Hong Kong, China",
-				"date": "August 2014"
-			},
+			// {
+			// 	"filename": "hongkong_1.jpg",
+			// 	"location": "Hong Kong, China",
+			// 	"date": "August 2014"
+			// },
 
 			{
 				"filename": "beijing_1.jpg",
@@ -159,7 +159,7 @@
 			caption: function($a) {
 				return '<strong>' + $a.text() + ' - ' + $a.next('span').text() + ' - <i class="fa fa-cc"></i> BY Quentin Barrand</strong>';
 			},
-			preload: true,
+			preload: false,
 			usePopupCaption: true,
 			usePopupDefaultStyling: false,
 			usePopupEasyClose: false,
@@ -203,7 +203,6 @@
 		$.fn.slider = function(scroll_down, scroll_up, cb_down, cb_up) {
 			var t = $(this);
 
-			// console.log('this id : ' + this.id);
 			var this_id = '#' + this.id;
 			var slider_id = '#' + t.attr('data-slider');
 
@@ -258,30 +257,41 @@
 		});
 	});
 
+	$('#show-interview').click(function() {
+		$(this).replaceWith('\
+			<iframe \
+				class="image fit player-wrapper" \
+				src="https://www.youtube.com/embed/sH7gx7I1Juw" \
+				frameborder="0" \
+				allowfullscreen> \
+			</iframe>');
+	});
+
 	// -------------------------------------------------------------------------
 	// Contact form
 	// -------------------------------------------------------------------------
 	// Ajax call to send the form's content
 	function sendForm() {
+
 		$.ajax({
-			url: 'mail.php',
-			method: 'POST',
-			data: {
-				name: $('#contact-name').val(),
-				email: $('#contact-email').val(),
-				body: $('#contact-body').val()
-			}
+		    url: 'https://formspree.io/quentin@quba.fr',
+		    method: 'POST',
+		    data: {
+					date: new Date().toString(),
+					email: $('#contact-email').val(),
+					message: $('#contact-body').val(),
+					name: $('#contact-name').val()
+				},
+		    dataType: 'json'
 		})
 		.done(function(response) {
-			data = JSON.parse(response);
-
 			var resultDiv = $('#contact-actions');
 			resultDiv.empty();
 
-			if(data.status == true) {
+			if(response.success) {
 				resultDiv
 					.append('<h2>Thanks !</h2>')
-					.append('<p>We\'ll be in touch soon.</p>');
+					.append("<p>We'll be in touch soon.</p>");
 			} else {
 				var this_link = '<a href="mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr';
 				this_link += '&body=' + $('#contact-body').val() + '" target="_blank">this link</a>';
@@ -337,20 +347,18 @@
 
 	// Smooth scrolling for links
 	function smooth_scroll(id, speed, callback) {
-		var	_bh = $('body, html');
-		var _nav = $('#nav');
-
-		var target = $(id);
+		var	bh = $('body, html');
 
 		var pos;
 
 		if(id == "#top") {
 			pos = 0;
 		} else {
-			pos = Math.max(target.offset().top - _nav.height() + 15, 0);
+			// pos = Math.max($(id).offset().top - $('#nav').height() + 30, 0);
+			pos = Math.max($(id).offset().top, 0);
 		}
 
-		_bh.animate({ scrollTop: pos }, speed ? speed : 'slow', 'swing', callback);
+		bh.animate({ scrollTop: pos }, speed ? speed : 'slow', 'swing', callback);
 	}
 
 	$('a').click(function(e) {
