@@ -1,3 +1,5 @@
+/* Home */
+
 .logo img {
     width: auto;
     height : auto;
@@ -5,6 +7,23 @@
     max-width: 100%;
     border-radius: 50%;
 }
+
+ul.icons {
+    margin-bottom: 0;
+}
+
+/* Common */
+
+.header-justify {
+    display: flex;
+    justify-content: space-between;
+}
+
+.header-justify p {
+    line-height: 2.3;
+}
+
+/* Work */
 
 p.followed-by-list {
     margin-bottom: 0px;
