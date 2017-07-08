@@ -424,11 +424,11 @@
                     //    "date": "August 2014"
                     //},
 
-                    //{
-                    //    "filename": "geneva_1.jpg",
-                    //    "location": "Geneva, Switzerland",
-                    //    "date": "September 2014"
-                    //},
+                    {
+                        "filename": "geneva_1.jpg",
+                        "location": "Geneva, Switzerland",
+                        "date": "June 2016"
+                    },
                     {
                         "filename": "newyork_2.jpg",
                         "location": "New York, USA",
