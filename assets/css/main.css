@@ -1082,7 +1082,7 @@
 			z-index: 2;
 		}
 
-		#bg:after {
+		/*#bg:after {
 			-moz-transform: scale(1.125);
 			-webkit-transform: scale(1.125);
 			-ms-transform: scale(1.125);
@@ -1096,7 +1096,7 @@
 			background-size: cover;
 			background-repeat: no-repeat;
 			z-index: 1;
-		}
+		}*/
 
 		body.is-article-visible #bg:after {
 			-moz-transform: scale(1.0825);

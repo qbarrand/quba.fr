@@ -404,6 +404,70 @@
                             $main._show(location.hash.substr(1), true);
                         });
 
+                // Add an image
+                var backgrounds = [
+                    //{
+                    //    "filename": "newyork_1.jpg",
+                    //    "location": "New York, USA",
+                    //    "date": "February 2014"
+                    //},
+
+                    // {
+                    //  "filename": "hongkong_1.jpg",
+                    //  "location": "Hong Kong, China",
+                    //  "date": "August 2014"
+                    // },
+
+                    //{
+                    //    "filename": "beijing_1.jpg",
+                    //    "location": "Beijing, China",
+                    //    "date": "August 2014"
+                    //},
+
+                    //{
+                    //    "filename": "geneva_1.jpg",
+                    //    "location": "Geneva, Switzerland",
+                    //    "date": "September 2014"
+                    //},
+                    {
+                        "filename": "newyork_2.jpg",
+                        "location": "New York, USA",
+                        "date": "August 2015"
+                    },
+                    {
+                        "filename": "thun_1.jpg",
+                        "location": "Thun, Switzerland",
+                        "date": "May 2016"
+                    },
+                    {
+                        "filename": "montreux_1.jpg",
+                        "location": "Montreux, Switzerland",
+                        "date": "October 2016"
+                    }
+                ];
+
+                // Pick a random image
+                var image = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+                // Show its properties on the home page
+                $('#bg').after().css({
+                    'background-image': 'url(images/bg/' + image.filename + ')',
+                    '-moz-transform': 'scale(1.125)',
+                    '-webkit-transform': 'scale(1.125)',
+                    '-ms-transform': 'scale(1.125)',
+                    'transform': 'scale(1.125)',
+                    '-moz-transition': '-moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out',
+                    '-webkit-transition': '-webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out',
+                    '-ms-transition': '-ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out',
+                    'transition': 'transform 0.325s ease-in-out, filter 0.325s ease-in-out',
+                    'background-position': 'center',
+                    'background-size': 'cover',
+                    'background-repeat': 'no-repeat',
+                    'z-index': '1'
+                });
+
+                $('#bg_location').text(image.location);
+                $('#bg_date').text(image.date);
     });
 
 })(jQuery);
