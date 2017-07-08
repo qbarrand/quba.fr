@@ -5,3 +5,14 @@
     max-width: 100%;
     border-radius: 50%;
 }
+
+p.followed-by-list {
+    margin-bottom: 0px;
+}
+
+.work-date {
+    display: block;
+    margin-bottom: 0.5em;
+    /* font-style: italic; */
+}
+
