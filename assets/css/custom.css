@@ -8,8 +8,21 @@
     border-radius: 50%;
 }
 
-ul.icons {
-    margin-bottom: 0;
+#header .content .inner {
+    padding: 2em;
+}
+
+#bubbles {
+    margin: 0 0 1rem 0;
+}
+
+#bubbles ul {
+    margin: 0 0 0 0;
+    padding-bottom: 1rem;
+}
+
+#bg_date {
+    margin-right: 0.3rem;
 }
 
 /* Common */
