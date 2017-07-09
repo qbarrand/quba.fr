@@ -70,9 +70,11 @@ p.followed-by-list {
 
 /* Privacy */
 
+#privacy-outer {
+    background-color: white;
+}
+
 iframe {
-    /* display:block;
-    border: 0; */
     height: auto;
     width: 100%;
 }
