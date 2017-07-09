@@ -406,24 +406,6 @@
 
                 // Add an image
                 var backgrounds = [
-                    //{
-                    //    "filename": "newyork_1.jpg",
-                    //    "location": "New York, USA",
-                    //    "date": "February 2014"
-                    //},
-
-                    // {
-                    //  "filename": "hongkong_1.jpg",
-                    //  "location": "Hong Kong, China",
-                    //  "date": "August 2014"
-                    // },
-
-                    //{
-                    //    "filename": "beijing_1.jpg",
-                    //    "location": "Beijing, China",
-                    //    "date": "August 2014"
-                    //},
-
                     {
                         "filename": "shenzhen_1.jpg",
                         "location": "Shenzhen, China",
@@ -483,8 +465,6 @@
 
                 function sendForm() {
 
-                    console.log('here')
-
                     var resultDiv = $('#contact-actions');
 
                     $.ajax({
@@ -494,7 +474,9 @@
                                 date: new Date().toString(),
                                 email: $('#contact-email').val(),
                                 message: $('#contact-body').val(),
-                                name: $('#contact-name').val()
+                                name: $('#contact-name').val(),
+                                _subject: 'New message from quba.fr',
+                                _format: 'plain'
                             },
                         dataType: 'json'
                     })
@@ -520,31 +502,28 @@
                 } // function sendForm()
 
                 // Tooltipster initialization
-                $('input, textarea').each(function(elem) {
-                    $(this).tooltipster({
-                        trigger: 'custom',
-                        onlyOne: false
-                    });
-                });
+                var tooltipFields = $('.tooltip');
+                tooltipFields.tooltipster({ trigger: 'custom' });
 
                 // Validator initialization
                 var validator = $('#contact-form').validate({
                     submitHandler: sendForm,
                     errorPlacement: function (error, element) {
-                            $(element).tooltipster('update', $(error).text());
-                            $(element).tooltipster('show');
+                        var errorText = $(error).text();
+
+                        if (errorText) {
+                            var element = $(element)
+                            element.tooltipster('content', errorText);
+                            element.tooltipster('open');
+                        }
                     },
-                    success: function (label, element) {
-                            $(element).tooltipster('hide');
+                    success: function (_, element) {
+                        $(element).tooltipster('close');
                     }
                 });
 
-                $('#form-send').click(function() {
-                        $('#contact-form').submit();
-                });
-
                 $('#form-clear').click(function() {
-                    $('input, textarea').tooltipster('hide');
+                    tooltipFields.tooltipster('hide');
                     $('#contact-form')[0].reset();
                 });
     });

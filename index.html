@@ -64,7 +64,6 @@
                                 <li><a href="#work">Work</a></li>
                                 <li><a href="#education">Education</a></li>
                                 <li><a href="#contact">Contact</a></li>
-                                <li><a href="#elements">Elements</a></li>
                             </ul>
                         </nav>
                     </header>
@@ -209,15 +208,15 @@
                                 <form id="contact-form" method="post" action="#">
                                     <div class="field half first">
                                         <label for="name">Name</label>
-                                        <input type="text" name="name" id="contact-name" class="tooltip" />
+                                        <input type="text" name="name" id="contact-name" class="tooltip" required />
                                     </div>
                                     <div class="field half">
                                         <label for="email">Email</label>
-                                        <input type="text" name="email" id="contact-email" class="tooltip"/>
+                                        <input type="email" name="email" id="contact-email" class="tooltip" required />
                                     </div>
                                     <div class="field">
                                         <label for="message">Message</label>
-                                        <textarea name="message" id="contact-body" rows="4" class="tooltip"></textarea>
+                                        <textarea name="message" id="contact-body" rows="4" class="tooltip" required></textarea>
                                     </div>
                                     <span id="contact-actions">
                                         <ul class="actions">
