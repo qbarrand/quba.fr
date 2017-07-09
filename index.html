@@ -33,11 +33,11 @@
                         </div>
                         <nav>
                             <ul>
-                                <li><a href="#intro">Intro</a></li>
+                                <li><a href="#about">About me</a></li>
                                 <li><a href="#work">Work</a></li>
-                                <li><a href="#about">About</a></li>
+                                <li><a href="#education">Education</a></li>
                                 <li><a href="#contact">Contact</a></li>
-                                <!--<li><a href="#elements">Elements</a></li>-->
+                                <li><a href="#elements">Elements</a></li>
                             </ul>
                         </nav>
                     </header>
@@ -45,9 +45,9 @@
                 <!-- Main -->
                     <div id="main">
 
-                        <!-- Intro -->
-                            <article id="intro">
-                                <h2 class="major">Intro</h2>
+                        <!-- About me -->
+                            <article id="about">
+                                <h2 class="major">About</h2>
                                 <span class="image main"><img src="images/pic01.jpg" alt="" /></span>
                                 <p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
@@ -63,16 +63,24 @@
                                     </a>
                                 </p>
                                 </div>
-                                <!-- <span class="image main"><img src="images/pic02.jpg" alt="" /></span> -->
-                                <h3>
-                                    <a href="https://home.cern" target="_blank">CERN</a>
-                                </h3>
+                                <div class=header-justify>
+                                    <div>
+                                        <h3>
+                                            <a href="https://home.cern" target="_blank">CERN</a>
+                                        </h3>
+                                        <p>
+                                            <span class="item-details">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>Geneva, Switzerland<br />
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>since September 2016<br />
+                                                <i class="fa fa-sitemap" aria-hidden="true"></i>IT-CS-CE<br />
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="item-logo-outer"> <!-- image -->
+                                        <img class="item-logo-inner" src="images/cern_transparent_bg.png"></img>
+                                    </div>
+                                </div> <!-- header-justify -->
                                 <p class="followed-by-list">
-                                    <span class="work-date">
-                                        <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;Geneva, Switzerland<br />
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;since September 2016<br />
-                                        <i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;&nbsp;IT-CS-CE<br />
-                                    </span>
                                     I am currently working with the <strong>Communication Engineering</strong> team on network-related topics.
                                     My main occupations include:
                                 </p>
@@ -85,15 +93,24 @@
                                 </ul>
 
 
-                                <h3>
-                                    <a href="http://www.sncf-reseau.fr/fr" target="_blank">SNCF Réseau</a>
-                                </h3>
+                                <div class="header-justify">
+                                    <div>
+                                        <h3>
+                                            <a href="http://www.sncf-reseau.fr/fr" target="_blank">SNCF Réseau</a>
+                                        </h3>
+                                        <p>
+                                            <span class="item-details">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>Paris, France<br />
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>2013&ndash;2016<br />
+                                                <i class="fa fa-sitemap" aria-hidden="true"></i>I&amp;P LE TBS<br />
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="item-logo-outer">
+                                        <img class="item-logo-inner" src="images/sncf_transparent_bg.png"></img>
+                                    </div>
+                                </div>
                                 <p class="followed-by-list">
-                                    <span class="work-date">
-                                        <i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;&nbsp;Paris, France<br />
-                                        <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;2013&ndash;2016<br />
-                                        <i class="fa fa-sitemap" aria-hidden="true"></i>&nbsp;&nbsp;I&amp;P LE TBS<br />
-                                    </span>
                                     I held a Systems &amp; Networks Engineer position at SNCF Réseau where I implemented web technologies on various real-time systems onboard <strong>IRIS 320</strong>, a special high-speed train dedicated to railway measurement. I used the following technologies:
                                 <ul>
                                     <li>C# and Microsoft .NET</li>
@@ -104,11 +121,59 @@
 
                             </article>
 
-                        <!-- About -->
-                            <article id="about">
-                                <h2 class="major">About</h2>
-                                <span class="image main"><img src="images/pic03.jpg" alt="" /></span>
-                                <p>Lorem ipsum dolor sit amet, consectetur et adipiscing elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices. Aliquam libero et malesuada fames ac ante ipsum primis in faucibus. Cras viverra ligula sit amet ex mollis mattis lorem ipsum dolor sit amet.</p>
+                        <!-- Education -->
+                            <article id="education">
+                                <div class="header-justify">
+                                <h2 class="major">Education</h2>
+                                <p>
+                                    <a href="https://cv.quba.fr" target="_blank">
+                                        <i class="fa fa-download" aria-hidden="true"></i>&nbsp;CV (PDF)
+                                    </a>
+                                </p>
+                                </div>
+                                <div class=header-justify>
+                                    <div>
+                                        <h3>
+                                            <a href="http://www.ensiie.fr/" target="_blank">ENSIIE Paris</a><br />
+                                            <a href="http://www.telecom-sudparis.eu/" target="_blank">TELECOM SudParis</a>
+                                        </h3>
+                                        <p>
+                                            <span class="item-details">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>Paris, France<br />
+                                                <i class="fa fa-graduation-cap " aria-hidden="true"></i>Class of 2016<br />
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="item-logo-outer"> <!-- image -->
+                                        <img class="item-logo-inner" src="images/ensiie_tsp_transparent_bg.png"></img>
+                                    </div>
+                                </div> <!-- header-justify -->
+                                <p>
+                                I did my first two years of <strong>engineering</strong> studies at ENSIIE Paris.
+                                During my last semester, from September 2015 to January 2016, I took a specialized track at TELECOM SudParis focusing on <strong>mobile cellular networks</strong> (LTE / 5G) and <strong>software-defined networking</strong> (SDN / NFV).
+                                </p>
+
+                                <div class="header-justify">
+                                    <div>
+                                        <h3>
+                                            <a href="http://www.iut-bm.univ-fcomte.fr/" target="_blank">IUT Belfort-Montbéliard</a>
+                                        </h3>
+                                        <p>
+                                            <span class="item-details">
+                                                <i class="fa fa-map-marker" aria-hidden="true"></i>Belfort, France<br />
+                                                <i class="fa fa-calendar" aria-hidden="true"></i>Class of 2013<br />
+                                            </span>
+                                        </p>
+                                    </div>
+                                    <div class="item-logo-outer">
+                                        <img class="item-logo-inner" src="images/iutbm_transparent_bg.png"></img>
+                                    </div>
+                                </div>
+                                <p>
+                                I obtained a DUT Informatique in 2013, which is the French equivalent to a <strong>BSc in Computer Science</strong>.
+                                  My main academic project consisted in the design and development of a web services platform for <a href="http://www.lusineabelfort.fr/" target="_blank">l'Usine à Belfort</a>, a local coworking space.
+                                  <br>During this cursus, I also co-founded <a href="#hobbies">HackGyver</a>, Belfort's <strong>hackerspace</strong>.
+                                </p>
                             </article>
 
                         <!-- Contact -->

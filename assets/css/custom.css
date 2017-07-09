@@ -33,18 +33,35 @@
 }
 
 .header-justify p {
-    line-height: 2.3;
+    /* line-height: 2.3; */
+}
+
+.item-logo-outer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.item-logo-inner {
+    width: 5rem;
+}
+
+.item-details {
+    /* display: block; */
+    margin-bottom: 0.5em;
+}
+
+.item-details i {
+    display: inline-block;
+    width: 1rem;
+    text-align: center;
+    margin-right: 0.5rem;
 }
 
 /* Work */
 
 p.followed-by-list {
     margin-bottom: 0px;
-}
-
-.work-date {
-    display: block;
-    margin-bottom: 0.5em;
-    /* font-style: italic; */
 }
 
