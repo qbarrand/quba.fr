@@ -68,3 +68,11 @@ p.followed-by-list {
     margin-bottom: 0px;
 }
 
+/* Privacy */
+
+iframe {
+    /* display:block;
+    border: 0; */
+    height: auto;
+    width: 100%;
+}
