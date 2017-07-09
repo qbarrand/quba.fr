@@ -506,38 +506,36 @@
                             .append('<p>Please use ' + this_link + '.</p>');
                     });
 
-
-                        // resultDiv.;
                 } // function sendForm()
 
-            // Tooltipster initialization
-            $('input, textarea').each(function(elem) {
-                $(this).tooltipster({
-                    trigger: 'custom',
-                    onlyOne: false
+                // Tooltipster initialization
+                $('input, textarea').each(function(elem) {
+                    $(this).tooltipster({
+                        trigger: 'custom',
+                        onlyOne: false
+                    });
                 });
-            });
 
-            // Validator initialization
-            var validator = $('#contact-form').validate({
-                submitHandler: sendForm,
-                errorPlacement: function (error, element) {
-                        $(element).tooltipster('update', $(error).text());
-                        $(element).tooltipster('show');
-                },
-                success: function (label, element) {
-                        $(element).tooltipster('hide');
-                }
-            });
+                // Validator initialization
+                var validator = $('#contact-form').validate({
+                    submitHandler: sendForm,
+                    errorPlacement: function (error, element) {
+                            $(element).tooltipster('update', $(error).text());
+                            $(element).tooltipster('show');
+                    },
+                    success: function (label, element) {
+                            $(element).tooltipster('hide');
+                    }
+                });
 
-            $('#form-send').click(function() {
-                    $('#contact-form').submit();
-            });
+                $('#form-send').click(function() {
+                        $('#contact-form').submit();
+                });
 
-            $('#form-clear').click(function() {
-                $('input, textarea').tooltipster('hide');
-                $('#contact-form')[0].reset();
-            });
+                $('#form-clear').click(function() {
+                    $('input, textarea').tooltipster('hide');
+                    $('#contact-form')[0].reset();
+                });
     });
 
 })(jQuery);
