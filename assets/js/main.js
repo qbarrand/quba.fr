@@ -425,6 +425,12 @@
                     //},
 
                     {
+                        "filename": "shenzhen_1.jpg",
+                        "location": "Shenzhen, China",
+                        "date": "August 2014"
+                    },
+
+                    {
                         "filename": "geneva_1.jpg",
                         "location": "Geneva, Switzerland",
                         "date": "June 2016"
@@ -443,6 +449,11 @@
                         "filename": "montreux_1.jpg",
                         "location": "Montreux, Switzerland",
                         "date": "October 2016"
+                    },
+                    {
+                        "filename": "dubai_1.jpg",
+                        "location": "Dubai, UAE",
+                        "date": "June 2017"
                     }
                 ];
 
