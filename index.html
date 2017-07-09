@@ -10,6 +10,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
         <link rel="stylesheet" href="assets/css/main.css" />
+        <link rel="stylesheet" href="assets/css/tooltipster.bundle.min.css" />
         <link rel="stylesheet" href="assets/css/custom.css" />
         <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
     </head>
@@ -179,23 +180,25 @@
                         <!-- Contact -->
                             <article id="contact">
                                 <h2 class="major">Contact</h2>
-                                <form method="post" action="#">
+                                <form id="contact-form" method="post" action="#">
                                     <div class="field half first">
                                         <label for="name">Name</label>
-                                        <input type="text" name="name" id="name" />
+                                        <input type="text" name="name" id="contact-name" class="tooltip" />
                                     </div>
                                     <div class="field half">
                                         <label for="email">Email</label>
-                                        <input type="text" name="email" id="email" />
+                                        <input type="text" name="email" id="contact-email" class="tooltip"/>
                                     </div>
                                     <div class="field">
                                         <label for="message">Message</label>
-                                        <textarea name="message" id="message" rows="4"></textarea>
+                                        <textarea name="message" id="contact-body" rows="4" class="tooltip"></textarea>
                                     </div>
-                                    <ul class="actions">
-                                        <li><input type="submit" value="Send Message" class="special" /></li>
-                                        <li><input type="reset" value="Reset" /></li>
-                                    </ul>
+                                    <span id="contact-actions">
+                                        <ul class="actions">
+                                            <li><input id="form-send" type="submit" value="Send Message" class="special" /></li>
+                                            <li><input id="form-clear" type="reset" value="Reset" /></li>
+                                        </ul>
+                                    </span>
                                 </form>
                             </article>
 
@@ -505,6 +508,8 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
         <!-- Scripts -->
             <script src="assets/js/jquery.min.js"></script>
+            <script src="assets/js/tooltipster.bundle.min.js"></script>
+            <script src="assets/js/jquery.validate.min.js"></script>
             <script src="assets/js/skel.min.js"></script>
             <script src="assets/js/util.js"></script>
             <script src="assets/js/main.js"></script>

@@ -468,6 +468,76 @@
 
                 $('#bg_location').text(image.location);
                 $('#bg_date').text(image.date);
+
+
+                function sendForm() {
+
+                    console.log('here')
+
+                    var resultDiv = $('#contact-actions');
+
+                    $.ajax({
+                        url: 'https://formspree.io/quentin@quba.fr',
+                        method: 'POST',
+                        data: {
+                                date: new Date().toString(),
+                                email: $('#contact-email').val(),
+                                message: $('#contact-body').val(),
+                                name: $('#contact-name').val()
+                            },
+                        dataType: 'json'
+                    })
+                    .always(function() { resultDiv.css('text-align', 'center').empty(); })
+                    .done(function(response) {
+
+                        resultDiv
+                            .append('<h2>Thanks !</h2>')
+                            .append("<p>We'll be in touch soon.</p>");
+                    })
+                    .fail(function(response) {
+                        var this_link = '<a href="mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr';
+                        var body = encodeURIComponent($('#contact-body').val())
+                        body += encodeURIComponent('\n\n--\nTechnical information: ' + response.status + ' / ' + response.responseJSON.error);
+
+                        this_link += '&body=' + body  + '" target="_blank">this link</a>';
+
+                        resultDiv
+                            .append('<h3>Something went wrong.</h3>')
+                            .append('<p>Please use ' + this_link + '.</p>');
+                    });
+
+
+                        // resultDiv.;
+                } // function sendForm()
+
+            // Tooltipster initialization
+            $('input, textarea').each(function(elem) {
+                $(this).tooltipster({
+                    trigger: 'custom',
+                    onlyOne: false
+                });
+            });
+
+            // Validator initialization
+            var validator = $('#contact-form').validate({
+                submitHandler: sendForm,
+                errorPlacement: function (error, element) {
+                        $(element).tooltipster('update', $(error).text());
+                        $(element).tooltipster('show');
+                },
+                success: function (label, element) {
+                        $(element).tooltipster('hide');
+                }
+            });
+
+            $('#form-send').click(function() {
+                    $('#contact-form').submit();
+            });
+
+            $('#form-clear').click(function() {
+                $('input, textarea').tooltipster('hide');
+                $('#contact-form')[0].reset();
+            });
     });
 
 })(jQuery);
