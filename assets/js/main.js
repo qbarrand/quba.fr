@@ -409,33 +409,39 @@
                     {
                         "filename": "shenzhen_1.jpg",
                         "location": "Shenzhen, China",
-                        "date": "August 2014"
+                        "date": "August 2014",
+                        "hex_color": "#5D0C1C"
                     },
 
                     {
                         "filename": "geneva_1.jpg",
                         "location": "Geneva, Switzerland",
-                        "date": "June 2016"
+                        "date": "June 2016",
+                        "hex_color": "#737D86"
                     },
                     {
                         "filename": "newyork_2.jpg",
                         "location": "New York, USA",
-                        "date": "August 2015"
+                        "date": "August 2015",
+                        "hex_color": "#808B8F"
                     },
                     {
                         "filename": "thun_1.jpg",
                         "location": "Thun, Switzerland",
-                        "date": "May 2016"
+                        "date": "May 2016",
+                        "hex_color": "#597FA5"
                     },
                     {
                         "filename": "montreux_1.jpg",
                         "location": "Montreux, Switzerland",
-                        "date": "October 2016"
+                        "date": "October 2016",
+                        "hex_color": "#778693"
                     },
                     {
                         "filename": "dubai_1.jpg",
                         "location": "Dubai, UAE",
-                        "date": "June 2017"
+                        "date": "June 2017",
+                        "hex_color": "#514C44"
                     }
                 ];
 
@@ -461,6 +467,7 @@
 
                 $('#bg_location').text(image.location);
                 $('#bg_date').text(image.date);
+                $('meta[name=theme-color]').attr('content', image.hex_colors);
 
 
                 function sendForm() {
