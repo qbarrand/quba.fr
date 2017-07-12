@@ -467,7 +467,7 @@
 
                 $('#bg_location').text(image.location);
                 $('#bg_date').text(image.date);
-                $('meta[name=theme-color]').attr('content', image.hex_colors);
+                $('meta[name=theme-color]').attr('content', image.hex_color);
 
 
                 function sendForm() {
