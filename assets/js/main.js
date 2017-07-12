@@ -533,6 +533,11 @@
                     tooltipFields.tooltipster('hide');
                     $('#contact-form')[0].reset();
                 });
+
+                // ServiceWorker for offline caching
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('assets/js/sw.js', { scope: '/' })
+                }
     });
 
 })(jQuery);
