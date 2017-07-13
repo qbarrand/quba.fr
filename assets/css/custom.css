@@ -51,9 +51,9 @@
     width: 5rem;
 }
 
-.item-details {
+p.item-details {
     /* display: block; */
-    margin-bottom: 0.5em;
+    margin-bottom: 1rem;
 }
 
 .item-details i {
