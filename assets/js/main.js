@@ -470,6 +470,24 @@
                 $('meta[name=theme-color]').attr('content', image.hex_color);
 
 
+                // Skills
+                $('.skill-expand').click(function(event) {
+                    var $this = $(this);
+
+                    // Hide the three dots and the +
+                    $this
+                        .find('.skill-dots, .skill-plus')
+                        .hide();
+
+                    // Reset the cursor
+                    $this.css('cursor', 'inherit');
+
+                    // Show the content
+                    $this
+                        .next('p')
+                        .slideDown();
+                });
+
                 function sendForm() {
 
                     var resultDiv = $('#contact-actions');

@@ -63,6 +63,28 @@
     margin-right: 0.5rem;
 }
 
+/* About */
+
+h5 i {
+    font-size: 1.1rem;
+}
+
+.skill-description {
+    display: none;
+}
+
+.skill-expand {
+    cursor: pointer;
+}
+
+.skill-icon {
+    display: inline-block;
+    width: 1rem;
+    text-align: center;
+    margin-right: 1rem;
+    font-size: 1.1rem;
+}
+
 /* Work */
 
 p.followed-by-list {
