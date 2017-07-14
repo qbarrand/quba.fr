@@ -554,7 +554,7 @@
 
                 // ServiceWorker for offline caching
                 if ('serviceWorker' in navigator) {
-                    navigator.serviceWorker.register('assets/js/sw.js', { scope: '/' })
+                    navigator.serviceWorker.register('sw.js', { scope: '/' })
                 }
     });
 
