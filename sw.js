@@ -73,11 +73,20 @@ cachedFiles = [
     '/assets/js/tooltipster.bundle.min.js',
     '/assets/js/util.js',
     // fonts
-    '/assets/fonts/custom.css',
-    '/assets/fonts/font-awesome.min.css',
-    '/assets/fonts/ie9.css',
-    '/assets/fonts/main.css',
-    '/assets/fonts/tooltipster.bundle.min.css'
+    '/assets/fonts/FontAwesome.otf',
+    '/assets/fonts/fontawesome-webfont.eot',
+    '/assets/fonts/fontawesome-webfont.svg',
+    '/assets/fonts/fontawesome-webfont.ttf',
+    '/assets/fonts/fontawesome-webfont.woff',
+    '/assets/fonts/fontawesome-webfont.woff2',
+    '/assets/fonts/source_sans_pro_300i_latin-ext.woff2',
+    '/assets/fonts/source_sans_pro_300i_latin.woff2',
+    '/assets/fonts/source_sans_pro_300_latin-ext.woff2',
+    '/assets/fonts/source_sans_pro_300_latin.woff2',
+    '/assets/fonts/source_sans_pro_600i_latin-ext.woff2',
+    '/assets/fonts/source_sans_pro_600i_latin.woff2',
+    '/assets/fonts/source_sans_pro_600_latin-ext.woff2',
+    '/assets/fonts/source_sans_pro_600_latin.woff2'
 ]
 
 self.addEventListener('install', e => e.waitUntil(
