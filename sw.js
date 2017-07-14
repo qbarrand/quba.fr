@@ -2,6 +2,7 @@ cachedFiles = [
     // html
     '/',
     '/index.html',
+    '/sw.js',
     //images
     '/images/cern_transparent_bg.png',
     '/images/ensiie_tsp_transparent_bg.png',
@@ -69,7 +70,6 @@ cachedFiles = [
     '/assets/js/jquery.validate.min.js',
     '/assets/js/main.js',
     '/assets/js/skel.min.js',
-    '/assets/js/sw.js',
     '/assets/js/tooltipster.bundle.min.js',
     '/assets/js/util.js',
     // fonts
