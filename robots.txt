@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /assets
+Disallow: /old
+
+Sitemap: https://quba.fr/sitemap.xml
