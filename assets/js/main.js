@@ -547,7 +547,7 @@
         tooltipFields.tooltipster({ trigger: 'custom' });
 
         // Validator initialization
-        var validator = $('#contact-form').validate({
+        $('#contact-form').validate({
             submitHandler: sendForm,
             errorPlacement: function (error, element) {
                 var errorText = $(error).text();
