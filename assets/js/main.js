@@ -417,26 +417,31 @@
                         "date": "June 2016",
                         "hex_color": "#737D86"
                     },
+
                     "newyork_2": {
                         "location": "New York, USA",
                         "date": "August 2015",
                         "hex_color": "#808B8F"
                     },
+
                     "thun_1": {
                         "location": "Thun, Switzerland",
                         "date": "May 2016",
                         "hex_color": "#597FA5"
                     },
+
                     "montreux_1": {
                         "location": "Montreux, Switzerland",
                         "date": "October 2016",
                         "hex_color": "#778693"
                     },
+
                     "dubai_1": {
                         "location": "Dubai, UAE",
                         "date": "June 2017",
                         "hex_color": "#514C44"
                     },
+
                     "lhc_1": {
                         "location": "LHC, France / Switzerland",
                         "date": "August 2019",
@@ -528,13 +533,13 @@
                     .fail(function(response) {
                         var this_link = '<a href="mailto:quentin@quba.fr?subject=Fallback mailing method - quba.fr';
                         var body = encodeURIComponent($('#contact-body').val())
-                        body += encodeURIComponent('\n\n--\nTechnical information: ' + response.status + ' / ' + response.responseJSON.error);
+                        body += encodeURIComponent(`\n\n--\nTechnical information: ${response.status} / ${response.responseJSON.error}`);
 
-                        this_link += '&body=' + body  + '" target="_blank">this link</a>';
+                        this_link += `&body=${body}" target="_blank">this link</a>`;
 
                         resultDiv
                             .append('<h3>Something went wrong.</h3>')
-                            .append('<p>Please use ' + this_link + '.</p>');
+                            .append(`<p>Please use ${this_link}.</p>'`);
                     });
 
                 } // function sendForm()
