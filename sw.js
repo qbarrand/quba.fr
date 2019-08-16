@@ -13,6 +13,7 @@ cachedFiles = [
     // images/bg
     '/images/bg/dubai_1.jpg',
     '/images/bg/geneva_1.jpg',
+    '/images/bg/lhc_1.jpg',
     '/images/bg/montreux_1.jpg',
     '/images/bg/newyork_2.jpg',
     '/images/bg/shenzhen_1.jpg',
