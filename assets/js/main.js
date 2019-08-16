@@ -405,52 +405,65 @@
                         });
 
                 // Add an image
-                var backgrounds = [
-                    {
-                        "filename": "shenzhen_1.jpg",
+                var backgrounds = {
+                    "shenzhen_1": {
                         "location": "Shenzhen, China",
                         "date": "August 2014",
                         "hex_color": "#5D0C1C"
                     },
 
-                    {
-                        "filename": "geneva_1.jpg",
+                    "geneva_1": {
                         "location": "Geneva, Switzerland",
                         "date": "June 2016",
                         "hex_color": "#737D86"
                     },
-                    {
-                        "filename": "newyork_2.jpg",
+                    "newyork_2": {
                         "location": "New York, USA",
                         "date": "August 2015",
                         "hex_color": "#808B8F"
                     },
-                    {
-                        "filename": "thun_1.jpg",
+                    "thun_1": {
                         "location": "Thun, Switzerland",
                         "date": "May 2016",
                         "hex_color": "#597FA5"
                     },
-                    {
-                        "filename": "montreux_1.jpg",
+                    "montreux_1": {
                         "location": "Montreux, Switzerland",
                         "date": "October 2016",
                         "hex_color": "#778693"
                     },
-                    {
-                        "filename": "dubai_1.jpg",
+                    "dubai_1": {
                         "location": "Dubai, UAE",
                         "date": "June 2017",
                         "hex_color": "#514C44"
+                    },
+                    "lhc_1": {
+                        "location": "LHC, France / Switzerland",
+                        "date": "August 2019",
+                        "hex_color": "#817365"
                     }
-                ];
+                };
 
-                // Pick a random image
-                var image = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+                let imageId;
+
+                const qsImageName = new URLSearchParams(location.search).get("bgimg");
+
+                if (qsImageName != null) {
+                    imageId = qsImageName;
+                } else {
+                    const keys = Object.keys(backgrounds);
+
+                    // Pick a random image
+                    imageId = keys[Math.floor(Math.random() * keys.length)]
+                }
+
+                console.log(imageId)
+
+                const image = backgrounds[imageId];
 
                 // Show its properties on the home page
                 $('#bg').after().css({
-                    'background-image': 'url(images/bg/' + image.filename + ')',
+                    'background-image': `url(images/bg/${imageId}.jpg)`,
                     '-moz-transform': 'scale(1.125)',
                     '-webkit-transform': 'scale(1.125)',
                     '-ms-transform': 'scale(1.125)',
