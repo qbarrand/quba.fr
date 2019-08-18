@@ -4,9 +4,61 @@
     Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+const sizes = {
+    XS: {
+        index: 0,
+        suffix: '_xs',
+    },
+    S: {
+        index: 1,
+        suffix: '_s',
+    },
+    M: {
+        index: 2,
+        suffix: '_m',
+    },
+    L: {
+        index: 3,
+        suffix: '_l',
+    },
+    XL: {
+        index: 4,
+        suffix: '_xl',
+    },
+    FULL: {
+        index: 5,
+        suffix: '_full'
+    },
+}
+
+const queries = {
+    // XS: 480px
+    //  S: 736px
+    //  M: 980px
+    //  L: 1280px
+    // XL: 1690px
+
+    // Portrait
+    '(orientation: portrait) and (max-height: 480px)': sizes.XS,
+    '(orientation: portrait) and (min-height: 481px) and (max-height: 736px)': sizes.S,
+    '(orientation: portrait) and (min-height: 737px) and (max-height: 980px)': sizes.M,
+    '(orientation: portrait) and (min-height: 981px) and (max-height: 1280px)': sizes.L,
+    '(orientation: portrait) and (min-height: 1281px) and (max-height: 1690px)': sizes.XL,
+    '(orientation: portrait) and (min-height: 1691px)': sizes.FULL,
+
+    // Landscape
+    '(orientation: landscape) and (max-width: 480px)': sizes.XS,
+    '(orientation: landscape) and (min-width: 481px) and (max-width: 736px)': sizes.S,
+    '(orientation: landscape) and (min-width: 737px) and (max-width: 980px)': sizes.M,
+    '(orientation: landscape) and (min-width: 981px) and (max-width: 1280px)': sizes.L,
+    '(orientation: landscape) and (min-width: 1281px) and (max-width: 1690px)': sizes.XL,
+    '(orientation: landscape) and (min-width: 1691px)': sizes.FULL
+}
+
+let currentIndex;
+
 (function($) {
     $(function() {
-
         var $window = $(window),
             $body = $('body'),
             $wrapper = $('#wrapper'),
@@ -456,9 +508,12 @@
 
         const image = backgrounds[imageId];
 
-        // Show its properties on the home page
+        $('#bg_location').text(image.location);
+        $('#bg_date').text(image.date);
+        $('meta[name=theme-color]').attr('content', image.hex_color);
+
         $('#bg').after().css({
-            'background-image': `url(images/bg/${imageId}.jpg)`,
+            // 'background-image': `url(images/bg/${imageId}${size.suffix}.jpg)`,
             '-moz-transform': 'scale(1.125)',
             '-webkit-transform': 'scale(1.125)',
             '-ms-transform': 'scale(1.125)',
@@ -473,10 +528,31 @@
             'z-index': '1'
         });
 
-        $('#bg_location').text(image.location);
-        $('#bg_date').text(image.date);
-        $('meta[name=theme-color]').attr('content', image.hex_color);
+        function setBackgroundImage(size) {
+            console.log(`Fetching ${imageId}${size.suffix}.jpg`)
 
+            // Show its properties on the home page
+            $('#bg').after().css({
+                'background-image': `url(images/bg/${imageId}${size.suffix}.jpg)`,
+            });
+
+            currentIndex = size.index;
+        }
+
+        // Register all media query listeners
+        for (let [q, size] of Object.entries(queries)) {
+            const m = window.matchMedia(q)
+
+            if (m.matches) {
+                setBackgroundImage(size);
+            }
+
+            m.addListener(e => {
+                if (e.matches && (currentIndex == undefined || size.index > currentIndex)) {
+                    setBackgroundImage(size);
+                }
+            });
+        }
 
         // Skills
         $('.skill-expand').click(function(event) {
