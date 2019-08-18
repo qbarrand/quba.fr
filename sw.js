@@ -70,7 +70,6 @@ cachedFiles = [
     '/assets/js/jquery.min.js',
     '/assets/js/jquery.validate.min.js',
     '/assets/js/main.js',
-    '/assets/js/skel.min.js',
     '/assets/js/tooltipster.bundle.min.js',
     '/assets/js/util.js',
     // fonts
