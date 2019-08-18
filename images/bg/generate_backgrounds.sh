@@ -9,8 +9,10 @@ sizes=(
     [1690]=_xl
 )
 
-for i in `ls`; do
+for i in $*; do
+	id=${$i%.jpg}
+	mv $id $id_full.jpg
 	for h in "${!sizes[@]}"; do
-		convert $i -sampling-factor 4:2:0 -strip -resize x$h -interlace JPEG -colorspace sRGB -quality 85 ${i}${sizes[$h]}
+		convert $id_full -sampling-factor 4:2:0 -strip -resize x$h -interlace JPEG -colorspace sRGB -quality 85 ${id}${sizes[$h]}.jpg
 	done
 done
