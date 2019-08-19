@@ -70,7 +70,6 @@ cachedFiles = [
     '/assets/js/jquery.min.js',
     '/assets/js/jquery.validate.min.js',
     '/assets/js/main.js',
-    '/assets/js/skel.min.js',
     '/assets/js/tooltipster.bundle.min.js',
     '/assets/js/util.js',
     // fonts
@@ -100,12 +99,8 @@ self.addEventListener('install', e => e.waitUntil(
 
 // Reply with cache
 self.addEventListener('fetch', e => e.respondWith(
-    caches
-        .match(e.request)
-        .then(response => {
-            // If the response from the cache is null, fetch the resource
-            // from the network.
-            return response ? response : fetch(e.request);
-        })
+        fetch(e.request).catch(
+            () => caches.match(e.request)
+        )
     )
 );
