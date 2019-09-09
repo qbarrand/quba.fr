@@ -20,12 +20,6 @@ class Constraint {
 }
 
 const queries = {
-    // XS: 480px
-    //  S: 736px
-    //  M: 980px
-    //  L: 1280px
-    // XL: 1690px
-
     // Portrait
     '(orientation: portrait) and (max-height: 480px)':                              new Constraint('height', 480),
     '(orientation: portrait) and (min-height: 481px) and (max-height: 736px)':      new Constraint('height', 736),
@@ -40,7 +34,9 @@ const queries = {
     '(orientation: landscape) and (min-width: 737px) and (max-width: 980px)':   new Constraint('width', 980),
     '(orientation: landscape) and (min-width: 981px) and (max-width: 1280px)':  new Constraint('width', 1280),
     '(orientation: landscape) and (min-width: 1281px) and (max-width: 1690px)': new Constraint('width', 1690),
-    '(orientation: landscape) and (min-width: 1691px)':                         new Constraint('width', Infinity),
+    '(orientation: landscape) and (min-width: 1691px) and (max-width: 1920px)': new Constraint('width', 1920),
+    '(orientation: landscape) and (min-width: 1921px) and (max-width: 2880px)': new Constraint('width', 2880),
+    '(orientation: landscape) and (min-width: 2881px)':                         new Constraint('width', Infinity),
 }
 
 let currentConstraint;
