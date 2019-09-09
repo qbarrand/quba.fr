@@ -4,31 +4,19 @@
     Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
-const sizes = {
-    XS: {
-        index: 0,
-        suffix: '_xs',
-    },
-    S: {
-        index: 1,
-        suffix: '_s',
-    },
-    M: {
-        index: 2,
-        suffix: '_m',
-    },
-    L: {
-        index: 3,
-        suffix: '_l',
-    },
-    XL: {
-        index: 4,
-        suffix: '_xl',
-    },
-    FULL: {
-        index: 5,
-        suffix: '_full'
-    },
+class Constraint {
+    constructor(direction, n) {
+        this.direction = direction
+        this.n = n
+    }
+
+    requiresUpdate(other) {
+        return other.direction != this.direction || other.n > this.n
+    }
+
+    toQueryString() {
+        return `${this.direction}=${this.n}`
+    }
 }
 
 const queries = {
@@ -39,23 +27,23 @@ const queries = {
     // XL: 1690px
 
     // Portrait
-    '(orientation: portrait) and (max-height: 480px)': sizes.XS,
-    '(orientation: portrait) and (min-height: 481px) and (max-height: 736px)': sizes.S,
-    '(orientation: portrait) and (min-height: 737px) and (max-height: 980px)': sizes.M,
-    '(orientation: portrait) and (min-height: 981px) and (max-height: 1280px)': sizes.L,
-    '(orientation: portrait) and (min-height: 1281px) and (max-height: 1690px)': sizes.XL,
-    '(orientation: portrait) and (min-height: 1691px)': sizes.FULL,
+    '(orientation: portrait) and (max-height: 480px)':                              new Constraint('height', 480),
+    '(orientation: portrait) and (min-height: 481px) and (max-height: 736px)':      new Constraint('height', 736),
+    '(orientation: portrait) and (min-height: 737px) and (max-height: 980px)':      new Constraint('height', 980),
+    '(orientation: portrait) and (min-height: 981px) and (max-height: 1280px)':     new Constraint('height', 1280),
+    '(orientation: portrait) and (min-height: 1281px) and (max-height: 1690px)':    new Constraint('height', 1690),
+    '(orientation: portrait) and (min-height: 1691px)':                             new Constraint('height', Infinity),
 
     // Landscape
-    '(orientation: landscape) and (max-width: 480px)': sizes.XS,
-    '(orientation: landscape) and (min-width: 481px) and (max-width: 736px)': sizes.S,
-    '(orientation: landscape) and (min-width: 737px) and (max-width: 980px)': sizes.M,
-    '(orientation: landscape) and (min-width: 981px) and (max-width: 1280px)': sizes.L,
-    '(orientation: landscape) and (min-width: 1281px) and (max-width: 1690px)': sizes.XL,
-    '(orientation: landscape) and (min-width: 1691px)': sizes.FULL
+    '(orientation: landscape) and (max-width: 480px)':                          new Constraint('width', 480),
+    '(orientation: landscape) and (min-width: 481px) and (max-width: 736px)':   new Constraint('width', 736),
+    '(orientation: landscape) and (min-width: 737px) and (max-width: 980px)':   new Constraint('width', 980),
+    '(orientation: landscape) and (min-width: 981px) and (max-width: 1280px)':  new Constraint('width', 1280),
+    '(orientation: landscape) and (min-width: 1281px) and (max-width: 1690px)': new Constraint('width', 1690),
+    '(orientation: landscape) and (min-width: 1691px)':                         new Constraint('width', Infinity),
 }
 
-let currentIndex;
+let currentConstraint;
 
 (function($) {
     $(function() {
@@ -512,15 +500,11 @@ let currentIndex;
         $('#bg_date').text(image.date);
         $('meta[name=theme-color]').attr('content', image.hex_color);
 
+
         $('#bg').after().css({
-            // 'background-image': `url(images/bg/${imageId}${size.suffix}.jpg)`,
-            '-moz-transform': 'scale(1.125)',
-            '-webkit-transform': 'scale(1.125)',
-            '-ms-transform': 'scale(1.125)',
-            'transform': 'scale(1.125)',
-            '-moz-transition': '-moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out',
-            '-webkit-transition': '-webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out',
-            '-ms-transition': '-ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out',
+            // '-moz-transition': '-moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out',
+            // '-webkit-transition': '-webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out',
+            // '-ms-transition': '-ms-transform 0.325s ease-in-out, -ms-filter 0.325s ease-in-out',
             'transition': 'transform 0.325s ease-in-out, filter 0.325s ease-in-out',
             'background-position': 'center',
             'background-size': 'cover',
@@ -528,28 +512,40 @@ let currentIndex;
             'z-index': '1'
         });
 
-        function setBackgroundImage(size) {
-            console.log(`Fetching ${imageId}${size.suffix}.jpg`)
+        function setBackgroundImage(constraint) {
+            let filename = `${imageId}.jpg`;
 
+            if (constraint.n != Infinity) {
+                filename += '?' + constraint.toQueryString()
+            }
+
+            console.log('Fetching ' + filename)
+
+            // Preload the image
+            const image = new Image();
+            image.src = `images/bg/${filename}`
+
+            image.onload = () => {
             // Show its properties on the home page
-            $('#bg').after().css({
-                'background-image': `url(images/bg/${imageId}${size.suffix}.jpg)`,
-            });
+                $('#bg').after().css({
+                    'background-image': `url(images/bg/${filename})`,
+                });
+            }
 
-            currentIndex = size.index;
+            currentConstraint = constraint;
         }
 
         // Register all media query listeners
-        for (let [q, size] of Object.entries(queries)) {
+        for (let [q, c] of Object.entries(queries)) {
             const m = window.matchMedia(q)
 
             if (m.matches) {
-                setBackgroundImage(size);
+                setBackgroundImage(c);
             }
 
             m.addListener(e => {
-                if (e.matches && (currentIndex == undefined || size.index > currentIndex)) {
-                    setBackgroundImage(size);
+                if (e.matches && (currentConstraint == undefined || currentConstraint.requiresUpdate(c))) {
+                    setBackgroundImage(c);
                 }
             });
         }
