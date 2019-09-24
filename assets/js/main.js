@@ -471,7 +471,7 @@ let currentConstraint;
 
             xhr.onload = (e) => {
                 $('#bg_location').text(xhr.getResponseHeader('X-Quba-Location'));
-                $('#bg_date').text(xhr.getResponseHeader('X-Quba-Location'));
+                $('#bg_date').text(xhr.getResponseHeader('X-Quba-Date'));
                 $('meta[name=theme-color]').attr('content', xhr.getResponseHeader('X-Quba-Maincolor'));
 
                 const blob = new Blob([xhr.response], {type: contentType});
