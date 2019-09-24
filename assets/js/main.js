@@ -432,71 +432,6 @@ let currentConstraint;
                 $main._show(location.hash.substr(1), true);
             });
 
-        // Add an image
-        var backgrounds = {
-            "shenzhen_1": {
-                "location": "Shenzhen, China",
-                "date": "August 2014",
-                "hex_color": "#5D0C1C"
-            },
-
-            "geneva_1": {
-                "location": "Geneva, Switzerland",
-                "date": "June 2016",
-                "hex_color": "#737D86"
-            },
-
-            "newyork_2": {
-                "location": "New York, USA",
-                "date": "August 2015",
-                "hex_color": "#808B8F"
-            },
-
-            "thun_1": {
-                "location": "Thun, Switzerland",
-                "date": "May 2016",
-                "hex_color": "#597FA5"
-            },
-
-            "montreux_1": {
-                "location": "Montreux, Switzerland",
-                "date": "October 2016",
-                "hex_color": "#778693"
-            },
-
-            "dubai_1": {
-                "location": "Dubai, UAE",
-                "date": "June 2017",
-                "hex_color": "#514C44"
-            },
-
-            "lhc_1": {
-                "location": "LHC, France / Switzerland",
-                "date": "August 2019",
-                "hex_color": "#817365"
-            }
-        };
-
-        let imageId;
-
-        const qsImageName = new URLSearchParams(location.search).get("bgimg");
-
-        if (qsImageName != null) {
-            imageId = qsImageName;
-        } else {
-            const keys = Object.keys(backgrounds);
-
-            // Pick a random image
-            imageId = keys[Math.floor(Math.random() * keys.length)]
-        }
-
-        const image = backgrounds[imageId];
-
-        $('#bg_location').text(image.location);
-        $('#bg_date').text(image.date);
-        $('meta[name=theme-color]').attr('content', image.hex_color);
-
-
         $('#bg').after().css({
             // '-moz-transition': '-moz-transform 0.325s ease-in-out, -moz-filter 0.325s ease-in-out',
             // '-webkit-transition': '-webkit-transform 0.325s ease-in-out, -webkit-filter 0.325s ease-in-out',
@@ -508,40 +443,61 @@ let currentConstraint;
             'z-index': '1'
         });
 
-        function setBackgroundImage(constraint) {
-            let filename = `${imageId}.jpg`;
+        function setBackgroundImage(constraint, format) {
+            const params = {}
 
             if (constraint.n != Infinity) {
-                filename += '?' + constraint.toQueryString()
+                params[constraint.direction] = constraint.n
             }
 
-            console.log('Fetching ' + filename)
+            if (format) {
+                params['format'] = format
+            }
 
-            // Preload the image
-            const image = new Image();
-            image.src = `images/bg/${filename}`
+            const qs = Object.keys(params).map(k => k + '=' + params[k]).join('&');
 
-            image.onload = () => {
-            // Show its properties on the home page
+            let url = 'images/bg/random';
+
+            if (qs != '') {
+                url += '?' + qs;
+            }
+
+            console.log('Fetching ' + url)
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.responseType = "arraybuffer";
+            const contentType = xhr.getResponseHeader('Content-Type');
+
+            xhr.onload = (e) => {
+                $('#bg_location').text(xhr.getResponseHeader('X-Quba-Location'));
+                $('#bg_date').text(xhr.getResponseHeader('X-Quba-Location'));
+                $('meta[name=theme-color]').attr('content', xhr.getResponseHeader('X-Quba-Maincolor'));
+
+                const blob = new Blob([xhr.response], {type: contentType});
+
                 $('#bg').after().css({
-                    'background-image': `url(images/bg/${filename})`,
+                    'background-image': `url(${URL.createObjectURL(blob)})`,
                 });
-            }
 
-            currentConstraint = constraint;
+                currentConstraint = constraint;
+            };
+
+            xhr.send(null);
         }
 
         // Register all media query listeners
         for (let [q, c] of Object.entries(queries)) {
             const m = window.matchMedia(q)
+            const preferredFormat = 'webp'
 
             if (m.matches) {
-                setBackgroundImage(c);
+                setBackgroundImage(c, preferredFormat);
             }
 
             m.addListener(e => {
                 if (e.matches && (currentConstraint == undefined || currentConstraint.requiresUpdate(c))) {
-                    setBackgroundImage(c);
+                    setBackgroundImage(c, preferredFormat);
                 }
             });
         }
