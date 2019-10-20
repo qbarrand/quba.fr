@@ -467,14 +467,13 @@ let currentConstraint;
             const xhr = new XMLHttpRequest();
             xhr.open("GET", url, true);
             xhr.responseType = "arraybuffer";
-            const contentType = xhr.getResponseHeader('Content-Type');
 
             xhr.onload = (e) => {
                 $('#bg_location').text(xhr.getResponseHeader('X-Quba-Location'));
                 $('#bg_date').text(xhr.getResponseHeader('X-Quba-Date'));
                 $('meta[name=theme-color]').attr('content', xhr.getResponseHeader('X-Quba-Maincolor'));
 
-                const blob = new Blob([xhr.response], {type: contentType});
+                const blob = new Blob([xhr.response], {type: xhr.getResponseHeader('Content-Type')});
 
                 $('#bg').after().css({
                     'background-image': `url(${URL.createObjectURL(blob)})`,
@@ -583,11 +582,5 @@ let currentConstraint;
             tooltipFields.tooltipster('hide');
             $('#contact-form')[0].reset();
         });
-
-        // ServiceWorker for offline caching
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js', { scope: '/' })
-        }
     });
-
 })(jQuery);
