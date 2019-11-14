@@ -4,6 +4,68 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+const allImages = {
+	'shenzhen_1.jpg': 		{location: 'Shenzhen, China', 				date: 'August 2014'},
+	'geneva_1.jpg': 		{location: 'Geneva, Switzerland', 			date: 'June 2016'},
+	'newyork_2.jpg': 		{location: 'New York, USA',					date: 'August 2015'},
+	'thun_1.jpg': 			{location: 'Thun, Switzerland',				date: 'May 2016'},
+	'montreux_1.jpg': 		{location: 'Montreux, Switzerland',			date: 'October 2016',},
+	'dubai_1.jpg': 			{location: 'Dubai, UAE',					date: 'June 2017'},
+	'kyoto_1.jpg': 			{location: 'Kyoto, Japan',					date: 'October 2017'},
+	'nuggets_point_1.jpg': 	{location: 'Nuggets Point, New Zealand',	date: 'January 2019'},
+	'whaikiti_beach_1.jpg': {location: 'Whaikiti Beach, New Zealand',	date: 'January 2019'},
+	'lhc_1.jpg': 			{location: 'LHC, France / Switzerland',		date: 'August 2019'}
+};
+
+let currentDiv = null;
+let currentFile = '';
+
+async function printRandomBackground(wrapper) {
+	const keys = Object.keys(allImages).filter(e => e != currentFile);
+	currentFile = keys[Math.floor(Math.random()*keys.length)];
+
+	console.log(currentFile);
+
+	const image = allImages[currentFile];
+
+	if (image.div !== undefined) {
+		newDiv = image.div;
+	} else {
+		console.log('Fetching ' + currentFile);
+
+		// const width = window.innerWidth;
+
+		const response = await fetch(`images/${currentFile}?format=webp&width=${window.innerWidth}`);
+		const blob = await response.blob();
+		const url = URL.createObjectURL(blob);
+
+		image.div = document.createElement('div');
+		image.div.style.backgroundImage = `url("${url}")`;
+		image.div.style.backgroundPosition = 'center';
+		wrapper.appendChild(image.div);
+	}
+
+	if (currentDiv != null) {
+		currentDiv.classList.remove('top');
+	}
+
+	image.div.classList.add('visible');
+	image.div.classList.add('top');
+
+	document.querySelector('#where').innerHTML = image.location;
+	document.querySelector('#when').innerHTML = image.date;
+
+	const oldDiv = currentDiv;
+
+	if (oldDiv != null) {
+		window.setTimeout(() => oldDiv.classList.remove('visible'), 500);
+	}
+	currentDiv = image.div;
+
+	// TODO re-enable switchDiv
+	// document.querySelector('#switch > i').classList.remove('fa-spin');
+}
+
 (function() {
 
 	"use strict";
@@ -28,76 +90,80 @@
 			}, 100);
 		});
 
+	const $wrapper = document.createElement('div');
+	$wrapper.id = 'bg';
+	document.querySelector('body').appendChild($wrapper);
+
+	printRandomBackground($wrapper);
+
+	// TODO re-enable switchDiv
+	// const switchDiv = document.querySelector('#switch');
+
+	// switchDiv.addEventListener('click', e => {
+	// 	document.querySelector('#switch > i').classList.add('fa-spin');
+	// 	printRandomBackground($wrapper);
+	// });
+
 	// Slideshow Background.
-		(function() {
+		// (function() {
+			// document.querySelector('#switch').addEventListener('click', e => {
+			// 	document.querySelector('#switch > i').classList.add('fa-spin');
+			// });
 
-			// Settings.
-				var settings = {
+			// // Vars.
+			// 	var	pos = 0, lastPos = 0,
+			// 		$wrapper, $bgs = [], $bg,
+			// 		k, v;
 
-					// Images (in the format of 'url': 'alignment').
-						images: {
-							'images/bg01.jpg': 'center',
-							'images/bg02.jpg': 'center',
-							'images/bg03.jpg': 'center'
-						},
+			// // Create BG wrapper, BGs.
+			// 	$wrapper = document.createElement('div');
+			// 		$wrapper.id = 'bg';
+			// 		$body.appendChild($wrapper);
 
-					// Delay.
-						delay: 6000
+			// 	for (k in settings.images) {
 
-				};
+			// 		// Create BG.
+			// 			$bg = document.('div');
+			// 				$bg.style.backgroundImage = 'url("' + k + '")';
+			// 				$bg.style.backgroundPosition = settings.images[k];
+			// 				$wrapper.appendChild($bg);
 
-			// Vars.
-				var	pos = 0, lastPos = 0,
-					$wrapper, $bgs = [], $bg,
-					k, v;
+			// 		// Add it to array.
+			// 			$bgs.push($bg);
 
-			// Create BG wrapper, BGs.
-				$wrapper = document.createElement('div');
-					$wrapper.id = 'bg';
-					$body.appendChild($wrapper);
+			// 	}
 
-				for (k in settings.images) {
+			// // Main loop.
+			// 	$bgs[pos].classList.add('visible');
+			// 	$bgs[pos].classList.add('top');
 
-					// Create BG.
-						$bg = document.createElement('div');
-							$bg.style.backgroundImage = 'url("' + k + '")';
-							$bg.style.backgroundPosition = settings.images[k];
-							$wrapper.appendChild($bg);
+			// 	// Bail if we only have a single BG or the client doesn't support transitions.
+			// 		if ($bgs.length == 1
+			// 		||	!canUse('transition'))
+			// 			return;
 
-					// Add it to array.
-						$bgs.push($bg);
+			// 	window.setInterval(function() {
 
-				}
+			// 		lastPos = pos;
+			// 		pos++;
 
-			// Main loop.
-				$bgs[pos].classList.add('visible');
-				$bgs[pos].classList.add('top');
+			// 		// Wrap to beginning if necessary.
+			// 			if (pos >= $bgs.length)
+			// 				pos = 0;
 
-				// Bail if we only have a single BG or the client doesn't support transitions.
-					if ($bgs.length == 1
-					||	!canUse('transition'))
-						return;
+			// 		// Swap top images.
+			// 			$bgs[lastPos].classList.remove('top');
+			// 			$bgs[pos].classList.add('visible');
+			// 			$bgs[pos].classList.add('top');
 
-				window.setInterval(function() {
+			// 			console.log($bgs[pos])
 
-					lastPos = pos;
-					pos++;
+			// 		// Hide last image after a short delay.
+			// 			window.setTimeout(function() {
+			// 				$bgs[lastPos].classList.remove('visible');
+			// 			}, settings.delay / 2);
 
-					// Wrap to beginning if necessary.
-						if (pos >= $bgs.length)
-							pos = 0;
+			// 	}, settings.delay);
 
-					// Swap top images.
-						$bgs[lastPos].classList.remove('top');
-						$bgs[pos].classList.add('visible');
-						$bgs[pos].classList.add('top');
-
-					// Hide last image after a short delay.
-						window.setTimeout(function() {
-							$bgs[lastPos].classList.remove('visible');
-						}, settings.delay / 2);
-
-				}, settings.delay);
-
-		})();
+		// })();
 })();
