@@ -4,66 +4,121 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
 
+let webpSupported = false
+
+const img = new Image()
+img.onload = () => webpSupported = (img.width > 0) && (img.height > 0)
+img.src = 'data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA'
+
+class Constraint {
+    constructor(direction, n) {
+        this.direction = direction
+        this.n = n
+    }
+
+    requiresUpdate(other) {
+        return other.direction != this.direction || other.n > this.n
+    }
+
+    toQueryString() {
+        return `${this.direction}=${this.n}`
+    }
+}
+
+const queries = {
+    // Portrait
+    '(orientation: portrait) and (max-height: 480px)':                              new Constraint('height', 480),
+    '(orientation: portrait) and (min-height: 481px) and (max-height: 736px)':      new Constraint('height', 736),
+    '(orientation: portrait) and (min-height: 737px) and (max-height: 980px)':      new Constraint('height', 980),
+    '(orientation: portrait) and (min-height: 981px) and (max-height: 1280px)':     new Constraint('height', 1280),
+    '(orientation: portrait) and (min-height: 1281px) and (max-height: 1690px)':    new Constraint('height', 1690),
+    '(orientation: portrait) and (min-height: 1691px)':                             new Constraint('height', Infinity),
+
+    // Landscape
+    '(orientation: landscape) and (max-width: 480px)':                          new Constraint('width', 480),
+    '(orientation: landscape) and (min-width: 481px) and (max-width: 736px)':   new Constraint('width', 736),
+    '(orientation: landscape) and (min-width: 737px) and (max-width: 980px)':   new Constraint('width', 980),
+    '(orientation: landscape) and (min-width: 981px) and (max-width: 1280px)':  new Constraint('width', 1280),
+    '(orientation: landscape) and (min-width: 1281px) and (max-width: 1690px)': new Constraint('width', 1690),
+    '(orientation: landscape) and (min-width: 1691px) and (max-width: 1920px)': new Constraint('width', 1920),
+    '(orientation: landscape) and (min-width: 1921px) and (max-width: 2880px)': new Constraint('width', 2880),
+    '(orientation: landscape) and (min-width: 2881px)':                         new Constraint('width', Infinity),
+}
+
+class ImageData {
+	constructor(bloblUrl, mainColor) {
+		this.bloblUrl = bloblUrl;
+		this.mainColor = mainColor;
+	}
+}
+
+class ImageMetadata {
+	constructor(location, date) {
+		this.location = location;
+		this.date = date;
+	}
+}
+
 const allImages = {
-	'shenzhen_1.jpg': 		{location: 'Shenzhen, China', 				date: 'August 2014'},
-	'geneva_1.jpg': 		{location: 'Geneva, Switzerland', 			date: 'June 2016'},
-	'newyork_2.jpg': 		{location: 'New York, USA',					date: 'August 2015'},
-	'thun_1.jpg': 			{location: 'Thun, Switzerland',				date: 'May 2016'},
-	'montreux_1.jpg': 		{location: 'Montreux, Switzerland',			date: 'October 2016',},
-	'dubai_1.jpg': 			{location: 'Dubai, UAE',					date: 'June 2017'},
-	'kyoto_1.jpg': 			{location: 'Kyoto, Japan',					date: 'October 2017'},
-	'nuggets_point_1.jpg': 	{location: 'Nuggets Point, New Zealand',	date: 'January 2019'},
-	'whaikiti_beach_1.jpg': {location: 'Whaikiti Beach, New Zealand',	date: 'January 2019'},
-	'lhc_1.jpg': 			{location: 'LHC, France / Switzerland',		date: 'August 2019'}
+	'shenzhen_1.jpg': 		new ImageMetadata('Shenzhen, China', 'August 2014'),
+	'geneva_1.jpg': 		new ImageMetadata('Geneva, Switzerland', 'June 2016'),
+	'newyork_2.jpg': 		new ImageMetadata('New York, USA', 'August 2015'),
+	'thun_1.jpg': 			new ImageMetadata('Thun, Switzerland', 'May 2016'),
+	'montreux_1.jpg': 		new ImageMetadata('Montreux, Switzerland', 'October 2016',),
+	'dubai_1.jpg': 			new ImageMetadata('Dubai, UAE', 'June 2017'),
+	'kyoto_1.jpg': 			new ImageMetadata('Kyoto, Japan', 'October 2017'),
+	'nuggets_point_1.jpg': 	new ImageMetadata('Nuggets Point, New Zealand', 'January 2019'),
+	'whaikiti_beach_1.jpg': new ImageMetadata('Whaikiti Beach, New Zealand', 'January 2019'),
+	'lhc_1.jpg': 			new ImageMetadata('LHC, France / Switzerland', 'August 2019')
 };
 
-let currentDiv = null;
-let currentFile = '';
+const cache = new Map();
 
-async function printRandomBackground(wrapper) {
-	const keys = Object.keys(allImages).filter(e => e != currentFile);
-	currentFile = keys[Math.floor(Math.random()*keys.length)];
+let currentConstraint = null;
 
-	console.log(currentFile);
+async function printRandomBackground(parent, imageName, constraint) {
+	const metadata = allImages[imageName];
 
-	const image = allImages[currentFile];
+	const url = `images/${imageName}?${constraint.toQueryString()}`
 
-	if (image.div !== undefined) {
-		newDiv = image.div;
+	console.log(webpSupported)
+
+	if (webpSupported) {
+		url += '&format=webp'
+	}
+
+	let imageData = cache.get(url);
+
+	if (imageData != null) {
+		console.log('Using cache')
 	} else {
-		console.log('Fetching ' + currentFile);
+		console.log('Fetching ' + url);
 
-		// const width = window.innerWidth;
-
-		const response = await fetch(`images/${currentFile}?format=webp&width=${window.innerWidth}`);
+		const response = await fetch(url);
 		const blob = await response.blob();
-		const url = URL.createObjectURL(blob);
 
-		image.div = document.createElement('div');
-		image.div.style.backgroundImage = `url("${url}")`;
-		image.div.style.backgroundPosition = 'center';
-		wrapper.appendChild(image.div);
+		const objUrl = URL.createObjectURL(blob);
+		const mainColor = response.headers.get('X-Main-Color');
+
+		imageData = new ImageData(objUrl, mainColor);
+
+		cache.set(url, imageData);
 	}
 
-	if (currentDiv != null) {
-		currentDiv.classList.remove('top');
-	}
+	const div = document.createElement('div');
+	div.style.backgroundImage = `url("${imageData.bloblUrl}")`;
+	div.style.backgroundPosition = 'center';
+	parent.appendChild(div);
 
-	image.div.classList.add('visible');
-	image.div.classList.add('top');
+	div.classList.add('visible');
+	div.classList.add('top');
 
-	document.querySelector('#where').innerHTML = image.location;
-	document.querySelector('#when').innerHTML = image.date;
+	// document.querySelector('#where').innerHTML = metadata.location;
+	// document.querySelector('#when').innerHTML = metadata.date;
 
-	const oldDiv = currentDiv;
+	document.querySelector('meta[name=theme-color]').setAttribute('content', imageData.mainColor);
 
-	if (oldDiv != null) {
-		window.setTimeout(() => oldDiv.classList.remove('visible'), 500);
-	}
-	currentDiv = image.div;
-
-	// TODO re-enable switchDiv
-	// document.querySelector('#switch > i').classList.remove('fa-spin');
+	currentConstraint = constraint;
 }
 
 (function() {
@@ -94,7 +149,27 @@ async function printRandomBackground(wrapper) {
 	$wrapper.id = 'bg';
 	document.querySelector('body').appendChild($wrapper);
 
-	printRandomBackground($wrapper);
+	const keys = Object.keys(allImages) // .filter(e => e != currentFile);
+	const selected = keys[Math.floor(Math.random()*keys.length)];
+
+	// Register all media query listeners
+	for (let [q, c] of Object.entries(queries)) {
+		const m = window.matchMedia(q)
+		const preferredFormat = 'webp'
+
+		if (m.matches) {
+			printRandomBackground($wrapper, selected, c);
+		}
+
+		m.addListener(e => {
+			if (e.matches && (currentConstraint == undefined || currentConstraint.requiresUpdate(c))) {
+				printRandomBackground($wrapper, selected, c);
+			}
+		});
+	}
+
+
+	// printRandomBackground($wrapper);
 
 	// TODO re-enable switchDiv
 	// const switchDiv = document.querySelector('#switch');
