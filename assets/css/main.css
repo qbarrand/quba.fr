@@ -539,3 +539,8 @@ ul.fa-ul {
 code {
   text-shadow: initial;
 }
+
+#footer .copyright li.no-separator {
+  border-left: 0;
+  padding-left: 0;
+}
