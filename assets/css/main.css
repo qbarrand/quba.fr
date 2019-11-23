@@ -148,7 +148,8 @@ body {
   transition: opacity 2s ease-in-out;
   height: 100%;
   left: 0;
-  opacity: 0.375;
+  /* opacity: 0.375; */
+  opacity: 0.5;
   position: fixed;
   top: 0;
   width: 100%;
@@ -528,12 +529,16 @@ ul.icons {
 
 /* custom stuff */
 header {
-  text-shadow: 2px 2px 15px black;
+  text-shadow: 0 0 1em black;
 }
 
 ul.fa-ul {
   margin-left: 1.5em;
-  text-shadow: 0px 0px 10px black;
+  text-shadow: 0 0 1em black;
+}
+
+footer:hover {
+  text-shadow: 0 0 0.5  em black;
 }
 
 code {
