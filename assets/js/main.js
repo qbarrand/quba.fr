@@ -7,10 +7,10 @@
 let webpSupported = false;
 let webpPromiseRan = false;
 
-const p = new Promise((resolve, reject) => {
+const p = new Promise((resolve, _) => {
     let img = new Image()
     img.onload = () => resolve(img.width > 0 && img.height > 0)
-    img.onerror = () => reject(false)
+    img.onerror = () => resolve(false)
     img.src = 'data:image/webp;base64,UklGRiIAAABXRUJQVlA4IBYAAAAwAQCdASoBAAEADsD+JaQAA3AAAAAA'
 });
 
@@ -70,9 +70,12 @@ const allImages = {
     'thun_1.jpg': 			new ImageMetadata('Thun, Switzerland', 'May 2016'),
     'montreux_1.jpg': 		new ImageMetadata('Montreux, Switzerland', 'October 2016',),
     'dubai_1.jpg': 			new ImageMetadata('Dubai, UAE', 'June 2017'),
+    'new_delhi_1.jpg': 		new ImageMetadata('New Delhi, India', 'June 2017'),
     'kyoto_1.jpg': 			new ImageMetadata('Kyoto, Japan', 'October 2017'),
+    'singapore_1.jpg': 		new ImageMetadata('Singapore', 'January 2019'),
     'nuggets_point_1.jpg': 	new ImageMetadata('Nuggets Point, New Zealand', 'January 2019'),
     'whaikiti_beach_1.jpg': new ImageMetadata('Whaikiti Beach, New Zealand', 'January 2019'),
+    'malibu_1.jpg': 		new ImageMetadata('Malibu, USA', 'March 2019'),
     'lhc_1.jpg': 			new ImageMetadata('LHC, France / Switzerland', 'August 2019')
 };
 
@@ -159,8 +162,12 @@ async function printRandomBackground(parent, imageName, constraint) {
     $wrapper.id = 'bg';
     document.querySelector('body').appendChild($wrapper);
 
-    const keys = Object.keys(allImages) // .filter(e => e != currentFile);
-    const selected = keys[Math.floor(Math.random()*keys.length)];
+    let selected = new URLSearchParams(window.location.search).get('img')
+
+    if (selected == null) {
+        const keys = Object.keys(allImages) // .filter(e => e != currentFile);
+        selected = keys[Math.floor(Math.random()*keys.length)];
+    }
 
     // Register all media query listeners
     for (let [q, c] of Object.entries(queries)) {
