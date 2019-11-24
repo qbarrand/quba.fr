@@ -1,4 +1,1 @@
-User-agent: *
-Disallow: /assets
-
 Sitemap: https://quba.fr/sitemap.xml
