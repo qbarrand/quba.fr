@@ -21,15 +21,15 @@ class Constraint {
     }
 
     requiresUpdate(other) {
-        return other.direction != direction || other.n > n
+        return other.direction != direction || other.n > this.n
     }
 
     toQueryString() {
-        if (n == Infinity) {
+        if (this.n == Infinity) {
             return ''
         }
 
-        return `${direction}=${this.n}`
+        return `${this.direction}=${this.n}`
     }
 }
 
