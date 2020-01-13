@@ -54,43 +54,19 @@ const queries = {
 }
 
 class ImageData {
-    constructor(bloblUrl, mainColor) {
+    constructor(bloblUrl, mainColor, location, date) {
         this.bloblUrl = bloblUrl;
         this.mainColor = mainColor;
-    }
-}
-
-class ImageMetadata {
-    constructor(location, date) {
         this.location = location;
         this.date = date;
     }
 }
-
-const allImages = {
-    'shenzhen_1.jpg': 		new ImageMetadata('Shenzhen, China', 'August 2014'),
-    'geneva_1.jpg': 		new ImageMetadata('Geneva, Switzerland', 'June 2016'),
-    'newyork_2.jpg': 		new ImageMetadata('New York, USA', 'August 2015'),
-    'thun_1.jpg': 			new ImageMetadata('Thun, Switzerland', 'May 2016'),
-    'montreux_1.jpg': 		new ImageMetadata('Montreux, Switzerland', 'October 2016',),
-    'dubai_1.jpg': 			new ImageMetadata('Dubai, UAE', 'June 2017'),
-    'new_delhi_1.jpg': 		new ImageMetadata('New Delhi, India', 'June 2017'),
-    'kyoto_1.jpg': 			new ImageMetadata('Kyoto, Japan', 'October 2017'),
-    'singapore_1.jpg': 		new ImageMetadata('Singapore', 'January 2019'),
-    'nuggets_point_1.jpg': 	new ImageMetadata('Nuggets Point, New Zealand', 'January 2019'),
-    'whaikiti_beach_1.jpg': new ImageMetadata('Whaikiti Beach, New Zealand', 'January 2019'),
-    'malibu_1.jpg': 		new ImageMetadata('Malibu, USA', 'March 2019'),
-    'lhc_1.jpg': 			new ImageMetadata('LHC, France / Switzerland', 'August 2019'),
-    'dents_du_midi_1.jpg': 	new ImageMetadata('Dents du Midi, Switzerland', 'January 2020')
-};
 
 const cache = new Map();
 
 let currentConstraint = null;
 
 async function printRandomBackground(parent, imageName, constraint) {
-    const metadata = allImages[imageName];
-
     let url = `images/${imageName}?${constraint.toQueryString()}`
 
     if (!webpPromiseRan) {
@@ -120,10 +96,12 @@ async function printRandomBackground(parent, imageName, constraint) {
 
         const blob = await response.blob();
 
-        const objUrl = URL.createObjectURL(blob);
-        const mainColor = response.headers.get('X-Main-Color');
-
-        imageData = new ImageData(objUrl, mainColor);
+        imageData = new ImageData(
+            URL.createObjectURL(blob),
+            response.headers.get('X-Main-Color'),
+            response.headers.get('X-Location'),
+            response.headers.get('X-Date')
+        );
 
         cache.set(url, imageData);
     }
@@ -136,15 +114,15 @@ async function printRandomBackground(parent, imageName, constraint) {
     div.classList.add('visible');
     div.classList.add('top');
 
-    document.querySelector('#where').innerHTML = metadata.location;
-    document.querySelector('#when').innerHTML = metadata.date;
+    document.querySelector('#where').innerHTML = imageData.location;
+    document.querySelector('#when').innerHTML = imageData.date;
 
     document.querySelector('meta[name=theme-color]').setAttribute('content', imageData.mainColor);
 
     currentConstraint = constraint;
 }
 
-(function() {
+(async function() {
 
     "use strict";
 
@@ -172,11 +150,18 @@ async function printRandomBackground(parent, imageName, constraint) {
     $wrapper.id = 'bg';
     document.querySelector('body').appendChild($wrapper);
 
+    const res = await fetch("/images/");
+    const arr = await res.json();
+    const allImages = arr.map(e => {
+        if (e.type == "file") {
+            return e.name;
+        }
+    });
+
     let selected = new URLSearchParams(window.location.search).get('img')
 
     if (selected == null) {
-        const keys = Object.keys(allImages) // .filter(e => e != currentFile);
-        selected = keys[Math.floor(Math.random()*keys.length)];
+        selected = allImages[Math.floor(Math.random()*allImages.length)];
     }
 
     // Register all media query listeners
