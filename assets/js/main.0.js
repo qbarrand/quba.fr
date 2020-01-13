@@ -80,7 +80,8 @@ const allImages = {
     'nuggets_point_1.jpg': 	new ImageMetadata('Nuggets Point, New Zealand', 'January 2019'),
     'whaikiti_beach_1.jpg': new ImageMetadata('Whaikiti Beach, New Zealand', 'January 2019'),
     'malibu_1.jpg': 		new ImageMetadata('Malibu, USA', 'March 2019'),
-    'lhc_1.jpg': 			new ImageMetadata('LHC, France / Switzerland', 'August 2019')
+    'lhc_1.jpg': 			new ImageMetadata('LHC, France / Switzerland', 'August 2019'),
+    'dents_du_midi_1.jpg': 	new ImageMetadata('Dents du Midi, Switzerland', 'January 2020')
 };
 
 const cache = new Map();
