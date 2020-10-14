@@ -9,9 +9,10 @@ type Handler interface {
 	io.WriterTo
 
 	Resize(context.Context, int, int) error
+	SetFormat(Format) error
 }
 
 type Processor interface {
 	Init() error
-	NewImageHandler(string) (*Handler, error)
+	NewImageHandler(string) (Handler, error)
 }

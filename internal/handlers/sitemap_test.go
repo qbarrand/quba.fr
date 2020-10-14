@@ -3,26 +3,29 @@ package handlers
 import (
 	"net/http/httptest"
 	"testing"
+	"time"
 
+	"github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func Test_newSitemap(t *testing.T) {
-	t.Run("empty lastmod", func(t *testing.T) {
-		_, err := newSitemap("")
-		assert.Error(t, err)
-	})
+	logger, _ := test.NewNullLogger()
 
 	t.Run("should work", func(t *testing.T) {
-		s, err := newSitemap("2020-10-14")
+		s, err := newSitemap(time.Now(), logger)
 		assert.NoError(t, err)
 		assert.NotNil(t, s)
 	})
 }
 
 func TestSitemap_ServeHTTP(t *testing.T) {
-	s, err := newSitemap("2020-10-14")
+	logger, _ := test.NewNullLogger()
+
+	lastModTime := time.Date(2020, time.October, 14, 0, 0, 0, 0, time.UTC)
+
+	s, err := newSitemap(lastModTime, logger)
 
 	require.NoError(t, err)
 

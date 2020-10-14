@@ -5,11 +5,11 @@ import (
 	"flag"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/sirupsen/logrus"
 
 	"github.com/qbarrand/quba.fr/internal/handlers"
+	"github.com/qbarrand/quba.fr/internal/image"
 )
 
 func main() {
@@ -32,13 +32,17 @@ func main() {
 	logger.SetLevel(logLevel)
 
 	opts := handlers.AppOptions{
-		LastMod: time.Now(),
+		ImageProcessor: &image.VipsProcessor{},
+		LastMod:        cfg.lastMod,
+		WebRootDir:     "webroot",
 	}
 
 	app, err := handlers.NewApp(&opts, logger)
 	if err != nil {
 		logger.WithError(err).Fatal("Could not initialize the app")
 	}
+
+	logger.WithField("addr", cfg.addr).Info("Starting the server")
 
 	if err := http.ListenAndServe(cfg.addr, app); err != nil {
 		logger.WithError(err).Fatal("General error caught")
