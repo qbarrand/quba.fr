@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	img "github.com/qbarrand/quba.fr/internal/image"
+	"github.com/qbarrand/quba.fr/pkg/httplog"
 )
 
 const requestIDKey = "request-id"
@@ -50,10 +51,19 @@ func loggingMiddleware(logger logrus.FieldLogger, next http.Handler) http.Handle
 
 		ctx := context.WithValue(r.Context(), requestIDKey, id)
 
+		lrw := httplog.NewLoggingResponseWriter(w)
+
 		next.ServeHTTP(
-			w,
+			lrw,
 			r.WithContext(ctx),
 		)
+
+		logger.
+			WithFields(logrus.Fields{
+				"id":     id,
+				"status": lrw.StatusCode(),
+			}).
+			Info("Finished serving request")
 	}
 }
 

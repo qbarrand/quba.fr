@@ -11,7 +11,7 @@ var errNotImplemented = errors.New("not implemented")
 type VipsHandler struct {
 }
 
-func (vh *VipsHandler) Resize(ctx context.Context, i int, i2 int) error {
+func (vh *VipsHandler) Resize(ctx context.Context, w, h int) error {
 	return errNotImplemented
 }
 
