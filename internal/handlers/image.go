@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -38,5 +39,30 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	i.logger.WithField("path", path).Debug("Serving image")
 
-	http.ServeFile(w, r, path)
+	fail := func(msg string, wrapped error) {
+		i.logger.WithError(wrapped).Error(msg)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+
+	handler, err := i.processor.NewImageHandler(path)
+	if err != nil {
+		fail("Could not create an image handler", err)
+		return
+	}
+
+	// Get the format
+	f, err := img.AcceptHeaderToFormat(r.Header.Values("Accept"))
+	if err != nil {
+		if errors.Is(img.ErrNotAcceptable, err) {
+			// TODO find something clever in case the image is not JPEG
+			i.logger.WithError(err).Debug("No acceptable format: using JPEG")
+			f = img.JPEG
+		} else {
+			fail("Error while determining the accepted format", err)
+			return
+		}
+	}
+
+	_ = f
+	_ = handler
 }

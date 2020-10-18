@@ -26,6 +26,11 @@ func (vh *VipsHandler) WriteTo(w io.Writer) (n int64, err error) {
 type VipsProcessor struct {
 }
 
+func (vp *VipsProcessor) Destroy() error {
+	// noop for this processor
+	return nil
+}
+
 func (vp *VipsProcessor) Init() error {
 	// noop for this processor
 	return nil

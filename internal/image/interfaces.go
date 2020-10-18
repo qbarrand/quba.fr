@@ -13,6 +13,7 @@ type Handler interface {
 }
 
 type Processor interface {
+	Destroy() error
 	Init() error
 	NewImageHandler(string) (Handler, error)
 }
