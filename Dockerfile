@@ -1,6 +1,6 @@
 FROM golang:1.15-alpine as builder
 
-RUN ["apk", "add", "git", "make"]
+RUN ["apk", "add", "gcc", "git", "make", "musl-dev", "pkgconfig", "vips-dev"]
 
 RUN ["mkdir", "/build"]
 WORKDIR /build
@@ -15,6 +15,13 @@ RUN ["make"]
 
 FROM alpine
 
-COPY --from=builder /build/quba-fr /
+RUN ["mkdir", "/app"]
 
-ENTRYPOINT ["/quba-fr"]
+COPY --from=builder /build/quba-fr /app
+COPY ./webroot /app/webroot
+
+RUN ["apk", "add", "vips"]
+
+EXPOSE 8080/tcp
+
+ENTRYPOINT ["/app/quba-fr"]
