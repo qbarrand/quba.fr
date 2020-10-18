@@ -7,6 +7,7 @@ import "context"
 type Handler interface {
 	Bytes() ([]byte, error)
 	Destroy() error
+	MainColor() (uint, uint, uint, error)
 	Resize(context.Context, int, int) error
 	SetFormat(Format) error
 }

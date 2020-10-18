@@ -31,6 +31,10 @@ func (vh *VipsHandler) Destroy() error {
 	return nil
 }
 
+func (vh *VipsHandler) MainColor() (uint, uint, uint, error) {
+	return 0, 0, 0, errors.New("not implemented")
+}
+
 func (vh *VipsHandler) Resize(ctx context.Context, w, h int) error {
 	chanErr := make(chan error, 1)
 
