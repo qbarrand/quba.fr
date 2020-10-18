@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"net/http"
 	"path/filepath"
+	"strconv"
 
 	"github.com/sirupsen/logrus"
 
@@ -49,6 +51,7 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		fail("Could not create an image handler", err)
 		return
 	}
+	defer handler.Destroy()
 
 	// Get the format
 	f, err := img.AcceptHeaderToFormat(r.Header.Values("Accept"))
@@ -63,6 +66,37 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	_ = f
-	_ = handler
+	if err := handler.SetFormat(f); err != nil {
+		fail("Could not set the format", err)
+		return
+	}
+
+	widthStr := r.FormValue("width")
+
+	if widthStr != "" {
+		width, err := strconv.Atoi(widthStr)
+		if err != nil {
+			fail("Could not convert the width parameter to integer", err)
+			return
+		}
+
+		if err := handler.Resize(r.Context(), width, 0); err != nil {
+			fail("Could not resize the image", err)
+			return
+		}
+	}
+
+	buf, err := handler.Bytes()
+	if err != nil {
+		fail("Could not get the image bytes", err)
+		return
+	}
+
+	n, err := bytes.NewReader(buf).WriteTo(w)
+	if err != nil {
+		fail("Could not write the resulting image", err)
+		return
+	}
+
+	i.logger.WithField("bytes", n).Debug("Finished writing image")
 }

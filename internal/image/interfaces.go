@@ -1,13 +1,12 @@
+//go:generate go run github.com/golang/mock/mockgen -source interfaces.go -destination mock_image/interfaces.go Handler,Processor
+
 package image
 
-import (
-	"context"
-	"io"
-)
+import "context"
 
 type Handler interface {
-	io.WriterTo
-
+	Bytes() ([]byte, error)
+	Destroy() error
 	Resize(context.Context, int, int) error
 	SetFormat(Format) error
 }
