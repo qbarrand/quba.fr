@@ -185,7 +185,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 	t.Run("resize + return bytes", func(t *testing.T) {
 		const width = 1234
 
-		buf := []byte(`abcd`)
+		buf := []byte("abcd")
 		ctx := getContext(t)
 
 		mockHandler := mock_image.NewMockHandler(ctrl)

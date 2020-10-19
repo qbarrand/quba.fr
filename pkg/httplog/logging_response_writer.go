@@ -20,6 +20,11 @@ func (lrw *LoggingResponseWriter) StatusCode() int {
 }
 
 func (lrw *LoggingResponseWriter) Write(b []byte) (int, error) {
+	// Respect the http.ResponseWriter interface's behaviour as documented
+	if lrw.statusCode == 0 {
+		lrw.WriteHeader(http.StatusOK)
+	}
+
 	return lrw.wrapped.Write(b)
 }
 

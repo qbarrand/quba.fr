@@ -1,7 +1,6 @@
 package httplog
 
 import (
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -64,9 +63,6 @@ func TestLoggingResponseWriter_Write(t *testing.T) {
 
 	require.NoError(t, err)
 	assert.Equal(t, len(content), n)
-
-	responseBody, err := ioutil.ReadAll(rw.Result().Body)
-
-	require.NoError(t, err)
-	assert.Equal(t, content, responseBody)
+	assert.Equal(t, content, rw.Body.Bytes())
+	assert.Equal(t, http.StatusOK, lrw.statusCode)
 }
