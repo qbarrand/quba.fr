@@ -1,9 +1,10 @@
 package handlers
 
 import (
-	"bytes"
+	"encoding/hex"
 	"errors"
 	"fmt"
+	"hash/fnv"
 	"net/http"
 	"path/filepath"
 	"strconv"
@@ -39,10 +40,15 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		filepath.Base(r.URL.Path),
 	)
 
-	i.logger.WithField("path", path).Debug("Serving image")
+	logger := i.logger.WithFields(logrus.Fields{
+		"path":       path,
+		"request-id": getRequestID(r),
+	})
+
+	logger.Debug("Serving image")
 
 	fail := func(msg string, wrapped error) {
-		i.logger.WithError(wrapped).Error(msg)
+		logger.WithError(wrapped).Error(msg)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 
@@ -65,8 +71,6 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
-	w.Header().Set("Content-Type", mimeType)
 
 	if err := handler.SetFormat(f); err != nil {
 		fail("Could not set the format", err)
@@ -94,11 +98,21 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	n, err := bytes.NewReader(buf).WriteTo(w)
+	h := fnv.New32()
+	h.Write(buf) // per the docs: never returns an error
+
+	headers := w.Header()
+
+	headers.Set("Content-Length", strconv.Itoa(len(buf)))
+	headers.Set("Content-Type", mimeType)
+	headers.Set("ETag", hex.EncodeToString(h.Sum(nil)))
+
+	n, err := w.Write(buf)
 	if err != nil {
-		fail("Could not write the resulting image", err)
+		// do not call fail() as we've already written headers
+		logger.WithError(err).Error("Could not write the resulting image")
 		return
 	}
 
-	i.logger.WithField("bytes", n).Debug("Finished writing image")
+	logger.WithField("bytes", n).Debug("Finished writing image")
 }

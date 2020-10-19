@@ -153,9 +153,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		r.Form.Set("width", strconv.Itoa(width))
 		r = r.WithContext(ctx)
 
-		w := assertStatusCode(t, i, r, http.StatusInternalServerError)
-
-		assert.Equal(t, mimeWebp, w.Result().Header.Get(contentTypeHeader))
+		assertStatusCode(t, i, r, http.StatusInternalServerError)
 	})
 
 	t.Run("no resize + cannot get bytes", func(t *testing.T) {
@@ -181,9 +179,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		r.Header.Set(acceptHeader, mimeWebp)
 		r = r.WithContext(ctx)
 
-		w := assertStatusCode(t, i, r, http.StatusInternalServerError)
-
-		assert.Equal(t, mimeWebp, w.Result().Header.Get(contentTypeHeader))
+		assertStatusCode(t, i, r, http.StatusInternalServerError)
 	})
 
 	t.Run("resize + return bytes", func(t *testing.T) {
@@ -217,6 +213,10 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		w := assertStatusCode(t, i, r, http.StatusOK)
 		assert.Equal(t, mimeWebp, w.Result().Header.Get(contentTypeHeader))
+		// `abcd`'s fnv hash is b9de7375
+		assert.Equal(t, "b9de7375", w.Result().Header.Get("ETag"))
+		// `abcd` is 4 bytes
+		assert.Equal(t, "4", w.Result().Header.Get("Content-Length"))
 		assert.Equal(t, buf, w.Body.Bytes())
 	})
 }

@@ -18,7 +18,13 @@ import (
 const requestIDKey = "request-id"
 
 func getRequestID(r *http.Request) string {
-	return r.Context().Value(requestIDKey).(string)
+	id, ok := r.Context().Value(requestIDKey).(string)
+
+	if ok {
+		return id
+	}
+
+	return "<nil>"
 }
 
 type AppOptions struct {
