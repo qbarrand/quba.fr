@@ -13,15 +13,15 @@ const (
 
 var ErrNotAcceptable = errors.New("no acceptable MIME type found")
 
-func AcceptHeaderToFormat(accept []string) (Format, error) {
+func AcceptHeaderToFormat(accept []string) (Format, string, error) {
 	for _, mimeType := range accept {
 		switch mimeType {
 		case "image/jpeg":
-			return JPEG, nil
+			return JPEG, mimeType, nil
 		case "image/webp":
-			return Webp, nil
+			return Webp, mimeType, nil
 		}
 	}
 
-	return 0, ErrNotAcceptable
+	return 0, "", ErrNotAcceptable
 }

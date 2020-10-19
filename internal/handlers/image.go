@@ -54,7 +54,7 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer handler.Destroy()
 
 	// Get the format
-	f, err := img.AcceptHeaderToFormat(r.Header.Values("Accept"))
+	f, mimeType, err := img.AcceptHeaderToFormat(r.Header.Values("Accept"))
 	if err != nil {
 		if errors.Is(img.ErrNotAcceptable, err) {
 			// TODO find something clever in case the image is not JPEG
@@ -65,6 +65,8 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	w.Header().Set("Content-Type", mimeType)
 
 	if err := handler.SetFormat(f); err != nil {
 		fail("Could not set the format", err)

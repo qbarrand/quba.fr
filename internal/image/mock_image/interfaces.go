@@ -63,6 +63,23 @@ func (mr *MockHandlerMockRecorder) Destroy() *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Destroy", reflect.TypeOf((*MockHandler)(nil).Destroy))
 }
 
+// MainColor mocks base method
+func (m *MockHandler) MainColor() (uint, uint, uint, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "MainColor")
+	ret0, _ := ret[0].(uint)
+	ret1, _ := ret[1].(uint)
+	ret2, _ := ret[2].(uint)
+	ret3, _ := ret[3].(error)
+	return ret0, ret1, ret2, ret3
+}
+
+// MainColor indicates an expected call of MainColor
+func (mr *MockHandlerMockRecorder) MainColor() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MainColor", reflect.TypeOf((*MockHandler)(nil).MainColor))
+}
+
 // Resize mocks base method
 func (m *MockHandler) Resize(arg0 context.Context, arg1, arg2 int) error {
 	m.ctrl.T.Helper()

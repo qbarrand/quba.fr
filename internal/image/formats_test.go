@@ -9,33 +9,45 @@ import (
 )
 
 func TestAcceptHeaderToFormat(t *testing.T) {
+	const (
+		mimeJpeg = "image/jpeg"
+		mimeWebp = "image/webp"
+	)
+
 	cases := []struct {
-		types         []string
-		expected      Format
-		returnedError error
+		types            []string
+		expectedFormat   Format
+		expectedMIMEType string
+		returnedError    error
 	}{
 		{
-			types:    []string{"image/jpeg"},
-			expected: JPEG,
+			types:            []string{mimeJpeg},
+			expectedFormat:   JPEG,
+			expectedMIMEType: mimeJpeg,
 		},
 		{
-			types:    []string{"image/webp"},
-			expected: Webp,
+			types:            []string{mimeWebp},
+			expectedFormat:   Webp,
+			expectedMIMEType: mimeWebp,
 		},
 		{
-			types:    []string{"image/webp", "image/jpeg"},
-			expected: Webp,
+			types:            []string{mimeWebp, mimeJpeg},
+			expectedFormat:   Webp,
+			expectedMIMEType: mimeWebp,
 		},
 		{
-			types:         []string{"image/bmp"},
-			returnedError: ErrNotAcceptable,
+			types:            []string{"image/bmp"},
+			expectedFormat:   0,
+			expectedMIMEType: "",
+			returnedError:    ErrNotAcceptable,
 		},
 	}
 
 	for _, c := range cases {
 		t.Run(strings.Join(c.types, "_"), func(t *testing.T) {
-			f, err := AcceptHeaderToFormat(c.types)
-			assert.Equal(t, c.expected, f)
+			f, mime, err := AcceptHeaderToFormat(c.types)
+			assert.Equal(t, c.expectedFormat, f)
+			assert.Equal(t, c.expectedMIMEType, mime)
 
 			if c.returnedError != nil {
 				assert.True(t, errors.Is(ErrNotAcceptable, err))
