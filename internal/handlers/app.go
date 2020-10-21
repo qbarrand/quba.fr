@@ -12,7 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	img "github.com/qbarrand/quba.fr/internal/image"
-	"github.com/qbarrand/quba.fr/pkg/httplog"
+	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
 const requestIDKey = "request-id"
@@ -46,9 +46,10 @@ func loggingMiddleware(logger logrus.FieldLogger, next http.Handler) http.Handle
 			id = u.String()
 		}
 
+		logger = logger.WithField("id", id)
+
 		logger.
 			WithFields(logrus.Fields{
-				"id":     id,
 				"method": r.Method,
 				"remote": r.RemoteAddr,
 				"url":    r.URL.String(),
@@ -57,18 +58,15 @@ func loggingMiddleware(logger logrus.FieldLogger, next http.Handler) http.Handle
 
 		ctx := context.WithValue(r.Context(), requestIDKey, id)
 
-		lrw := httplog.NewLoggingResponseWriter(w)
+		scrw := httputils.NewStatusCodeResponseWriter(w)
 
 		next.ServeHTTP(
-			lrw,
+			scrw,
 			r.WithContext(ctx),
 		)
 
 		logger.
-			WithFields(logrus.Fields{
-				"id":     id,
-				"status": lrw.StatusCode(),
-			}).
+			WithField("status", scrw.StatusCode()).
 			Info("Finished serving request")
 	}
 }
@@ -94,6 +92,7 @@ func NewApp(opts *AppOptions, logger logrus.FieldLogger) (http.HandlerFunc, erro
 
 	subRouter := router.Methods(http.MethodGet).Subrouter()
 	subRouter.Handle("/sitemap.xml", sitemap)
+	subRouter.Handle("/healthz", newHealthz(logger))
 	subRouter.PathPrefix("/images").Handler(image)
 	subRouter.PathPrefix("/").Handler(
 		http.FileServer(
