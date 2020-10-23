@@ -12,6 +12,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	img "github.com/qbarrand/quba.fr/internal/image"
+	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
 type image struct {
@@ -42,7 +43,7 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	logger := i.logger.WithFields(logrus.Fields{
 		"path":       path,
-		"request-id": getRequestID(r),
+		"request-id": httputils.GetRequestID(r),
 	})
 
 	logger.Debug("Serving image")
