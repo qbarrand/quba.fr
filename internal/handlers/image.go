@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"bytes"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"hash/fnv"
@@ -16,6 +18,7 @@ import (
 )
 
 type image struct {
+	lister    img.Lister
 	logger    logrus.FieldLogger
 	path      string
 	processor img.Processor
@@ -116,4 +119,28 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	logger.WithField("bytes", n).Debug("Finished writing image")
+}
+
+func newImageLister(lister img.Lister, logger logrus.FieldLogger) (http.HandlerFunc, error) {
+	var buf bytes.Buffer
+
+	allImages, err := lister.Images()
+	if err != nil {
+		return nil, fmt.Errorf("could not list images: %v", err)
+	}
+
+	if err := json.NewEncoder(&buf).Encode(allImages); err != nil {
+		return nil, fmt.Errorf("could not generate the corresponding JSON: %v", err)
+	}
+
+	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+
+		if _, err := buf.WriteTo(w); err != nil {
+			logger.WithError(err).Error("Could not write the list of images")
+		}
+	}
+
+	return handlerFunc, nil
 }

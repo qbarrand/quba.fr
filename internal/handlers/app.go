@@ -19,10 +19,11 @@ type AppOptions struct {
 }
 
 type App struct {
-	file    http.Handler
-	healthz http.Handler
-	image   http.Handler
-	sitemap http.Handler
+	file        http.Handler
+	healthz     http.Handler
+	image       http.Handler
+	imageLister http.Handler
+	sitemap     http.Handler
 }
 
 func (a *App) Router() *mux.Router {
@@ -31,7 +32,8 @@ func (a *App) Router() *mux.Router {
 	subRouter := router.Methods(http.MethodGet).Subrouter()
 	subRouter.Handle("/healthz", a.healthz)
 	subRouter.Handle("/sitemap.xml", a.sitemap)
-	subRouter.PathPrefix("/images").Handler(a.image)
+	subRouter.Path("/images").Handler(a.imageLister)
+	subRouter.PathPrefix("/images/").Handler(a.image)
 	subRouter.PathPrefix("/").Handler(a.file)
 
 	return router
@@ -54,11 +56,17 @@ func NewApp(opts *AppOptions, logger logrus.FieldLogger) (*App, error) {
 		return nil, fmt.Errorf("could not initialize the image handler: %v", err)
 	}
 
+	imageLister, err := newImageLister(&img.StaticLister{}, logger.WithField(handlerKey, "lister"))
+	if err != nil {
+		return nil, fmt.Errorf("could not initialize the lister handler: %w", err)
+	}
+
 	app := App{
-		file:    http.FileServer(http.Dir(opts.WebRootDir)),
-		healthz: newHealthz(logger),
-		image:   image,
-		sitemap: sitemap,
+		file:        http.FileServer(http.Dir(opts.WebRootDir)),
+		healthz:     newHealthz(logger),
+		image:       image,
+		imageLister: imageLister,
+		sitemap:     sitemap,
 	}
 
 	return &app, nil
