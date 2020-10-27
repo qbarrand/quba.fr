@@ -18,8 +18,8 @@ import (
 )
 
 type image struct {
-	lister    img.Lister
 	logger    logrus.FieldLogger
+	metaDB    img.MetaDB
 	path      string
 	processor img.Processor
 }
@@ -121,15 +121,15 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	logger.WithField("bytes", n).Debug("Finished writing image")
 }
 
-func newImageLister(lister img.Lister, logger logrus.FieldLogger) (http.HandlerFunc, error) {
+func newImageLister(metaDB img.MetaDB, logger logrus.FieldLogger) (http.HandlerFunc, error) {
 	var buf bytes.Buffer
 
-	allImages, err := lister.Images()
+	allNames, err := metaDB.AllNames()
 	if err != nil {
-		return nil, fmt.Errorf("could not list images: %v", err)
+		return nil, fmt.Errorf("could not get a list of image names: %w", err)
 	}
 
-	if err := json.NewEncoder(&buf).Encode(allImages); err != nil {
+	if err := json.NewEncoder(&buf).Encode(allNames); err != nil {
 		return nil, fmt.Errorf("could not generate the corresponding JSON: %v", err)
 	}
 

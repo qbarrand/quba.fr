@@ -56,7 +56,7 @@ func NewApp(opts *AppOptions, logger logrus.FieldLogger) (*App, error) {
 		return nil, fmt.Errorf("could not initialize the image handler: %v", err)
 	}
 
-	imageLister, err := newImageLister(&img.StaticLister{}, logger.WithField(handlerKey, "lister"))
+	imageLister, err := newImageLister(img.NewStaticMetaDB(), logger.WithField(handlerKey, "lister"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the lister handler: %w", err)
 	}

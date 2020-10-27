@@ -10,6 +10,8 @@ import (
 )
 
 func TestGetRequestID(t *testing.T) {
+	t.Parallel()
+
 	t.Run("no request ID", func(t *testing.T) {
 		req := httptest.NewRequest(http.MethodGet, "/some/url", nil)
 		assert.Equal(t, "<nil>", GetRequestID(req))

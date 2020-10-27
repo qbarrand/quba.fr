@@ -220,3 +220,37 @@ func TestImage_ServeHTTP(t *testing.T) {
 		assert.Equal(t, buf, w.Body.Bytes())
 	})
 }
+
+func Test_newImageLister(t *testing.T) {
+	t.Parallel()
+
+	ctrl := gomock.NewController(t)
+	metaDB := mock_image.NewMockMetaDB(ctrl)
+
+	t.Run("returns an error", func(t *testing.T) {
+		randomError := errors.New("random-error")
+
+		metaDB.EXPECT().AllNames().Return(nil, randomError)
+
+		_, err := newImageLister(metaDB, nil)
+		assert.True(t, errors.Is(err, randomError))
+	})
+
+	t.Run("should work as expected", func(t *testing.T) {
+		metaDB.EXPECT().AllNames().Return([]string{"name-1", "name-2"}, nil)
+
+		logger, _ := test.NewNullLogger()
+
+		il, err := newImageLister(metaDB, logger)
+
+		require.NoError(t, err)
+
+		req := httptest.NewRequest(http.MethodGet, "/", nil)
+		w := httptest.NewRecorder()
+
+		il.ServeHTTP(w, req)
+
+		assert.Equal(t, "application/json", w.Header().Get("Content-Type"))
+		assert.Equal(t, `["name-1","name-2"]`+"\n", w.Body.String())
+	})
+}

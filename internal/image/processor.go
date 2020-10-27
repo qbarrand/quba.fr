@@ -1,8 +1,10 @@
-//go:generate go run github.com/golang/mock/mockgen -source interfaces.go -destination mock_image/interfaces.go Handler,Processor
+//go:generate go run github.com/golang/mock/mockgen -source processor.go -destination mock_image/processor.go Handler,Processor
 
 package image
 
-import "context"
+import (
+	"context"
+)
 
 type Handler interface {
 	Bytes() ([]byte, error)
