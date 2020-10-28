@@ -51,12 +51,14 @@ func NewApp(opts *AppOptions, logger logrus.FieldLogger) (*App, error) {
 
 	imagesPath := filepath.Join(opts.WebRootDir, subdir)
 
-	image, err := newImage(opts.ImageProcessor, imagesPath, logger.WithField(handlerKey, "image"))
+	meta := img.NewStaticMetaDB()
+
+	image, err := newImage(opts.ImageProcessor, imagesPath, meta, logger.WithField(handlerKey, "image"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the image handler: %v", err)
 	}
 
-	imageLister, err := newImageLister(img.NewStaticMetaDB(), logger.WithField(handlerKey, "lister"))
+	imageLister, err := newImageLister(meta, logger.WithField(handlerKey, "lister"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the lister handler: %w", err)
 	}

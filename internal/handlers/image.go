@@ -24,13 +24,14 @@ type image struct {
 	processor img.Processor
 }
 
-func newImage(processor img.Processor, path string, logger logrus.FieldLogger) (*image, error) {
+func newImage(processor img.Processor, path string, metaDB img.MetaDB, logger logrus.FieldLogger) (*image, error) {
 	if err := processor.Init(); err != nil {
 		return nil, fmt.Errorf("could not initialize the processor: %w", err)
 	}
 
 	i := image{
 		logger:    logger,
+		metaDB:    metaDB,
 		path:      path,
 		processor: processor,
 	}
@@ -39,10 +40,9 @@ func newImage(processor img.Processor, path string, logger logrus.FieldLogger) (
 }
 
 func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	path := filepath.Join(
-		i.path,
-		filepath.Base(r.URL.Path),
-	)
+	name := filepath.Base(r.URL.Path)
+
+	path := filepath.Join(i.path, name)
 
 	logger := i.logger.WithFields(logrus.Fields{
 		"path":       path,
@@ -105,11 +105,19 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := fnv.New32()
 	h.Write(buf) // per the docs: never returns an error
 
+	meta, err := i.metaDB.GetMetadata(name)
+	if err != nil {
+		fail("Could not get the image metadata", err)
+		return
+	}
+
 	headers := w.Header()
 
 	headers.Set("Content-Length", strconv.Itoa(len(buf)))
 	headers.Set("Content-Type", mimeType)
 	headers.Set("ETag", hex.EncodeToString(h.Sum(nil)))
+	headers.Set("X-Quba-Date", strconv.FormatInt(meta.Date.Unix(), 10))
+	headers.Set("X-Quba-Location", meta.Location)
 
 	n, err := w.Write(buf)
 	if err != nil {
@@ -133,11 +141,13 @@ func newImageLister(metaDB img.MetaDB, logger logrus.FieldLogger) (http.HandlerF
 		return nil, fmt.Errorf("could not generate the corresponding JSON: %v", err)
 	}
 
+	b := buf.Bytes()
+
 	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
-		if _, err := buf.WriteTo(w); err != nil {
+		if _, err := w.Write(b); err != nil {
 			logger.WithError(err).Error("Could not write the list of images")
 		}
 	}

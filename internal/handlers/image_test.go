@@ -8,6 +8,7 @@ import (
 	"net/url"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/golang/mock/gomock"
 	"github.com/sirupsen/logrus/hooks/test"
@@ -23,13 +24,14 @@ func Test_newImage(t *testing.T) {
 
 	ctrl := gomock.NewController(t)
 	mockProcessor := mock_image.NewMockProcessor(ctrl)
+	mockMeta := mock_image.NewMockMetaDB(ctrl)
 
 	t.Run("processor returns an error", func(t *testing.T) {
 		randomError := errors.New("random error")
 
 		mockProcessor.EXPECT().Init().Return(randomError)
 
-		_, err := newImage(mockProcessor, "", nil)
+		_, err := newImage(mockProcessor, "", nil, nil)
 		assert.True(t, errors.Is(err, randomError))
 	})
 
@@ -41,11 +43,12 @@ func Test_newImage(t *testing.T) {
 
 		expected := &image{
 			logger:    logger,
+			metaDB:    mockMeta,
 			path:      path,
 			processor: mockProcessor,
 		}
 
-		i, err := newImage(mockProcessor, path, logger)
+		i, err := newImage(mockProcessor, path, mockMeta, logger)
 
 		assert.NoError(t, err)
 		assert.Equal(t, expected, i)
@@ -57,6 +60,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 	ctrl := gomock.NewController(t)
 	mockProcessor := mock_image.NewMockProcessor(ctrl)
+	mockMetaDB := mock_image.NewMockMetaDB(ctrl)
 
 	const (
 		acceptHeader      = "Accept"
@@ -74,7 +78,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		logger, _ := test.NewNullLogger()
 
-		i, err := newImage(mockProcessor, "basepath", logger)
+		i, err := newImage(mockProcessor, "basepath", mockMetaDB, logger)
 
 		require.NoError(t, err)
 		assert.HTTPStatusCode(
@@ -110,7 +114,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		logger, _ := test.NewNullLogger()
 
-		i, err := newImage(mockProcessor, "basepath", logger)
+		i, err := newImage(mockProcessor, "basepath", mockMetaDB, logger)
 
 		require.NoError(t, err)
 
@@ -143,7 +147,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		logger, _ := test.NewNullLogger()
 
-		i, err := newImage(mockProcessor, "basepath", logger)
+		i, err := newImage(mockProcessor, "basepath", mockMetaDB, logger)
 
 		require.NoError(t, err)
 
@@ -171,7 +175,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		logger, _ := test.NewNullLogger()
 
-		i, err := newImage(mockProcessor, "basepath", logger)
+		i, err := newImage(mockProcessor, "basepath", mockMetaDB, logger)
 
 		require.NoError(t, err)
 
@@ -190,18 +194,29 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		mockHandler := mock_image.NewMockHandler(ctrl)
 
+		const (
+			location = "some-location"
+			secs     = 1603842450
+		)
+
+		meta := &img.Metadata{
+			Date:     time.Unix(secs, 0),
+			Location: location,
+		}
+
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
 			mockHandler.EXPECT().SetFormat(img.Webp),
 			mockHandler.EXPECT().Resize(ctx, width, 0),
 			mockHandler.EXPECT().Bytes().Return(buf, nil),
+			mockMetaDB.EXPECT().GetMetadata("image_1.jpg").Return(meta, nil),
 			mockHandler.EXPECT().Destroy(),
 		)
 
 		logger, _ := test.NewNullLogger()
 
-		i, err := newImage(mockProcessor, "basepath", logger)
+		i, err := newImage(mockProcessor, "basepath", mockMetaDB, logger)
 
 		require.NoError(t, err)
 
@@ -212,11 +227,16 @@ func TestImage_ServeHTTP(t *testing.T) {
 		r = r.WithContext(ctx)
 
 		w := assertStatusCode(t, i, r, http.StatusOK)
-		assert.Equal(t, mimeWebp, w.Result().Header.Get(contentTypeHeader))
+
+		resHeader := w.Result().Header
+
+		assert.Equal(t, mimeWebp, resHeader.Get(contentTypeHeader))
 		// `abcd`'s fnv hash is b9de7375
-		assert.Equal(t, "b9de7375", w.Result().Header.Get("ETag"))
+		assert.Equal(t, "b9de7375", resHeader.Get("ETag"))
 		// `abcd` is 4 bytes
-		assert.Equal(t, "4", w.Result().Header.Get("Content-Length"))
+		assert.Equal(t, "4", resHeader.Get("Content-Length"))
+		assert.Equal(t, location, resHeader.Get("X-Quba-Location"))
+		assert.Equal(t, strconv.Itoa(secs), resHeader.Get("X-Quba-Date"))
 		assert.Equal(t, buf, w.Body.Bytes())
 	})
 }
