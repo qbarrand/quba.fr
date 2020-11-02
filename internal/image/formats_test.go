@@ -2,7 +2,6 @@ package image
 
 import (
 	"errors"
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -15,39 +14,34 @@ func TestAcceptHeaderToFormat(t *testing.T) {
 	)
 
 	cases := []struct {
-		types            []string
-		expectedFormat   Format
-		expectedMIMEType string
-		returnedError    error
+		expectedFormat Format
+		mimeType       string
+		returnedError  error
 	}{
 		{
-			types:            []string{mimeJpeg},
-			expectedFormat:   JPEG,
-			expectedMIMEType: mimeJpeg,
+			mimeType:       mimeJpeg,
+			expectedFormat: JPEG,
 		},
 		{
-			types:            []string{mimeWebp},
-			expectedFormat:   Webp,
-			expectedMIMEType: mimeWebp,
+			mimeType:       mimeWebp,
+			expectedFormat: Webp,
 		},
 		{
-			types:            []string{mimeWebp, mimeJpeg},
-			expectedFormat:   Webp,
-			expectedMIMEType: mimeWebp,
+			expectedFormat: "",
+			mimeType:       "abcd",
+			returnedError:  ErrNotAcceptable,
 		},
 		{
-			types:            []string{"image/bmp"},
-			expectedFormat:   0,
-			expectedMIMEType: "",
-			returnedError:    ErrNotAcceptable,
+			expectedFormat: "",
+			mimeType:       "",
+			returnedError:  ErrNotAcceptable,
 		},
 	}
 
 	for _, c := range cases {
-		t.Run(strings.Join(c.types, "_"), func(t *testing.T) {
-			f, mime, err := AcceptHeaderToFormat(c.types)
-			assert.Equal(t, c.expectedFormat, f)
-			assert.Equal(t, c.expectedMIMEType, mime)
+		t.Run(c.mimeType, func(t *testing.T) {
+			format, err := FormatFromMIMEType(c.mimeType)
+			assert.Equal(t, c.expectedFormat, format)
 
 			if c.returnedError != nil {
 				assert.True(t, errors.Is(ErrNotAcceptable, err))

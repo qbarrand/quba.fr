@@ -7,9 +7,11 @@ import (
 	"errors"
 	"fmt"
 	"hash/fnv"
+	"mime"
 	"net/http"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 
@@ -63,20 +65,22 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	defer handler.Destroy()
 
-	// Get the format
-	f, mimeType, err := img.AcceptHeaderToFormat(r.Header.Values("Accept"))
+	// Get the accepted MIME types
+	acceptedTypes, err := getMIMETypes(r.Header.Values("Accept"))
 	if err != nil {
-		if errors.Is(img.ErrNotAcceptable, err) {
-			// TODO find something clever in case the image is not JPEG
-			i.logger.WithError(err).Debug("No acceptable format: using JPEG")
-			f = img.JPEG
-		} else {
-			fail("Error while determining the accepted format", err)
-			return
-		}
+		logger.WithError(err).Error("Could not parse the Accept headers")
+		w.WriteHeader(http.StatusBadRequest)
+		return
 	}
 
-	if err := handler.SetFormat(f); err != nil {
+	format, err := getBestFormat(i.processor.BestFormats(), acceptedTypes)
+	if err != nil {
+		logger.WithError(err).Error("Could not find the best MIME type")
+		w.WriteHeader(http.StatusNotAcceptable)
+		return
+	}
+
+	if err := handler.SetFormat(format); err != nil {
 		fail("Could not set the format", err)
 		return
 	}
@@ -114,7 +118,7 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	headers := w.Header()
 
 	headers.Set("Content-Length", strconv.Itoa(len(buf)))
-	headers.Set("Content-Type", mimeType)
+	headers.Set("Content-Type", string(format))
 	headers.Set("ETag", hex.EncodeToString(h.Sum(nil)))
 	headers.Set("X-Quba-Date", strconv.FormatInt(meta.Date.Unix(), 10))
 	headers.Set("X-Quba-Location", meta.Location)
@@ -153,4 +157,45 @@ func newImageLister(metaDB img.MetaDB, logger logrus.FieldLogger) (http.HandlerF
 	}
 
 	return handlerFunc, nil
+}
+
+func getBestFormat(serverFormats []img.Format, clientTypes []string) (img.Format, error) {
+	clientFmtMap := make(map[img.Format]bool, len(clientTypes))
+
+	for _, t := range clientTypes {
+		f, err := img.FormatFromMIMEType(t)
+		if err != nil {
+			// This MIME type is not a recognized format
+			continue
+		}
+
+		clientFmtMap[f] = true
+	}
+
+	for _, f := range serverFormats {
+		if clientFmtMap[f] {
+			return f, nil
+		}
+	}
+
+	return "", errors.New("no acceptable format found")
+}
+
+// getMIMETypes parses a slice of Accept headers and returns a slice of all the types.
+// It returns an error if a header element could not be parsed.
+func getMIMETypes(acceptHeaders []string) ([]string, error) {
+	types := make([]string, 0)
+
+	for _, header := range acceptHeaders {
+		for _, i := range strings.Split(header, ",") {
+			mt, _, err := mime.ParseMediaType(i)
+			if err != nil {
+				return nil, fmt.Errorf("could not parse header item %s: %v", i, err)
+			}
+
+			types = append(types, mt)
+		}
+	}
+
+	return types, nil
 }

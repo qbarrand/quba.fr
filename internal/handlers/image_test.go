@@ -108,6 +108,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
+			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
 			mockHandler.EXPECT().SetFormat(img.Webp).Return(randomError),
 			mockHandler.EXPECT().Destroy(),
 		)
@@ -140,6 +141,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
+			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
 			mockHandler.EXPECT().SetFormat(img.Webp),
 			mockHandler.EXPECT().Resize(ctx, width, 0).Return(randomError),
 			mockHandler.EXPECT().Destroy(),
@@ -168,6 +170,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
+			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
 			mockHandler.EXPECT().SetFormat(img.Webp),
 			mockHandler.EXPECT().Bytes().Return(nil, randomError),
 			mockHandler.EXPECT().Destroy(),
@@ -207,6 +210,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
+			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
 			mockHandler.EXPECT().SetFormat(img.Webp),
 			mockHandler.EXPECT().Resize(ctx, width, 0),
 			mockHandler.EXPECT().Bytes().Return(buf, nil),
@@ -272,5 +276,76 @@ func Test_newImageLister(t *testing.T) {
 
 		assert.Equal(t, "application/json", w.Header().Get("Content-Type"))
 		assert.Equal(t, `["name-1","name-2"]`+"\n", w.Body.String())
+	})
+}
+
+func Test_getBestFormat(t *testing.T) {
+	t.Run("empty server formats", func(t *testing.T) {
+		_, err := getBestFormat(nil, []string{"image/webp"})
+		assert.Error(t, err)
+	})
+
+	t.Run("empty server formats", func(t *testing.T) {
+		_, err := getBestFormat(nil, []string{"image/webp"})
+		assert.Error(t, err)
+	})
+}
+
+func Test_getMIMETypes(t *testing.T) {
+	t.Run("one header, no value", func(t *testing.T) {
+		ct, err := getMIMETypes(nil)
+		require.NoError(t, err)
+		assert.Empty(t, ct)
+	})
+
+	t.Run("one header, one invalid value", func(t *testing.T) {
+		_, err := getMIMETypes([]string{"abcd def"})
+		require.Error(t, err)
+	})
+
+	t.Run("one header, one valid value", func(t *testing.T) {
+		headers := []string{"image/jpeg"}
+
+		ct, err := getMIMETypes(headers)
+
+		require.NoError(t, err)
+		assert.Equal(t, headers, ct)
+	})
+
+	const (
+		jpeg = "image/jpeg"
+		webp = "image/webp"
+	)
+
+	t.Run("one header, two valid values (comma)", func(t *testing.T) {
+		ct, err := getMIMETypes([]string{jpeg + "," + webp})
+
+		require.NoError(t, err)
+		assert.Equal(t, []string{jpeg, webp}, ct)
+	})
+
+	t.Run("one header, two valid values (comma space)", func(t *testing.T) {
+		ct, err := getMIMETypes([]string{jpeg + ", " + webp})
+
+		require.NoError(t, err)
+		assert.Equal(t, []string{jpeg, webp}, ct)
+	})
+
+	t.Run("two headers, two valid values", func(t *testing.T) {
+		s := []string{jpeg, webp}
+
+		ct, err := getMIMETypes(s)
+
+		require.NoError(t, err)
+		assert.Equal(t, s, ct)
+	})
+
+	t.Run("two headers, three valid values", func(t *testing.T) {
+		const png = "image/png"
+
+		ct, err := getMIMETypes([]string{jpeg, webp + "," + png})
+
+		require.NoError(t, err)
+		assert.Equal(t, []string{jpeg, webp, png}, ct)
 	})
 }

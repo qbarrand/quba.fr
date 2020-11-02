@@ -15,6 +15,7 @@ type Handler interface {
 }
 
 type Processor interface {
+	BestFormats() []Format
 	Destroy() error
 	Init() error
 	NewImageHandler(string) (Handler, error)

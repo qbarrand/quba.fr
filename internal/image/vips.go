@@ -10,7 +10,11 @@ import (
 	"github.com/davidbyttow/govips/pkg/vips"
 )
 
-var ErrFormatUnavailable = errors.New("this format is not available in vips")
+var (
+	ErrFormatUnavailable = errors.New("this format is not available in vips")
+
+	vipsFormats = []Format{Webp, JPEG}
+)
 
 type VipsHandler struct {
 	export *vips.ExportParams
@@ -68,6 +72,10 @@ func (vh *VipsHandler) WriteTo(w io.Writer) (int64, error) {
 }
 
 type VipsProcessor struct{}
+
+func (vp *VipsProcessor) BestFormats() []Format {
+	return vipsFormats
+}
 
 func (vp *VipsProcessor) Destroy() error {
 	vips.Shutdown()

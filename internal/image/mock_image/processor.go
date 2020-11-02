@@ -131,6 +131,20 @@ func (m *MockProcessor) EXPECT() *MockProcessorMockRecorder {
 	return m.recorder
 }
 
+// BestFormats mocks base method
+func (m *MockProcessor) BestFormats() []image.Format {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "BestFormats")
+	ret0, _ := ret[0].([]image.Format)
+	return ret0
+}
+
+// BestFormats indicates an expected call of BestFormats
+func (mr *MockProcessorMockRecorder) BestFormats() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BestFormats", reflect.TypeOf((*MockProcessor)(nil).BestFormats))
+}
+
 // Destroy mocks base method
 func (m *MockProcessor) Destroy() error {
 	m.ctrl.T.Helper()

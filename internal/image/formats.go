@@ -4,24 +4,28 @@ import (
 	"errors"
 )
 
-type Format uint
+type Format string
 
 const (
-	JPEG Format = iota
-	Webp
+	JPEG Format = "image/jpeg"
+	Webp Format = "image/webp"
 )
 
-var ErrNotAcceptable = errors.New("no acceptable MIME type found")
+var (
+	ErrNotAcceptable = errors.New("no acceptable MIME type found")
 
-func AcceptHeaderToFormat(accept []string) (Format, string, error) {
-	for _, mimeType := range accept {
-		switch mimeType {
-		case "image/jpeg":
-			return JPEG, mimeType, nil
-		case "image/webp":
-			return Webp, mimeType, nil
-		}
+	mimeToFormat = map[string]Format{
+		string(JPEG): JPEG,
+		string(Webp): Webp,
+	}
+)
+
+func FormatFromMIMEType(mimeType string) (Format, error) {
+	f := mimeToFormat[mimeType]
+
+	if f == "" {
+		return f, ErrNotAcceptable
 	}
 
-	return 0, "", ErrNotAcceptable
+	return f, nil
 }
