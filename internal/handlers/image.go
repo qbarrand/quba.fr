@@ -122,6 +122,7 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	headers.Set("ETag", hex.EncodeToString(h.Sum(nil)))
 	headers.Set("X-Quba-Date", strconv.FormatInt(meta.Date.Unix(), 10))
 	headers.Set("X-Quba-Location", meta.Location)
+	headers.Set("X-Quba-MainColor", meta.MainColor)
 
 	n, err := w.Write(buf)
 	if err != nil {
