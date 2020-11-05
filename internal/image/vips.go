@@ -1,11 +1,9 @@
 package image
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
-	"io"
 
 	"github.com/davidbyttow/govips/pkg/vips"
 )
@@ -56,15 +54,6 @@ func (vh *VipsHandler) SetFormat(format Format) error {
 	vh.export.Format, err = formatToVipsImageType(format)
 
 	return err
-}
-
-func (vh *VipsHandler) WriteTo(w io.Writer) (int64, error) {
-	buf, _, err := vh.ref.Export(*vh.export)
-	if err != nil {
-		return 0, err
-	}
-
-	return bytes.NewReader(buf).WriteTo(w)
 }
 
 type VipsProcessor struct{}
