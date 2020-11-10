@@ -11,6 +11,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - run: git tag ${{ github.sha }}
+      - name: Save the version to an environment file
+        run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
 
-      - run: git push origin ${{ github.sha }}
+      - run: git tag ${VERSION}
+
+      - run: git push origin ${VERSION}
