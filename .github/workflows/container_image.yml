@@ -21,3 +21,5 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          tags: |
+            ghcr.io/qbarrand/quba.fr:${{ GITHUB_SHA }}
