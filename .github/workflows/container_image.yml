@@ -22,4 +22,4 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/qbarrand/quba.fr:${{ GITHUB_SHA }}
+            ghcr.io/qbarrand/quba.fr:${{ github.sha }}
