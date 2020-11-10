@@ -15,16 +15,18 @@ func Test_newMetadata(t *testing.T) {
 	t.Parallel()
 
 	const (
-		month    = time.June
-		year     = 2020
-		location = "test-location"
+		month     = time.June
+		year      = 2020
+		location  = "test-location"
+		mainColor = "some-color"
 	)
 
-	details := newMetadata(month, year, location)
+	details := newMetadata(month, year, location, mainColor)
 
 	expected := &Metadata{
-		Date:     time.Date(year, month, 0, 0, 0, 0, 0, time.UTC),
-		Location: location,
+		Date:      time.Date(year, month, 0, 0, 0, 0, 0, time.UTC),
+		Location:  location,
+		MainColor: mainColor,
 	}
 
 	assert.Equal(t, expected, details)
@@ -69,8 +71,9 @@ func TestStaticMetaDB_GetMetadata(t *testing.T) {
 		require.NoError(t, err)
 
 		expectedMeta := Metadata{
-			Date:     time.Date(2017, time.June, 0, 0, 0, 0, 0, time.UTC),
-			Location: "Dubai, UAE",
+			Date:      time.Date(2017, time.June, 0, 0, 0, 0, 0, time.UTC),
+			Location:  "Dubai, UAE",
+			MainColor: "TODO",
 		}
 
 		assert.Equal(t, &expectedMeta, meta)
