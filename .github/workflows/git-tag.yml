@@ -1,0 +1,14 @@
+name: Git tag
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  container-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - run: git tag test-ci
