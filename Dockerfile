@@ -24,4 +24,6 @@ RUN ["apk", "add", "vips"]
 
 EXPOSE 8080/tcp
 
+LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
+
 ENTRYPOINT ["/app/quba-fr"]
