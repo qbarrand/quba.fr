@@ -2,11 +2,10 @@ name: Container image
 
 on:
   push:
-    tags:
+    tags: ['*']
 
 jobs:
   container-image:
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Set up QEMU
