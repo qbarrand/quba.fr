@@ -11,4 +11,6 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
-      - run: git tag test-ci
+      - run: git tag ${{ github.sha }}
+
+      - run: git push origin ${{ github.sha }}
