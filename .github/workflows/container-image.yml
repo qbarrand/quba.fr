@@ -24,8 +24,11 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
+      - name: Get tag
+        run: echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/qbarrand/quba.fr:${GITHUB_REF##*/}
+          tags: ghcr.io/qbarrand/quba.fr:${{ env.TAG }}
