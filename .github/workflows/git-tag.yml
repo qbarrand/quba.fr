@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+        with:
+          # NOTE @v2 uses the token as an auth http header. Set it to
+          # a Personal Access Token instead of secrets.GITHUB_TOKEN
+          # so that tag pushes trigger repo push events.
+          token: ${{ secrets.GH_PAT_REPO_FULL_ACCESS }}
 
       - name: Save the version to an environment file
         run: echo "VERSION=$(cat VERSION)" >> $GITHUB_ENV
