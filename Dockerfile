@@ -26,4 +26,6 @@ EXPOSE 8080/tcp
 
 LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
 
+WORKDIR /app
+
 ENTRYPOINT ["/app/quba-fr"]
