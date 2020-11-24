@@ -1,4 +1,4 @@
-package static
+package assets
 
 import (
 	"bytes"
@@ -18,7 +18,6 @@ import (
 
 var (
 	ErrElementPathConflict     = errors.New("an element is already registered for this key")
-	ErrNotFound                = errors.New("no dependency registered under this path")
 	ErrPathTranslationConflict = errors.New("this original path was already registered")
 	ErrTemplateError           = errors.New("could not compile template")
 )
