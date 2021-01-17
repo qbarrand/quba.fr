@@ -68,11 +68,7 @@ let currentConstraint = null;
 async function printRandomBackground(parent, imageName, constraint) {
     let url = `images/${imageName}?${constraint.toQueryString()}`
 
-    const webpSupported = await p;
-
     const accept = ['image/jpeg'];
-
-    console.debug(`webp supported: ${webpSupported}`)
 
     if (await p) {
         accept.unshift('image/webp');
@@ -151,7 +147,7 @@ async function printRandomBackground(parent, imageName, constraint) {
             printRandomBackground($wrapper, selected, c);
         }
 
-        m.addListener(e => {
+        m.addEventListener('change', e => {
             if (e.matches && (currentConstraint === undefined || currentConstraint.requiresUpdate(c))) {
                 printRandomBackground($wrapper, selected, c);
             }

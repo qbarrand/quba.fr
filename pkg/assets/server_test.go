@@ -28,7 +28,7 @@ func TestServer_AddTemplate(t *testing.T) {
 
 		s := NewServer(logger)
 
-		s.paths[path] = "/some/other/path"
+		s.hashedPaths[path] = "/some/other/path"
 
 		err := s.AddTemplate("", path, false)
 
@@ -86,7 +86,7 @@ func TestServer_AddTemplate(t *testing.T) {
 			t.Run(fmt.Sprintf("hashPath: %t", c.hashPath), func(t *testing.T) {
 				s := NewServer(logger)
 
-				s.paths[depPath] = depPath
+				s.hashedPaths[depPath] = depPath
 
 				err = s.AddTemplate(
 					fmt.Sprintf(`{{ getDependency "%s" }}`, depPath),
@@ -94,7 +94,7 @@ func TestServer_AddTemplate(t *testing.T) {
 					c.hashPath)
 
 				require.NoError(t, err)
-				assert.Equal(t, c.expectedResourcePath, s.paths[resourcePath])
+				assert.Equal(t, c.expectedResourcePath, s.hashedPaths[resourcePath])
 
 				req := httptest.NewRequest(http.MethodGet, resourcePath, nil)
 				w := httptest.NewRecorder()
@@ -120,7 +120,7 @@ func TestServer_AddHashedStaticFile(t *testing.T) {
 
 		s := NewServer(logger)
 
-		s.paths[path] = "/some/other/path"
+		s.hashedPaths[path] = "/some/other/path"
 
 		err := s.AddStaticFile("", path, false)
 
@@ -167,7 +167,7 @@ func TestServer_AddHashedStaticFile(t *testing.T) {
 				err = s.AddStaticFile(fd.Name(), resourcePath, c.hashPath)
 
 				require.NoError(t, err)
-				assert.Equal(t, c.expectedResourcePath, s.paths[resourcePath])
+				assert.Equal(t, c.expectedResourcePath, s.hashedPaths[resourcePath])
 
 				req := httptest.NewRequest(http.MethodGet, resourcePath, nil)
 				w := httptest.NewRecorder()

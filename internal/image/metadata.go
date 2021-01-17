@@ -18,7 +18,7 @@ type Metadata struct {
 
 func newMetadata(month time.Month, year int, location, mainColor string) *Metadata {
 	return &Metadata{
-		Date:      time.Date(year, month, 0, 0, 0, 0, 0, time.UTC),
+		Date:      time.Date(year, month, 1, 0, 0, 0, 0, time.UTC),
 		Location:  location,
 		MainColor: mainColor,
 	}
@@ -100,18 +100,18 @@ func NewStaticMetaDB() *StaticMetaDB {
 	}
 }
 
-func (smdb *StaticMetaDB) AllNames() ([]string, error) {
-	names := make([]string, 0, len(smdb.images))
+func (s *StaticMetaDB) AllNames() ([]string, error) {
+	names := make([]string, 0, len(s.images))
 
-	for n, _ := range smdb.images {
+	for n, _ := range s.images {
 		names = append(names, n)
 	}
 
 	return names, nil
 }
 
-func (smdb *StaticMetaDB) GetMetadata(name string) (*Metadata, error) {
-	meta := smdb.images[name]
+func (s *StaticMetaDB) GetMetadata(name string) (*Metadata, error) {
+	meta := s.images[name]
 
 	if meta == nil {
 		return nil, fmt.Errorf("%s: %w", name, ErrNoSuchMetadata)

@@ -5,11 +5,7 @@ RUN ["apk", "add", "gcc", "git", "make", "musl-dev", "pkgconfig", "vips-dev"]
 RUN ["mkdir", "/build"]
 WORKDIR /build
 
-COPY ./cmd cmd
-COPY ./internal internal
-COPY ./pkg pkg
-COPY go.* .
-COPY Makefile .
+COPY . /build
 
 RUN ["make"]
 
@@ -19,6 +15,7 @@ RUN ["mkdir", "/app"]
 
 COPY --from=builder /build/quba-fr /app
 COPY ./webroot /app/webroot
+COPY ./templates /app/templates
 
 RUN ["apk", "add", "vips"]
 

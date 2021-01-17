@@ -2,43 +2,70 @@ package assets
 
 import (
 	"bytes"
-	"encoding/hex"
 	"errors"
 	"fmt"
-	"hash/fnv"
-	"io"
 	"net/http"
 	"os"
-	"path/filepath"
-	"strings"
 	"text/template"
 
 	"github.com/sirupsen/logrus"
+
+	"github.com/qbarrand/quba.fr/pkg/fileutils"
 )
 
 var (
-	ErrElementPathConflict     = errors.New("an element is already registered for this key")
 	ErrPathTranslationConflict = errors.New("this original path was already registered")
 	ErrTemplateError           = errors.New("could not compile template")
 )
 
 type Server struct {
-	elements map[string]http.Handler
-	logger   logrus.FieldLogger
-	paths    map[string]string
+	fs          FS
+	logger      logrus.FieldLogger
+	hashedPaths map[string]string
 }
 
 func NewServer(logger logrus.FieldLogger) *Server {
 	return &Server{
-		elements: make(map[string]http.Handler),
-		logger:   logger,
-		paths:    make(map[string]string),
+		fs:          make(FS),
+		logger:      logger,
+		hashedPaths: make(map[string]string),
 	}
 }
 
-func (s *Server) AddTemplate(text, resourcePath string, hashPath bool) error {
-	if s.paths[resourcePath] != "" {
-		return ErrPathTranslationConflict
+func (s *Server) AddDirectory(path string) error {
+	return s.fs.AddFile(path, directoryFileGetter(path))
+}
+
+func (s *Server) AddStaticFile(filePath string, resourcePath string, hashPath bool) (string, error) {
+	if s.hashedPaths[resourcePath] != "" {
+		return "", ErrPathTranslationConflict
+	}
+
+	fd, err := os.Open(filePath)
+	if err != nil {
+		return "", fmt.Errorf("could not open %q: %v", filePath, err)
+	}
+	defer fd.Close()
+
+	h, err := fileutils.HashReader(fd)
+	if err != nil {
+		return "", fmt.Errorf("could not hash %q: %v", filePath, err)
+	}
+
+	newPath := resourcePath
+
+	if hashPath {
+		newPath = fileutils.PathWithHash(resourcePath, h)
+	}
+
+	s.hashedPaths[resourcePath] = newPath
+
+	return newPath, s.fs.AddFile(newPath, staticFileGetter(filePath))
+}
+
+func (s *Server) AddTemplate(text, resourcePath string, hashPath bool) (string, error) {
+	if s.hashedPaths[resourcePath] != "" {
+		return "", ErrPathTranslationConflict
 	}
 
 	tpl := template.
@@ -46,7 +73,7 @@ func (s *Server) AddTemplate(text, resourcePath string, hashPath bool) error {
 		Option("missingkey=error").
 		Funcs(template.FuncMap{
 			"getDependency": func(path string) (string, error) {
-				hashedPath := s.paths[path]
+				hashedPath := s.hashedPaths[path]
 
 				if hashedPath == "" {
 					return "", errors.New("dependency not found")
@@ -57,109 +84,38 @@ func (s *Server) AddTemplate(text, resourcePath string, hashPath bool) error {
 		})
 
 	if _, err := tpl.Parse(text); err != nil {
-		return fmt.Errorf("could not parse the template: %v", err)
+		return "", fmt.Errorf("could not parse the template: %v", err)
 	}
 
 	var buf bytes.Buffer
 
 	if err := tpl.Execute(&buf, nil); err != nil {
-		return fmt.Errorf("%w: %v", ErrTemplateError, err)
+		return "", fmt.Errorf("%w: %v", ErrTemplateError, err)
 	}
 
 	b := buf.Bytes()
 
-	h, err := hashReader(bytes.NewReader(b))
+	h, err := fileutils.HashReader(bytes.NewReader(b))
 	if err != nil {
-		return fmt.Errorf("could not hash the template output: %v", err)
+		return "", fmt.Errorf("could not hash the template output: %v", err)
 	}
 
 	newPath := resourcePath
 
 	if hashPath {
-		newPath = pathWithHash(resourcePath, h)
+		newPath = fileutils.PathWithHash(resourcePath, h)
 	}
 
-	s.paths[resourcePath] = newPath
+	s.hashedPaths[resourcePath] = newPath
 
-	if s.elements[newPath] != nil {
-		return ErrElementPathConflict
+	tfg := templateFileGetter{
+		buf:  b,
+		name: newPath,
 	}
 
-	s.elements[newPath] = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("ETag", h)
-		w.Write(b)
-	})
-
-	return nil
+	return newPath, s.fs.AddFile(newPath, &tfg)
 }
 
-func (s *Server) AddStaticFile(filePath string, resourcePath string, hashPath bool) error {
-	if s.paths[resourcePath] != "" {
-		return ErrPathTranslationConflict
-	}
-
-	fd, err := os.Open(filePath)
-	if err != nil {
-		return fmt.Errorf("could not open %q: %v", filePath, err)
-	}
-	defer fd.Close()
-
-	h, err := hashReader(fd)
-	if err != nil {
-		return fmt.Errorf("could not hash %q: %v", filePath, err)
-	}
-
-	newPath := resourcePath
-
-	if hashPath {
-		newPath = pathWithHash(resourcePath, h)
-	}
-
-	s.paths[resourcePath] = newPath
-
-	if s.elements[newPath] != nil {
-		return ErrElementPathConflict
-	}
-
-	s.elements[newPath] = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("ETag", h)
-		http.ServeFile(w, r, filePath)
-	})
-
-	return nil
-}
-
-func (s *Server) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	handler := s.elements[req.URL.Path]
-
-	if handler == nil {
-		http.NotFound(w, req)
-		return
-	}
-
-	handler.ServeHTTP(w, req)
-}
-
-func hashReader(r io.Reader) (string, error) {
-	hasher := fnv.New32()
-
-	if _, err := io.Copy(hasher, r); err != nil {
-		return "", fmt.Errorf("could copy bytes into the hasher: %v", err)
-	}
-
-	return hex.EncodeToString(hasher.Sum(nil)), nil
-}
-
-func pathWithHash(path, hash string) string {
-	ext := filepath.Ext(path)
-
-	// 4 times faster than fmt.Sprintf
-	var sb strings.Builder
-
-	sb.WriteString(path[:len(path)-len(ext)])
-	sb.WriteRune('.')
-	sb.WriteString(hash)
-	sb.WriteString(ext)
-
-	return sb.String()
+func (s *Server) Handler() http.Handler {
+	return http.FileServer(s.fs)
 }

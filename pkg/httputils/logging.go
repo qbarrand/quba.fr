@@ -62,8 +62,16 @@ func LoggingMiddleware(logger logrus.FieldLogger, next http.Handler) http.Handle
 			r.WithContext(ctx),
 		)
 
+		statusCode := scrw.StatusCode()
+
+		logLevel := logrus.InfoLevel
+
+		if statusCode >= 400 {
+			logLevel = logrus.WarnLevel
+		}
+
 		logger.
-			WithField("status", scrw.StatusCode()).
-			Info("Finished serving request")
+			WithField("status", statusCode).
+			Log(logLevel, "Finished serving request")
 	}
 }
