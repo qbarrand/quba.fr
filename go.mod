@@ -4,7 +4,7 @@ go 1.14
 
 require (
 	github.com/davidbyttow/govips v0.0.0-20190304175058-d272f04c0fea
-	github.com/golang/mock v1.4.4
+	github.com/golang/mock v1.5.0
 	github.com/google/uuid v1.1.5
 	github.com/gorilla/mux v1.8.0
 	github.com/sirupsen/logrus v1.7.0
