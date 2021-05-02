@@ -13,20 +13,20 @@ import (
 	"strconv"
 	"strings"
 
+	image3 "github.com/qbarrand/quba.fr/internal/image"
 	"github.com/sirupsen/logrus"
 
-	img "github.com/qbarrand/quba.fr/internal/image"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
 type image struct {
 	logger    logrus.FieldLogger
-	metaDB    img.MetaDB
+	metaDB    image3.MetaDB
 	path      string
-	processor img.Processor
+	processor image3.Processor
 }
 
-func newImage(processor img.Processor, path string, metaDB img.MetaDB, logger logrus.FieldLogger) (*image, error) {
+func newImage(processor image3.Processor, path string, metaDB image3.MetaDB, logger logrus.FieldLogger) (*image, error) {
 	if err := processor.Init(); err != nil {
 		return nil, fmt.Errorf("could not initialize the processor: %w", err)
 	}
@@ -134,7 +134,7 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	logger.WithField("bytes", n).Debug("Finished writing image")
 }
 
-func newImageLister(metaDB img.MetaDB, logger logrus.FieldLogger) (http.HandlerFunc, error) {
+func newImageLister(metaDB image3.MetaDB, logger logrus.FieldLogger) (http.HandlerFunc, error) {
 	var buf bytes.Buffer
 
 	allNames, err := metaDB.AllNames()
@@ -160,11 +160,11 @@ func newImageLister(metaDB img.MetaDB, logger logrus.FieldLogger) (http.HandlerF
 	return handlerFunc, nil
 }
 
-func getBestFormat(serverFormats []img.Format, clientTypes []string) (img.Format, error) {
-	clientFmtMap := make(map[img.Format]bool, len(clientTypes))
+func getBestFormat(serverFormats []image3.Format, clientTypes []string) (image3.Format, error) {
+	clientFmtMap := make(map[image3.Format]bool, len(clientTypes))
 
 	for _, t := range clientTypes {
-		f, err := img.FormatFromMIMEType(t)
+		f, err := image3.FormatFromMIMEType(t)
 		if err != nil {
 			// This MIME type is not a recognized format
 			continue

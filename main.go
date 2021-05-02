@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"errors"
 	"flag"
 	"net/http"
@@ -8,15 +9,19 @@ import (
 
 	"github.com/sirupsen/logrus"
 
+	"github.com/qbarrand/quba.fr/internal/config"
 	"github.com/qbarrand/quba.fr/internal/handlers"
 	"github.com/qbarrand/quba.fr/internal/image"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
+//go:embed VERSION
+var version string
+
 func main() {
 	logger := logrus.New()
 
-	cfg, err := configFromArgs(os.Args[1:])
+	cfg, err := config.ParseCommandLine(os.Args[1:])
 	if err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			return
@@ -25,7 +30,7 @@ func main() {
 		logger.WithError(err).Fatal("Could not parse the command line")
 	}
 
-	logLevel, err := logrus.ParseLevel(cfg.logLevel)
+	logLevel, err := logrus.ParseLevel(cfg.LogLevel)
 	if err != nil {
 		logger.WithError(err).Fatal("Could not parse the log level")
 	}
@@ -34,8 +39,8 @@ func main() {
 
 	opts := handlers.AppOptions{
 		ImageProcessor: &image.VipsProcessor{},
-		LastMod:        cfg.lastMod,
-		WebRootDir:     "webroot",
+		ImagesDir:      "data/images",
+		LastMod:        cfg.LastMod,
 	}
 
 	app, err := handlers.NewApp(&opts, logger)
@@ -51,9 +56,14 @@ func main() {
 		app.Router(),
 	)
 
-	logger.WithField("addr", cfg.addr).Info("Starting the server")
+	logger.
+		WithFields(logrus.Fields{
+			"addr":    cfg.Addr,
+			"version": version,
+		}).
+		Info("Starting the server")
 
-	if err := http.ListenAndServe(cfg.addr, main); err != nil {
+	if err := http.ListenAndServe(cfg.Addr, main); err != nil {
 		logger.WithError(err).Fatal("General error caught")
 	}
 }

@@ -2,73 +2,73 @@ package handlers
 
 import (
 	"fmt"
+	"io/fs"
 	"net/http"
-	"path/filepath"
-	"time"
 
-	"github.com/gorilla/mux"
+	"github.com/qbarrand/quba.fr/data/images"
+	"github.com/qbarrand/quba.fr/internal/handlers/imagefs"
 	"github.com/sirupsen/logrus"
 
+	"github.com/qbarrand/quba.fr/data/webroot"
+	"github.com/qbarrand/quba.fr/internal/handlers/healthz"
+	"github.com/qbarrand/quba.fr/internal/handlers/sitemap"
 	img "github.com/qbarrand/quba.fr/internal/image"
 )
 
 type AppOptions struct {
+	ImagesDir      string
 	ImageProcessor img.Processor
-	LastMod        time.Time
-	WebRootDir     string
+	LastMod        string
 }
 
 type App struct {
-	file        http.Handler
-	healthz     http.Handler
-	image       http.Handler
-	imageLister http.Handler
-	sitemap     http.Handler
+	healthz     *healthz.Healthz
+	image       *image
+	imageLister http.HandlerFunc
+	sitemap     http.HandlerFunc
+	webRootFS   fs.FS
 }
 
-func (a *App) Router() *mux.Router {
-	router := mux.NewRouter()
+func (a *App) Router() *http.ServeMux {
+	mux := http.NewServeMux()
 
-	subRouter := router.Methods(http.MethodGet).Subrouter()
-	subRouter.Handle("/healthz", a.healthz)
-	subRouter.Handle("/sitemap.xml", a.sitemap)
-	subRouter.Path("/images").Handler(a.imageLister)
-	subRouter.PathPrefix("/images/").Handler(a.image)
-	subRouter.PathPrefix("/").Handler(a.file)
+	mux.Handle("/", http.FileServer(http.FS(a.webRootFS)))
+	mux.Handle("/healthz", a.healthz)
+	mux.HandleFunc("/images", a.imageLister)
+	mux.Handle("/images/", http.StripPrefix("/images", a.image))
+	mux.HandleFunc("/sitemap.xml", a.sitemap)
 
-	return router
+	return mux
 }
 
 func NewApp(opts *AppOptions, logger logrus.FieldLogger) (*App, error) {
 	const handlerKey = "handler"
 
-	sitemap, err := newSitemap(opts.LastMod, logger.WithField(handlerKey, "sitemap"))
+	sm, err := sitemap.New(opts.LastMod)
 	if err != nil {
 		return nil, fmt.Errorf("could not create the sitemap handler: %v", err)
 	}
 
-	const subdir = "images"
-
-	imagesPath := filepath.Join(opts.WebRootDir, subdir)
-
 	meta := img.NewStaticMetaDB()
 
-	image, err := newImage(opts.ImageProcessor, imagesPath, meta, logger.WithField(handlerKey, "image"))
+	localImages := images.LocalImagesWithMetadata()
+
+	image, err := newImage(opts.ImageProcessor, opts.ImagesDir, meta, logger.WithField(handlerKey, "image"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the image handler: %v", err)
 	}
 
-	imageLister, err := newImageLister(meta, logger.WithField(handlerKey, "lister"))
+	imageLister, err := imagefs.ImageLister(localImages, logger.WithField(handlerKey, "lister"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the lister handler: %w", err)
 	}
 
 	app := App{
-		file:        http.FileServer(http.Dir(opts.WebRootDir)),
-		healthz:     newHealthz(logger),
+		webRootFS:   webroot.WebRoot,
+		healthz:     healthz.New(logger),
 		image:       image,
 		imageLister: imageLister,
-		sitemap:     sitemap,
+		sitemap:     sm,
 	}
 
 	return &app, nil

@@ -5,9 +5,10 @@
 package mock_image
 
 import (
-	gomock "github.com/golang/mock/gomock"
-	image "github.com/qbarrand/quba.fr/internal/image"
-	reflect "reflect"
+	"reflect"
+
+	"github.com/golang/mock/gomock"
+	"github.com/qbarrand/quba.fr/internal/image"
 )
 
 // MockMetaDB is a mock of MetaDB interface

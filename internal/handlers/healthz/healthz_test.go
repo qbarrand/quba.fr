@@ -1,4 +1,4 @@
-package handlers
+package healthz
 
 import (
 	"errors"
@@ -15,7 +15,7 @@ import (
 func Test_newHealth(t *testing.T) {
 	logger, _ := test.NewNullLogger()
 
-	h := newHealthz(logger)
+	h := New(logger)
 
 	assert.NotNil(t, h)
 	assert.NotNil(t, h.cache)
@@ -81,7 +81,7 @@ func TestHealth_ServeHTTP(t *testing.T) {
 
 	for _, c := range cases {
 		t.Run(fmt.Sprintf("%s: %d", c.name, c.expectedCode), func(t *testing.T) {
-			handler := &healthz{
+			handler := &Healthz{
 				cache:       &boolCache{},
 				dnsQueryier: c.queryier,
 				logger:      logger,
@@ -93,7 +93,7 @@ func TestHealth_ServeHTTP(t *testing.T) {
 	}
 
 	t.Run("check query", func(t *testing.T) {
-		handler := &healthz{
+		handler := &Healthz{
 			cache: &boolCache{},
 			dnsQueryier: func(q string) ([]string, error) {
 				assert.Equal(t, "ping.quba.fr", q)
@@ -110,7 +110,7 @@ func TestHealth_ServeHTTP(t *testing.T) {
 	})
 
 	t.Run("valid cache", func(t *testing.T) {
-		handler := &healthz{
+		handler := &Healthz{
 			cache: &boolCache{
 				lastCheck: time.Now(),
 				valid:     true,
@@ -135,7 +135,7 @@ func TestHealth_ServeHTTP(t *testing.T) {
 			}
 		}()
 
-		handler := &healthz{
+		handler := &Healthz{
 			cache: &boolCache{
 				lastCheck: time.Now().Add(-121 * time.Second),
 				valid:     true,

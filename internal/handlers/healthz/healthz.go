@@ -1,4 +1,4 @@
-package handlers
+package healthz
 
 import (
 	"net"
@@ -17,22 +17,22 @@ type (
 		m sync.Mutex
 	}
 
-	healthz struct {
+	Healthz struct {
 		cache       *boolCache
 		dnsQueryier func(string) ([]string, error)
 		logger      logrus.FieldLogger
 	}
 )
 
-func newHealthz(logger logrus.FieldLogger) *healthz {
-	return &healthz{
+func New(logger logrus.FieldLogger) *Healthz {
+	return &Healthz{
 		cache:       &boolCache{},
 		dnsQueryier: net.LookupTXT,
 		logger:      logger,
 	}
 }
 
-func (h *healthz) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (h *Healthz) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	const (
 		fqdn     = "ping.quba.fr"
 		interval = 120 * time.Second

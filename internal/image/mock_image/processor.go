@@ -5,10 +5,11 @@
 package mock_image
 
 import (
-	context "context"
-	gomock "github.com/golang/mock/gomock"
-	image "github.com/qbarrand/quba.fr/internal/image"
-	reflect "reflect"
+	"context"
+	"reflect"
+
+	"github.com/golang/mock/gomock"
+	"github.com/qbarrand/quba.fr/internal/image"
 )
 
 // MockHandler is a mock of Handler interface

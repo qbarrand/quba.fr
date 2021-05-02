@@ -5,9 +5,10 @@
 package handlers
 
 import (
-	gomock "github.com/golang/mock/gomock"
-	http "net/http"
-	reflect "reflect"
+	"net/http"
+	"reflect"
+
+	"github.com/golang/mock/gomock"
 )
 
 // MockHandler is a mock of Handler interface

@@ -11,12 +11,11 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
+	image3 "github.com/qbarrand/quba.fr/internal/image"
+	"github.com/qbarrand/quba.fr/internal/image/mock_image"
 	"github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	img "github.com/qbarrand/quba.fr/internal/image"
-	"github.com/qbarrand/quba.fr/internal/image/mock_image"
 )
 
 func Test_newImage(t *testing.T) {
@@ -108,8 +107,8 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
-			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
-			mockHandler.EXPECT().SetFormat(img.Webp).Return(randomError),
+			mockProcessor.EXPECT().BestFormats().Return([]image3.Format{image3.Webp}),
+			mockHandler.EXPECT().SetFormat(image3.Webp).Return(randomError),
 			mockHandler.EXPECT().Destroy(),
 		)
 
@@ -141,8 +140,8 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
-			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
-			mockHandler.EXPECT().SetFormat(img.Webp),
+			mockProcessor.EXPECT().BestFormats().Return([]image3.Format{image3.Webp}),
+			mockHandler.EXPECT().SetFormat(image3.Webp),
 			mockHandler.EXPECT().Resize(ctx, width, 0).Return(randomError),
 			mockHandler.EXPECT().Destroy(),
 		)
@@ -170,8 +169,8 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
-			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
-			mockHandler.EXPECT().SetFormat(img.Webp),
+			mockProcessor.EXPECT().BestFormats().Return([]image3.Format{image3.Webp}),
+			mockHandler.EXPECT().SetFormat(image3.Webp),
 			mockHandler.EXPECT().Bytes().Return(nil, randomError),
 			mockHandler.EXPECT().Destroy(),
 		)
@@ -202,7 +201,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 			secs     = 1603842450
 		)
 
-		meta := &img.Metadata{
+		meta := &image3.Metadata{
 			Date:     time.Unix(secs, 0),
 			Location: location,
 		}
@@ -210,8 +209,8 @@ func TestImage_ServeHTTP(t *testing.T) {
 		gomock.InOrder(
 			mockProcessor.EXPECT().Init(),
 			mockProcessor.EXPECT().NewImageHandler("basepath/image_1.jpg").Return(mockHandler, nil),
-			mockProcessor.EXPECT().BestFormats().Return([]img.Format{img.Webp}),
-			mockHandler.EXPECT().SetFormat(img.Webp),
+			mockProcessor.EXPECT().BestFormats().Return([]image3.Format{image3.Webp}),
+			mockHandler.EXPECT().SetFormat(image3.Webp),
 			mockHandler.EXPECT().Resize(ctx, width, 0),
 			mockHandler.EXPECT().Bytes().Return(buf, nil),
 			mockMetaDB.EXPECT().GetMetadata("image_1.jpg").Return(meta, nil),
