@@ -1,5 +1,3 @@
-//go:generate go run github.com/golang/mock/mockgen -source processor.go -destination mock_image/processor.go Handler,Processor
-
 package image
 
 import (
@@ -18,4 +16,5 @@ type Processor interface {
 	Destroy() error
 	Init() error
 	NewImageHandler(string) (Handler, error)
+	HandlerFromBytes([]byte) (Handler, error)
 }

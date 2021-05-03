@@ -23,7 +23,7 @@ type AppOptions struct {
 
 type App struct {
 	healthz     *healthz.Healthz
-	image       *image
+	image       *imagefs.Image
 	imageLister http.HandlerFunc
 	sitemap     http.HandlerFunc
 	webRootFS   fs.FS
@@ -49,16 +49,14 @@ func NewApp(opts *AppOptions, logger logrus.FieldLogger) (*App, error) {
 		return nil, fmt.Errorf("could not create the sitemap handler: %v", err)
 	}
 
-	meta := img.NewStaticMetaDB()
-
 	localImages := images.LocalImagesWithMetadata()
 
-	image, err := newImage(opts.ImageProcessor, opts.ImagesDir, meta, logger.WithField(handlerKey, "image"))
+	image, err := imagefs.New(opts.ImageProcessor, localImages, logger.WithField(handlerKey, "image"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the image handler: %v", err)
 	}
 
-	imageLister, err := imagefs.ImageLister(localImages, logger.WithField(handlerKey, "lister"))
+	imageLister, err := imagefs.Lister(localImages, logger.WithField(handlerKey, "lister"))
 	if err != nil {
 		return nil, fmt.Errorf("could not initialize the lister handler: %w", err)
 	}

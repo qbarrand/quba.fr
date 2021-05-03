@@ -11,17 +11,12 @@ RUN ["make"]
 
 FROM alpine
 
-RUN ["mkdir", "/app"]
+COPY --from=builder /build/quba-fr /quba-fr
 
-COPY --from=builder /build/quba-fr /app
-COPY data/webroot /app/webroot
-
-RUN ["apk", "--no-cache", "add", "vips"]
+RUN ["apk", "add", "--no-cache", "vips"]
 
 EXPOSE 8080/tcp
 
 LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
 
-WORKDIR /app
-
-ENTRYPOINT ["/app/quba-fr"]
+ENTRYPOINT ["/quba-fr"]

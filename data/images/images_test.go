@@ -4,6 +4,7 @@ import (
 	"image/jpeg"
 	"path/filepath"
 	"testing"
+	"testing/fstest"
 	"time"
 
 	"github.com/stretchr/testify/assert"
@@ -18,6 +19,11 @@ func TestLocalImagesWithMetadata(t *testing.T) {
 
 	// iwn contains an embed.FS that should contain all files in the current directory
 	iwm := LocalImagesWithMetadata()
+
+	assert.NoError(
+		t,
+		fstest.TestFS(iwm, entries...),
+	)
 
 	for _, e := range entries {
 		fd, meta, err := iwm.OpenWithMetadata(e)
@@ -40,7 +46,7 @@ func TestEmbedded_OpenWithMetadata(t *testing.T) {
 
 	// Check the metadata is correct
 	expectedMeta := &Metadata{
-		Date:      time.Date(2020, 1, 0, 0, 0, 0, 0, time.UTC),
+		Date:      time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
 		Location:  "Dents du Midi, Switzerland",
 		MainColor: "TODO",
 	}

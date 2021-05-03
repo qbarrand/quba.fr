@@ -88,6 +88,20 @@ func (vp *VipsProcessor) NewImageHandler(s string) (Handler, error) {
 	return &vh, nil
 }
 
+func (vp *VipsProcessor) HandlerFromBytes(b []byte) (Handler, error) {
+	ref, err := vips.NewImageFromBuffer(b)
+	if err != nil {
+		return nil, fmt.Errorf("could not create the handler: %v", err)
+	}
+
+	vh := VipsHandler{
+		export: &vips.ExportParams{},
+		ref:    ref,
+	}
+
+	return &vh, nil
+}
+
 func formatToVipsImageType(format Format) (vips.ImageType, error) {
 	it := vips.ImageTypeUnknown
 

@@ -15,7 +15,7 @@ type Metadata struct {
 
 func newMetadata(month time.Month, year int, location, mainColor string) *Metadata {
 	return &Metadata{
-		Date:      time.Date(year, month, 0, 0, 0, 0, 0, time.UTC),
+		Date:      time.Date(year, month, 1, 0, 0, 0, 0, time.UTC),
 		Location:  location,
 		MainColor: mainColor,
 	}

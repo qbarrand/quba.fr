@@ -7,14 +7,14 @@ import (
 	"io/fs"
 	"net/http"
 
-	"github.com/qbarrand/quba.fr/data/images"
 	"github.com/sirupsen/logrus"
 )
 
-func ImageLister(mfs images.MetadataFS, logger logrus.FieldLogger) (http.HandlerFunc, error) {
+// Lister returns a http.HandlerFunc that lists all images available in mfs.
+func Lister(fsys fs.FS, logger logrus.FieldLogger) (http.HandlerFunc, error) {
 	var buf bytes.Buffer
 
-	entries, err := fs.ReadDir(mfs, ".")
+	entries, err := fs.ReadDir(fsys, ".")
 	if err != nil {
 		return nil, fmt.Errorf("could not list files: %v", err)
 	}
@@ -32,6 +32,7 @@ func ImageLister(mfs images.MetadataFS, logger logrus.FieldLogger) (http.Handler
 	b := buf.Bytes()
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		if _, err := w.Write(b); err != nil {
 			logger.WithError(err).Error("Could not write the list of images")

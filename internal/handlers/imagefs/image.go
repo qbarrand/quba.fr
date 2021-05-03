@@ -1,53 +1,49 @@
-package handlers
+package imagefs
 
 import (
-	"bytes"
 	"encoding/hex"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"hash/fnv"
+	"io"
 	"mime"
 	"net/http"
 	"path/filepath"
 	"strconv"
 	"strings"
 
-	image3 "github.com/qbarrand/quba.fr/internal/image"
 	"github.com/sirupsen/logrus"
 
+	"github.com/qbarrand/quba.fr/data/images"
+	"github.com/qbarrand/quba.fr/internal/image"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
-type image struct {
+type Image struct {
+	mfs       images.MetadataFS
 	logger    logrus.FieldLogger
-	metaDB    image3.MetaDB
-	path      string
-	processor image3.Processor
+	processor image.Processor
 }
 
-func newImage(processor image3.Processor, path string, metaDB image3.MetaDB, logger logrus.FieldLogger) (*image, error) {
+func New(processor image.Processor, mfs images.MetadataFS, logger logrus.FieldLogger) (*Image, error) {
 	if err := processor.Init(); err != nil {
 		return nil, fmt.Errorf("could not initialize the processor: %w", err)
 	}
 
-	i := image{
+	i := Image{
+		mfs:       mfs,
 		logger:    logger,
-		metaDB:    metaDB,
-		path:      path,
 		processor: processor,
 	}
 
 	return &i, nil
 }
 
-func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	name := filepath.Base(r.URL.Path)
 
-	path := filepath.Join(i.path, name)
-
 	logger := i.logger.WithFields(logrus.Fields{
-		"path":       path,
+		"name":       name,
 		"request-id": httputils.GetRequestID(r),
 	})
 
@@ -58,7 +54,20 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 
-	handler, err := i.processor.NewImageHandler(path)
+	fd, meta, err := i.mfs.OpenWithMetadata(name)
+	if err != nil {
+		fail("Could not open the image", err)
+		return
+	}
+	defer fd.Close()
+
+	b, err := io.ReadAll(fd)
+	if err != nil {
+		fail("Could not read the image", err)
+		return
+	}
+
+	handler, err := i.processor.HandlerFromBytes(b)
 	if err != nil {
 		fail("Could not create an image handler", err)
 		return
@@ -109,12 +118,6 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	h := fnv.New32()
 	h.Write(buf) // per the docs: never returns an error
 
-	meta, err := i.metaDB.GetMetadata(name)
-	if err != nil {
-		fail("Could not get the image metadata", err)
-		return
-	}
-
 	headers := w.Header()
 
 	headers.Set("Content-Length", strconv.Itoa(len(buf)))
@@ -134,37 +137,11 @@ func (i *image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	logger.WithField("bytes", n).Debug("Finished writing image")
 }
 
-func newImageLister(metaDB image3.MetaDB, logger logrus.FieldLogger) (http.HandlerFunc, error) {
-	var buf bytes.Buffer
-
-	allNames, err := metaDB.AllNames()
-	if err != nil {
-		return nil, fmt.Errorf("could not get a list of image names: %w", err)
-	}
-
-	if err := json.NewEncoder(&buf).Encode(allNames); err != nil {
-		return nil, fmt.Errorf("could not generate the corresponding JSON: %v", err)
-	}
-
-	b := buf.Bytes()
-
-	handlerFunc := func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-
-		if _, err := w.Write(b); err != nil {
-			logger.WithError(err).Error("Could not write the list of images")
-		}
-	}
-
-	return handlerFunc, nil
-}
-
-func getBestFormat(serverFormats []image3.Format, clientTypes []string) (image3.Format, error) {
-	clientFmtMap := make(map[image3.Format]bool, len(clientTypes))
+func getBestFormat(serverFormats []image.Format, clientTypes []string) (image.Format, error) {
+	clientFmtMap := make(map[image.Format]bool, len(clientTypes))
 
 	for _, t := range clientTypes {
-		f, err := image3.FormatFromMIMEType(t)
+		f, err := image.FormatFromMIMEType(t)
 		if err != nil {
 			// This MIME type is not a recognized format
 			continue
