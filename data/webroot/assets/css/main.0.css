@@ -108,24 +108,15 @@ body {
   display: -webkit-flex;
   display: -ms-flex;
   display: flex;
-  -moz-flex-direction: column;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
-  -moz-justify-content: center;
-  -webkit-justify-content: center;
-  -ms-justify-content: center;
+  /*-moz-justify-content: center;*/
+  /*-webkit-justify-content: center;*/
+  /*-ms-justify-content: center;*/
   justify-content: center;
   background-color: #000;
   padding: 6em 4em 4em 4em; }
   body.is-preload *, body.is-preload *:before, body.is-preload *:after {
-    -moz-animation: none !important;
-    -webkit-animation: none !important;
-    -ms-animation: none !important;
     animation: none !important;
-    -moz-transition: none !important;
-    -webkit-transition: none !important;
-    -ms-transition: none !important;
     transition: none !important; }
   body > * {
     position: relative;
@@ -142,9 +133,6 @@ body {
 
 /* BG */
 #bg {
-  -moz-transition: opacity 2s ease-in-out;
-  -webkit-transition: opacity 2s ease-in-out;
-  -ms-transition: opacity 2s ease-in-out;
   transition: opacity 2s ease-in-out;
   height: 100%;
   left: 0;
@@ -155,9 +143,6 @@ body {
   width: 100%;
   z-index: 1; }
   #bg div {
-    -moz-transition: opacity 3s ease;
-    -webkit-transition: opacity 3s ease;
-    -ms-transition: opacity 3s ease;
     transition: opacity 3s ease;
     background-size: cover;
     height: 100%;
@@ -170,9 +155,6 @@ body {
     width: 100%;
   }
     #bg div.visible {
-      -moz-animation: bg 45s linear infinite;
-      -webkit-animation: bg 45s linear infinite;
-      -ms-animation: bg 45s linear infinite;
       animation: bg 45s linear infinite;
       opacity: 1;
       visibility: visible;
@@ -181,20 +163,11 @@ body {
         z-index: 2; }
       @media screen and (max-width: 1280px) {
         #bg div.visible {
-          -moz-animation: bg 29.25s linear infinite;
-          -webkit-animation: bg 29.25s linear infinite;
-          -ms-animation: bg 29.25s linear infinite;
           animation: bg 29.25s linear infinite; } }
       @media screen and (max-width: 736px) {
         #bg div.visible {
-          -moz-animation: bg 18s linear infinite;
-          -webkit-animation: bg 18s linear infinite;
-          -ms-animation: bg 18s linear infinite;
           animation: bg 18s linear infinite; } }
     #bg div:only-child {
-      -moz-animation-direction: alternate !important;
-      -webkit-animation-direction: alternate !important;
-      -ms-animation-direction: alternate !important;
       animation-direction: alternate !important; }
   body.is-preload #bg {
     opacity: 0; }
@@ -224,9 +197,6 @@ body, input, select, textarea {
       font-size: 12pt; } }
 
 a {
-  -moz-transition: border-bottom-color 0.2s ease, color 0.2s ease;
-  -webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
-  -ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
   transition: border-bottom-color 0.2s ease, color 0.2s ease;
   border-bottom: dotted 1px rgba(255, 255, 255, 0.25);
   color: inherit;
@@ -454,9 +424,6 @@ ul.icons {
     margin: 0 0 0 0; }
   @media screen and (max-width: 480px) {
     #signup-form {
-      -moz-flex-direction: column;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
       flex-direction: column; }
       #signup-form input[type="type"],
       #signup-form input[type="password"],
@@ -475,9 +442,6 @@ ul.icons {
 
 /* Footer */
 #footer {
-  -moz-transition: opacity 0.5s ease-in-out;
-  -webkit-transition: opacity 0.5s ease-in-out;
-  -ms-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
   bottom: 4em;
   color: rgba(255, 255, 255, 0.5);
@@ -532,14 +496,23 @@ header {
   text-shadow: 0 0 1em black;
 }
 
+#header p {
+  font-size: 1.75em;
+  color: rgba(255, 255, 255, 0.75);
+}
+
 ul.fa-ul {
   margin-left: 1.5em;
   text-shadow: 0 0 1em black;
 }
 
-footer:hover {
-  text-shadow: 0 0 0.5  em black;
+#footer {
+  opacity: 1;
+  text-shadow: 0 0 0.5em black;
 }
+
+/*footer:hover {*/
+/*}*/
 
 code {
   text-shadow: initial;
