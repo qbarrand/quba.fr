@@ -2,42 +2,52 @@ package image
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
-	"github.com/davidbyttow/govips/pkg/vips"
+	"github.com/davidbyttow/govips/v2/vips"
 )
 
-var (
-	ErrFormatUnavailable = errors.New("this format is not available in vips")
-
-	vipsFormats = []Format{Webp, JPEG}
-)
+var vipsFormats = []Format{Webp, JPEG}
 
 type VipsHandler struct {
-	export *vips.ExportParams
+	format Format
 	ref    *vips.ImageRef
 }
 
 func (vh *VipsHandler) Bytes() ([]byte, error) {
-	buf, _, err := vh.ref.Export(*vh.export)
+	switch vh.format {
+	case Webp:
+		buf, _, err := vh.ref.ExportWebp(nil)
+		return buf, err
+	case JPEG:
+		buf, _, err := vh.ref.ExportJpeg(nil)
+		return buf, err
+	}
 
-	vh.ref.Close()
-
-	return buf, err
+	return nil, fmt.Errorf("%d: unhandled format", vh.format)
 }
 
 func (vh *VipsHandler) Destroy() error {
-	vh.ref.Close()
-
 	return nil
 }
 
 func (vh *VipsHandler) Resize(ctx context.Context, w, h int) error {
+	var scale float64 = 1
+
+	if w != 0 {
+		scale = float64(w) / float64(vh.ref.Width())
+	} else if h != 0 {
+		scale = float64(h) / float64(vh.ref.Height())
+	}
+
+	if scale > 1 {
+		return nil
+	}
+
 	chanErr := make(chan error, 1)
 
 	go func() {
-		chanErr <- vh.ref.ThumbnailImage(w)
+		chanErr <- vh.ref.Resize(scale, vips.KernelAuto) // vh.ref.Thumbnail(w, h, vips.InterestingAll)
 	}()
 
 	select {
@@ -49,11 +59,8 @@ func (vh *VipsHandler) Resize(ctx context.Context, w, h int) error {
 }
 
 func (vh *VipsHandler) SetFormat(format Format) error {
-	var err error
-
-	vh.export.Format, err = formatToVipsImageType(format)
-
-	return err
+	vh.format = format
+	return nil
 }
 
 type VipsProcessor struct{}
@@ -80,12 +87,7 @@ func (vp *VipsProcessor) NewImageHandler(s string) (Handler, error) {
 		return nil, fmt.Errorf("could not create the handler: %v", err)
 	}
 
-	vh := VipsHandler{
-		export: &vips.ExportParams{},
-		ref:    ref,
-	}
-
-	return &vh, nil
+	return &VipsHandler{ref: ref}, nil
 }
 
 func (vp *VipsProcessor) HandlerFromBytes(b []byte) (Handler, error) {
@@ -94,27 +96,5 @@ func (vp *VipsProcessor) HandlerFromBytes(b []byte) (Handler, error) {
 		return nil, fmt.Errorf("could not create the handler: %v", err)
 	}
 
-	vh := VipsHandler{
-		export: &vips.ExportParams{},
-		ref:    ref,
-	}
-
-	return &vh, nil
-}
-
-func formatToVipsImageType(format Format) (vips.ImageType, error) {
-	it := vips.ImageTypeUnknown
-
-	switch format {
-	case JPEG:
-		it = vips.ImageTypeJPEG
-	case Webp:
-		it = vips.ImageTypeWEBP
-	}
-
-	if it == 0 {
-		return it, ErrFormatUnavailable
-	}
-
-	return it, nil
+	return &VipsHandler{ref: ref}, nil
 }
