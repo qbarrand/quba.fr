@@ -16,7 +16,6 @@ import (
 )
 
 type AppOptions struct {
-	ImagesDir      string
 	ImageProcessor img.Processor
 	LastMod        string
 }

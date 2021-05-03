@@ -39,7 +39,6 @@ func main() {
 
 	opts := handlers.AppOptions{
 		ImageProcessor: &image.VipsProcessor{},
-		ImagesDir:      "data/images",
 		LastMod:        cfg.LastMod,
 	}
 
