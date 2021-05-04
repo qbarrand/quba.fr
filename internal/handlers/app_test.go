@@ -7,10 +7,11 @@ import (
 	"testing"
 
 	"github.com/golang/mock/gomock"
-	"github.com/qbarrand/quba.fr/internal/generated/mock_image"
 	"github.com/sirupsen/logrus/hooks/test"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/qbarrand/quba.fr/internal/generated/mock_image"
 )
 
 //func TestNewApp(t *testing.T) {

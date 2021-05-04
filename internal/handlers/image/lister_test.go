@@ -9,9 +9,10 @@ import (
 	"testing/fstest"
 
 	"github.com/golang/mock/gomock"
-	"github.com/qbarrand/quba.fr/internal/generated/mock_images"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+
+	"github.com/qbarrand/quba.fr/internal/generated/mock_images"
 )
 
 func Test_newImageLister(t *testing.T) {

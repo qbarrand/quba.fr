@@ -13,13 +13,14 @@ import (
 	"time"
 
 	"github.com/golang/mock/gomock"
+	"github.com/sirupsen/logrus/hooks/test"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+
 	"github.com/qbarrand/quba.fr/data/images"
 	"github.com/qbarrand/quba.fr/internal/generated/mock_image"
 	"github.com/qbarrand/quba.fr/internal/generated/mock_images"
 	"github.com/qbarrand/quba.fr/internal/imgpro"
-	"github.com/sirupsen/logrus/hooks/test"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_New(t *testing.T) {
