@@ -25,11 +25,18 @@ func TestLocalImagesWithMetadata(t *testing.T) {
 		fstest.TestFS(iwm, entries...),
 	)
 
+	checkMeta := func(meta *Metadata) {
+		assert.NotZero(t, meta.Date)
+		assert.NotEmpty(t, meta.Location)
+		assert.NotEmpty(t, meta.Location)
+	}
+
 	for _, e := range entries {
 		fd, meta, err := iwm.OpenWithMetadata(e)
 
 		assert.NotNil(t, fd)
 		assert.NotNil(t, meta)
+		checkMeta(meta)
 		require.NoError(t, err)
 	}
 }

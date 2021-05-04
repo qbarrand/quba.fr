@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/require"
 
 	"github.com/qbarrand/quba.fr/data/images"
-	"github.com/qbarrand/quba.fr/internal/generated/mock_image"
 	"github.com/qbarrand/quba.fr/internal/generated/mock_images"
+	"github.com/qbarrand/quba.fr/internal/generated/mock_imgpro"
 	"github.com/qbarrand/quba.fr/internal/imgpro"
 )
 
@@ -27,7 +27,7 @@ func Test_New(t *testing.T) {
 	t.Parallel()
 
 	ctrl := gomock.NewController(t)
-	mockProcessor := mock_image.NewMockProcessor(ctrl)
+	mockProcessor := mock_imgpro.NewMockProcessor(ctrl)
 
 	t.Run("processor returns an error", func(t *testing.T) {
 		randomError := errors.New("random error")
@@ -61,7 +61,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 	t.Parallel()
 
 	ctrl := gomock.NewController(t)
-	mockProcessor := mock_image.NewMockProcessor(ctrl)
+	mockProcessor := mock_imgpro.NewMockProcessor(ctrl)
 	mockMetadataFS := mock_images.NewMockMetadataFS(ctrl)
 
 	const (
@@ -147,7 +147,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 	}
 
 	t.Run("handler cannot set the format", func(t *testing.T) {
-		mockHandler := mock_image.NewMockHandler(ctrl)
+		mockHandler := mock_imgpro.NewMockHandler(ctrl)
 
 		b, fd := getFsFile(t)
 		defer fd.Close()
@@ -184,7 +184,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 
 		ctx := getContext(t)
 
-		mockHandler := mock_image.NewMockHandler(ctrl)
+		mockHandler := mock_imgpro.NewMockHandler(ctrl)
 
 		b, fd := getFsFile(t)
 		defer fd.Close()
@@ -217,7 +217,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 	t.Run("no resize + cannot get bytes", func(t *testing.T) {
 		ctx := getContext(t)
 
-		mockHandler := mock_image.NewMockHandler(ctrl)
+		mockHandler := mock_imgpro.NewMockHandler(ctrl)
 
 		b, fd := getFsFile(t)
 		defer fd.Close()
@@ -228,6 +228,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 			mockProcessor.EXPECT().HandlerFromBytes(b).Return(mockHandler, nil),
 			mockProcessor.EXPECT().BestFormats().Return([]imgpro.Format{imgpro.Webp}),
 			mockHandler.EXPECT().SetFormat(imgpro.Webp),
+			mockHandler.EXPECT().StripMetadata().Return(nil),
 			mockHandler.EXPECT().Bytes().Return(nil, randomError),
 			mockHandler.EXPECT().Destroy(),
 		)
@@ -251,7 +252,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 		buf := []byte("abcd")
 		ctx := getContext(t)
 
-		mockHandler := mock_image.NewMockHandler(ctrl)
+		mockHandler := mock_imgpro.NewMockHandler(ctrl)
 
 		const (
 			location  = "some-location"
@@ -275,6 +276,7 @@ func TestImage_ServeHTTP(t *testing.T) {
 			mockProcessor.EXPECT().BestFormats().Return([]imgpro.Format{imgpro.Webp}),
 			mockHandler.EXPECT().SetFormat(imgpro.Webp),
 			mockHandler.EXPECT().Resize(ctx, width, 0),
+			mockHandler.EXPECT().StripMetadata().Return(nil),
 			mockHandler.EXPECT().Bytes().Return(buf, nil),
 			mockHandler.EXPECT().Destroy(),
 		)
