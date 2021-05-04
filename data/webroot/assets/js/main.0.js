@@ -96,7 +96,7 @@ async function printRandomBackground(parent, imageName, constraint) {
 
         imageData = new ImageData(
             URL.createObjectURL(blob),
-            response.headers.get('X-Main-Color'),
+            response.headers.get('X-Quba-Main-Color'),
             response.headers.get('X-Quba-Location'),
             date.toLocaleDateString('en-EN', {year: 'numeric', month: 'long'})
         );
@@ -132,7 +132,7 @@ async function printRandomBackground(parent, imageName, constraint) {
 
     const $wrapper = document.createElement('div');
     $wrapper.id = 'bg';
-    document.querySelector('body').appendChild($wrapper);
+    $body.appendChild($wrapper);
 
     const res = await fetch('/images');
     const allImages = await res.json();
@@ -151,7 +151,7 @@ async function printRandomBackground(parent, imageName, constraint) {
             printRandomBackground($wrapper, selected, c);
         }
 
-        m.addListener(e => {
+        m.addEventListener('change', e => {
             if (e.matches && (currentConstraint === undefined || currentConstraint.requiresUpdate(c))) {
                 printRandomBackground($wrapper, selected, c);
             }
