@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_configFromArgs(t *testing.T) {
+func TestParseCommandLine(t *testing.T) {
 	const (
 		addr     = "some-host:1234"
 		lastMod  = "2001-02-03"
