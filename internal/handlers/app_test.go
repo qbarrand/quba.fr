@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/qbarrand/quba.fr/internal/generated/mock_image"
+	"github.com/qbarrand/quba.fr/internal/generated/mock_imgpro"
 )
 
 //func TestNewApp(t *testing.T) {
@@ -124,9 +124,8 @@ func TestApp_Router(t *testing.T) {
 	logger, _ := test.NewNullLogger()
 
 	ctrl := gomock.NewController(t)
-	processor := mock_image.NewMockProcessor(ctrl)
+	processor := mock_imgpro.NewMockProcessor(ctrl)
 	processor.EXPECT().Init()
-	//processor.EXPECT().NewImageHandler(gomock.Any())
 
 	opts := &AppOptions{
 		ImageProcessor: processor,

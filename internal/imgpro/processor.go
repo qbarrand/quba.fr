@@ -10,6 +10,7 @@ type Handler interface {
 	Destroy() error
 	Resize(context.Context, int, int) error
 	SetFormat(Format) error
+	StripMetadata() error
 }
 
 type Processor interface {

@@ -10,17 +10,22 @@ import (
 var vipsFormats = []Format{Webp, JPEG}
 
 type VipsHandler struct {
-	format Format
-	ref    *vips.ImageRef
+	format        Format
+	ref           *vips.ImageRef
+	stripMetadata bool
 }
 
 func (vh *VipsHandler) Bytes() ([]byte, error) {
 	switch vh.format {
 	case Webp:
-		buf, _, err := vh.ref.ExportWebp(nil)
+		p := vips.NewWebpExportParams()
+		p.StripMetadata = vh.stripMetadata
+		buf, _, err := vh.ref.ExportWebp(p)
 		return buf, err
 	case JPEG:
-		buf, _, err := vh.ref.ExportJpeg(nil)
+		p := vips.NewJpegExportParams()
+		p.StripMetadata = vh.stripMetadata
+		buf, _, err := vh.ref.ExportJpeg(p)
 		return buf, err
 	}
 
@@ -60,6 +65,11 @@ func (vh *VipsHandler) Resize(ctx context.Context, w, h int) error {
 
 func (vh *VipsHandler) SetFormat(format Format) error {
 	vh.format = format
+	return nil
+}
+
+func (vh *VipsHandler) StripMetadata() error {
+	vh.stripMetadata = true
 	return nil
 }
 

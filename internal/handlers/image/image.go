@@ -110,6 +110,11 @@ func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if err := handler.StripMetadata(); err != nil {
+		fail("Could not strip the image's metadata", err)
+		return
+	}
+
 	buf, err := handler.Bytes()
 	if err != nil {
 		fail("Could not get the image bytes", err)
