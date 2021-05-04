@@ -1,6 +1,7 @@
 package imagefs
 
 import (
+	"bytes"
 	"encoding/hex"
 	"errors"
 	"fmt"
@@ -11,6 +12,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/sirupsen/logrus"
 
@@ -94,16 +96,15 @@ func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	widthStr := r.FormValue("width")
+	width, height, err := getDimensions(r)
+	if err != nil {
+		logger.WithError(err).Error("Invalid width or height")
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
 
-	if widthStr != "" {
-		width, err := strconv.Atoi(widthStr)
-		if err != nil {
-			fail("Could not convert the width parameter to integer", err)
-			return
-		}
-
-		if err := handler.Resize(r.Context(), width, 0); err != nil {
+	if width != 0 || height != 0 {
+		if err := handler.Resize(r.Context(), width, height); err != nil {
 			fail("Could not resize the image", err)
 			return
 		}
@@ -125,16 +126,21 @@ func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	headers.Set("ETag", hex.EncodeToString(h.Sum(nil)))
 	headers.Set("X-Quba-Date", strconv.FormatInt(meta.Date.Unix(), 10))
 	headers.Set("X-Quba-Location", meta.Location)
-	headers.Set("X-Quba-MainColor", meta.MainColor)
+	headers.Set("X-Quba-Main-Color", meta.MainColor)
 
-	n, err := w.Write(buf)
+	rs := bytes.NewReader(buf)
+
+	modTime := time.Time{}
+
+	stat, err := fd.Stat()
 	if err != nil {
-		// do not call fail() as we've already written headers
-		logger.WithError(err).Error("Could not write the resulting image")
-		return
+		logger.WithError(err).Error("Could not stat(); using zero time")
+	} else {
+		modTime = stat.ModTime()
+
 	}
 
-	logger.WithField("bytes", n).Debug("Finished writing image")
+	http.ServeContent(w, r, "", modTime, rs)
 }
 
 func getBestFormat(serverFormats []image.Format, clientTypes []string) (image.Format, error) {
@@ -157,6 +163,29 @@ func getBestFormat(serverFormats []image.Format, clientTypes []string) (image.Fo
 	}
 
 	return "", errors.New("no acceptable format found")
+}
+
+func getDimensions(req *http.Request) (int, int, error) {
+	width := 0
+	height := 0
+
+	var err error
+
+	if widthStr := req.FormValue("width"); widthStr != "" {
+		width, err = strconv.Atoi(widthStr)
+		if err != nil {
+			return width, height, fmt.Errorf("invalid width: %v", err)
+		}
+	}
+
+	if heightStr := req.FormValue("height"); heightStr != "" {
+		height, err = strconv.Atoi(heightStr)
+		if err != nil {
+			return width, height, fmt.Errorf("invalid height: %v", err)
+		}
+	}
+
+	return width, height, nil
 }
 
 // getMIMETypes parses a slice of Accept headers and returns a slice of all the types.
