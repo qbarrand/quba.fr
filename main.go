@@ -6,6 +6,7 @@ import (
 	"flag"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 
@@ -58,7 +59,7 @@ func main() {
 	logger.
 		WithFields(logrus.Fields{
 			"addr":    cfg.Addr,
-			"version": version,
+			"version": strings.TrimSuffix(version, "\n"),
 		}).
 		Info("Starting the server")
 
