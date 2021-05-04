@@ -24,7 +24,7 @@ func (vh *VipsHandler) Bytes() ([]byte, error) {
 		return buf, err
 	}
 
-	return nil, fmt.Errorf("%d: unhandled format", vh.format)
+	return nil, fmt.Errorf("%s: unhandled format", vh.format)
 }
 
 func (vh *VipsHandler) Destroy() error {

@@ -48,7 +48,7 @@ func TestEmbedded_OpenWithMetadata(t *testing.T) {
 	expectedMeta := &Metadata{
 		Date:      time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC),
 		Location:  "Dents du Midi, Switzerland",
-		MainColor: "TODO",
+		MainColor: "#4279AC",
 	}
 
 	assert.Equal(t, expectedMeta, meta)
