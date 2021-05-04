@@ -1,4 +1,5 @@
-package image
+// Package imgpro offers Image Processing interfaces as well as a few common implementations.
+package imgpro
 
 import (
 	"context"

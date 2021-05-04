@@ -9,7 +9,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	image "github.com/qbarrand/quba.fr/internal/image"
+	image "github.com/qbarrand/quba.fr/internal/imgpro"
 )
 
 // MockHandler is a mock of Handler interface.

@@ -1,4 +1,4 @@
-package imagefs
+package image
 
 import (
 	"bytes"

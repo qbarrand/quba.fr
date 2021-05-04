@@ -1,4 +1,4 @@
-package imagefs
+package image
 
 import (
 	"bytes"
@@ -9,7 +9,6 @@ import (
 	"io"
 	"mime"
 	"net/http"
-	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
@@ -17,17 +16,17 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/qbarrand/quba.fr/data/images"
-	"github.com/qbarrand/quba.fr/internal/image"
+	"github.com/qbarrand/quba.fr/internal/imgpro"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
 type Image struct {
 	mfs       images.MetadataFS
 	logger    logrus.FieldLogger
-	processor image.Processor
+	processor imgpro.Processor
 }
 
-func New(processor image.Processor, mfs images.MetadataFS, logger logrus.FieldLogger) (*Image, error) {
+func New(processor imgpro.Processor, mfs images.MetadataFS, logger logrus.FieldLogger) (*Image, error) {
 	if err := processor.Init(); err != nil {
 		return nil, fmt.Errorf("could not initialize the processor: %w", err)
 	}
@@ -42,7 +41,8 @@ func New(processor image.Processor, mfs images.MetadataFS, logger logrus.FieldLo
 }
 
 func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	name := filepath.Base(r.URL.Path)
+	name := strings.TrimPrefix(r.URL.Path, "/")
+	//name := r.URL.Path
 
 	logger := i.logger.WithFields(logrus.Fields{
 		"name":       name,
@@ -143,11 +143,11 @@ func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	http.ServeContent(w, r, "", modTime, rs)
 }
 
-func getBestFormat(serverFormats []image.Format, clientTypes []string) (image.Format, error) {
-	clientFmtMap := make(map[image.Format]bool, len(clientTypes))
+func getBestFormat(serverFormats []imgpro.Format, clientTypes []string) (imgpro.Format, error) {
+	clientFmtMap := make(map[imgpro.Format]bool, len(clientTypes))
 
 	for _, t := range clientTypes {
-		f, err := image.FormatFromMIMEType(t)
+		f, err := imgpro.FormatFromMIMEType(t)
 		if err != nil {
 			// This MIME type is not a recognized format
 			continue

@@ -12,7 +12,7 @@ import (
 
 	"github.com/qbarrand/quba.fr/internal/config"
 	"github.com/qbarrand/quba.fr/internal/handlers"
-	"github.com/qbarrand/quba.fr/internal/image"
+	"github.com/qbarrand/quba.fr/internal/imgpro"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
@@ -39,7 +39,7 @@ func main() {
 	logger.SetLevel(logLevel)
 
 	opts := handlers.AppOptions{
-		ImageProcessor: &image.VipsProcessor{},
+		ImageProcessor: &imgpro.VipsProcessor{},
 		LastMod:        cfg.LastMod,
 	}
 
