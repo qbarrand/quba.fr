@@ -1,31 +1,22 @@
-FROM golang:1.15-alpine as builder
+FROM golang:1.16-alpine as builder
 
 RUN ["apk", "add", "gcc", "git", "make", "musl-dev", "pkgconfig", "vips-dev"]
 
 RUN ["mkdir", "/build"]
 WORKDIR /build
 
-COPY ./cmd cmd
-COPY ./internal internal
-COPY ./pkg pkg
-COPY go.* .
-COPY Makefile .
+COPY . .
 
 RUN ["make"]
 
 FROM alpine
 
-RUN ["mkdir", "/app"]
+COPY --from=builder /build/quba-fr /quba-fr
 
-COPY --from=builder /build/quba-fr /app
-COPY ./webroot /app/webroot
-
-RUN ["apk", "add", "vips"]
+RUN ["apk", "add", "--no-cache", "vips"]
 
 EXPOSE 8080/tcp
 
 LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
 
-WORKDIR /app
-
-ENTRYPOINT ["/app/quba-fr"]
+ENTRYPOINT ["/quba-fr"]
