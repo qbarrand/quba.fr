@@ -66,13 +66,8 @@ const cache = new Map();
 let currentConstraint = null;
 
 async function printRandomBackground(parent, imageName, constraint) {
-    let url = `images/${imageName}?${constraint.toQueryString()}`
-
-    const webpSupported = await p;
-
+    const url = `images/${imageName}?${constraint.toQueryString()}`
     const accept = ['image/jpeg'];
-
-    console.debug(`webp supported: ${webpSupported}`)
 
     if (await p) {
         accept.unshift('image/webp');
