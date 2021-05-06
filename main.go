@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 
 	"github.com/qbarrand/quba.fr/internal/config"
@@ -57,13 +58,35 @@ func main() {
 	)
 
 	logger.
-		WithFields(logrus.Fields{
-			"addr":    cfg.Addr,
-			"version": strings.TrimSuffix(version, "\n"),
-		}).
-		Info("Starting the server")
+		WithField("version", strings.TrimSuffix(version, "\n")).
+		Info("Starting the app")
 
-	if err := http.ListenAndServe(cfg.Addr, main); err != nil {
-		logger.WithError(err).Fatal("General error caught")
-	}
+	chanErr := make(chan error)
+
+	go func() {
+		logger.
+			WithField("addr", cfg.Addr).
+			Info("Starting the main server")
+
+		chanErr <- http.ListenAndServe(cfg.Addr, main)
+	}()
+
+	go func() {
+		logger.
+			WithField("addr", cfg.MetricsAddr).
+			Info("Starting the metrics server")
+
+		chanErr <- runMetrics(cfg.MetricsAddr)
+	}()
+
+	err = <-chanErr
+
+	logger.WithError(err).Fatal("General error caught")
+}
+
+func runMetrics(addr string) error {
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
+
+	return http.ListenAndServe(addr, mux)
 }
