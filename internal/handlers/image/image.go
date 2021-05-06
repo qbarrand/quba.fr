@@ -42,7 +42,6 @@ func New(processor imgpro.Processor, mfs images.MetadataFS, logger logrus.FieldL
 
 func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	name := strings.TrimPrefix(r.URL.Path, "/")
-	//name := r.URL.Path
 
 	logger := i.logger.WithFields(logrus.Fields{
 		"name":       name,
@@ -142,7 +141,6 @@ func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		logger.WithError(err).Error("Could not stat(); using zero time")
 	} else {
 		modTime = stat.ModTime()
-
 	}
 
 	http.ServeContent(w, r, "", modTime, rs)
