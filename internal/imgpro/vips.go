@@ -7,8 +7,6 @@ import (
 	"github.com/davidbyttow/govips/v2/vips"
 )
 
-var vipsFormats = []Format{Webp, JPEG}
-
 type VipsHandler struct {
 	format        Format
 	ref           *vips.ImageRef
@@ -33,6 +31,8 @@ func (vh *VipsHandler) Bytes() ([]byte, error) {
 }
 
 func (vh *VipsHandler) Destroy() error {
+	vh.ref.Close()
+
 	return nil
 }
 
@@ -76,7 +76,7 @@ func (vh *VipsHandler) StripMetadata() error {
 type VipsProcessor struct{}
 
 func (vp *VipsProcessor) BestFormats() []Format {
-	return vipsFormats
+	return []Format{Webp, JPEG}
 }
 
 func (vp *VipsProcessor) Destroy() error {
@@ -89,15 +89,6 @@ func (vp *VipsProcessor) Init() error {
 	vips.Startup(nil)
 
 	return nil
-}
-
-func (vp *VipsProcessor) NewImageHandler(s string) (Handler, error) {
-	ref, err := vips.NewImageFromFile(s)
-	if err != nil {
-		return nil, fmt.Errorf("could not create the handler: %v", err)
-	}
-
-	return &VipsHandler{ref: ref}, nil
 }
 
 func (vp *VipsProcessor) HandlerFromBytes(b []byte) (Handler, error) {

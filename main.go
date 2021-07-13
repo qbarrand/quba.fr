@@ -5,6 +5,7 @@ import (
 	"errors"
 	"flag"
 	"net/http"
+	"net/http/pprof"
 	"os"
 	"strings"
 
@@ -39,8 +40,17 @@ func main() {
 
 	logger.SetLevel(logLevel)
 
+	var ip imgpro.Processor
+
+	switch cfg.ImageProcessor {
+	case "imagemagick":
+		ip = &imgpro.ImageMagickProcessor{}
+	case "vips":
+		ip = &imgpro.VipsProcessor{}
+	}
+
 	opts := handlers.AppOptions{
-		ImageProcessor: &imgpro.VipsProcessor{},
+		ImageProcessor: ip,
 		LastMod:        cfg.LastMod,
 	}
 
@@ -77,6 +87,18 @@ func main() {
 			Info("Starting the metrics server")
 
 		chanErr <- runMetrics(cfg.MetricsAddr)
+	}()
+
+	go func() {
+		mux := http.NewServeMux()
+
+		mux.HandleFunc("/debug/pprof/", pprof.Index)
+		mux.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+		mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+		mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+		mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
+
+		chanErr <- http.ListenAndServe("localhost:6060", mux)
 	}()
 
 	err = <-chanErr

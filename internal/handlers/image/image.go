@@ -136,8 +136,7 @@ func (i *Image) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	modTime := time.Time{}
 
-	stat, err := fd.Stat()
-	if err != nil {
+	if stat, err := fd.Stat(); err != nil {
 		logger.WithError(err).Error("Could not stat(); using zero time")
 	} else {
 		modTime = stat.ModTime()
