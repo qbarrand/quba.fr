@@ -1,6 +1,6 @@
 FROM golang:1.16-alpine as builder
 
-RUN ["apk", "add", "gcc", "git", "make", "musl-dev", "pkgconfig", "vips-dev"]
+RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
 
 RUN ["mkdir", "/build"]
 WORKDIR /build
@@ -13,7 +13,7 @@ FROM alpine
 
 COPY --from=builder /build/quba-fr /quba-fr
 
-RUN ["apk", "add", "--no-cache", "vips"]
+RUN ["apk", "add", "--no-cache", "imagemagick", "vips"]
 
 EXPOSE 8080/tcp
 
