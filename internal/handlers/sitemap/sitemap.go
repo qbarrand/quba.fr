@@ -3,14 +3,15 @@ package sitemap
 import (
 	"fmt"
 	"net/http"
-	"strings"
 	"time"
+
+	"github.com/sirupsen/logrus"
 )
 
 const lastModLayout = "2006-01-02"
 
 // New returns a new handler that writes the sitemap.
-func New(lastmod string) (http.HandlerFunc, error) {
+func New(lastmod string, logger logrus.FieldLogger) (http.HandlerFunc, error) {
 	if _, err := time.Parse(lastModLayout, lastmod); err != nil {
 		return nil, fmt.Errorf("invalid lastmod: %v", err)
 	}
@@ -25,13 +26,15 @@ func New(lastmod string) (http.HandlerFunc, error) {
 	</url>
 </urlset>`
 
-	body := fmt.Sprintf(sitemapTemplateStr, lastmod)
+	body := []byte(fmt.Sprintf(sitemapTemplateStr, lastmod))
 
 	handler := func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "application/xml")
 		w.WriteHeader(http.StatusOK)
 
-		strings.NewReader(body).WriteTo(w)
+		if _, err := w.Write(body); err != nil {
+			logger.WithError(err).Error("Could not write the body")
+		}
 	}
 
 	return handler, nil

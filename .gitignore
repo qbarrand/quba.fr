@@ -4,5 +4,11 @@
 # IDE
 .idea/
 
-# compiled binary
-quba-fr
+# built files
+image-resizer
+server
+dist/
+img-out
+
+# Node stuff
+node_modules

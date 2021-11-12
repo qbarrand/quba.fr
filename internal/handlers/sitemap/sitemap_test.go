@@ -6,23 +6,24 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestNew(t *testing.T) {
 	t.Run("empty lastmod", func(t *testing.T) {
-		_, err := New("")
+		_, err := New("", logrus.New())
 		assert.Error(t, err)
 	})
 
 	t.Run("invalid lastmod", func(t *testing.T) {
-		_, err := New("abcd")
+		_, err := New("abcd", logrus.New())
 		assert.Error(t, err)
 	})
 
 	t.Run("valid lastmod", func(t *testing.T) {
-		handler, err := New("2021-05-01")
+		handler, err := New("2021-05-01", logrus.New())
 		require.NoError(t, err)
 
 		req := httptest.NewRequest(http.MethodGet, "/", nil)

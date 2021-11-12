@@ -1,0 +1,37 @@
+{
+  "name": "quba.fr",
+  "version": "1.0.0",
+  "description": "quba.fr web application",
+  "private": true,
+  "scripts": {
+    "start": "webpack serve --open",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qbarrand/quba.fr.git"
+  },
+  "author": "Quentin Barrand <quentin@quba.dev>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/qbarrand/quba.fr/issues"
+  },
+  "homepage": "https://github.com/qbarrand/quba.fr#readme",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.0.0",
+    "css-loader": "^6.6.0",
+    "favicons": "^6.2.2",
+    "favicons-webpack-plugin": "^5.0.2",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.0",
+    "jest": "^27.5.1",
+    "ts-jest": "^27.1.3"
+  }
+}

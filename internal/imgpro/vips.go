@@ -85,8 +85,8 @@ func (vp *VipsProcessor) Destroy() error {
 	return nil
 }
 
-func (vp *VipsProcessor) Init() error {
-	vips.Startup(nil)
+func (vp *VipsProcessor) Init(concurrency int) error {
+	vips.Startup(&vips.Config{ConcurrencyLevel: concurrency})
 
 	return nil
 }
@@ -98,4 +98,8 @@ func (vp *VipsProcessor) HandlerFromBytes(b []byte) (Handler, error) {
 	}
 
 	return &VipsHandler{ref: ref}, nil
+}
+
+func (vp *VipsProcessor) String() string {
+	return "Vips"
 }
