@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"gopkg.in/gographics/imagick.v3/imagick"
+	"gopkg.in/gographics/imagick.v2/imagick"
 )
 
 type ImageMagickHandler struct {
