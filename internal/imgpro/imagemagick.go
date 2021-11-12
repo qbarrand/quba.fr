@@ -103,3 +103,7 @@ func (imp *ImageMagickProcessor) HandlerFromBytes(b []byte) (Handler, error) {
 
 	return &imh, imh.mw.ReadImageBlob(b)
 }
+
+func (imp *ImageMagickProcessor) String() string {
+	return "ImageMagick"
+}

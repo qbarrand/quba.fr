@@ -99,3 +99,7 @@ func (vp *VipsProcessor) HandlerFromBytes(b []byte) (Handler, error) {
 
 	return &VipsHandler{ref: ref}, nil
 }
+
+func (vp *VipsProcessor) String() string {
+	return "Vips"
+}

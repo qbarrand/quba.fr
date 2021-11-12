@@ -3,6 +3,7 @@ package imgpro
 
 import (
 	"context"
+	"fmt"
 )
 
 type Handler interface {
@@ -14,6 +15,8 @@ type Handler interface {
 }
 
 type Processor interface {
+	fmt.Stringer
+
 	BestFormats() []Format
 	Destroy() error
 	Init() error
