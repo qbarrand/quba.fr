@@ -30,10 +30,10 @@ func BenchmarkSuite(b *testing.B) {
 	}
 
 	images := []string{
-		"../../data/images/lhc_1.jpg",
-		"../../data/images/dubai_1.jpg",
-		"../../data/images/singapore_1.jpg",
-		"../../data/images/zermatt_1.jpg",
+		"../../data/img-src/lhc_1.jpg",
+		"../../data/img-src/dubai_1.jpg",
+		"../../data/img-src/singapore_1.jpg",
+		"../../data/img-src/zermatt_1.jpg",
 	}
 
 	dimensions := []struct{ w, h int }{
@@ -43,7 +43,7 @@ func BenchmarkSuite(b *testing.B) {
 	}
 
 	for _, p := range processors {
-		p.processor.Init()
+		p.processor.Init(1)
 		defer p.processor.Destroy()
 	}
 
@@ -59,7 +59,7 @@ func BenchmarkSuite(b *testing.B) {
 					for i := 0; i < b.N; i++ {
 						h, err := p.processor.HandlerFromBytes(imageBytes)
 						require.NoError(b, err)
-						// Without destroying vips images, vips.Shutdown() panics
+						// Without destroying vips img-src, vips.Shutdown() panics
 						defer h.Destroy()
 
 						h.Resize(context.Background(), 1690, 0)

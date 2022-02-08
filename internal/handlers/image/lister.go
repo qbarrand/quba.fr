@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// Lister returns a http.HandlerFunc that lists all images available in mfs.
+// Lister returns a http.HandlerFunc that lists all img-src available in mfs.
 func Lister(fsys fs.FS, logger logrus.FieldLogger) (http.HandlerFunc, error) {
 	var buf bytes.Buffer
 
@@ -35,7 +35,7 @@ func Lister(fsys fs.FS, logger logrus.FieldLogger) (http.HandlerFunc, error) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		if _, err := w.Write(b); err != nil {
-			logger.WithError(err).Error("Could not write the list of images")
+			logger.WithError(err).Error("Could not write the list of img-src")
 		}
 	}
 

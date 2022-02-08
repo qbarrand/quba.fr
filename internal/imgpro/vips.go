@@ -85,8 +85,8 @@ func (vp *VipsProcessor) Destroy() error {
 	return nil
 }
 
-func (vp *VipsProcessor) Init() error {
-	vips.Startup(nil)
+func (vp *VipsProcessor) Init(concurrency int) error {
+	vips.Startup(&vips.Config{ConcurrencyLevel: concurrency})
 
 	return nil
 }

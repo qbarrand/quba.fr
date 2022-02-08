@@ -129,26 +129,30 @@ async function printRandomBackground(parent, imageName, constraint) {
     $wrapper.id = 'bg';
     $body.appendChild($wrapper);
 
-    const res = await fetch('/images');
-    const allImages = await res.json();
+    const res = await fetch("/images/metadata.json")
+    const allImages = await res.json()
 
-    let selected = new URLSearchParams(window.location.search).get('img')
+    let selectedKey = new URLSearchParams(window.location.search).get('img')
 
-    if (selected == null) {
-        selected = allImages[Math.floor(Math.random()*allImages.length)];
+    if (selectedKey == null) {
+        const allKeys = Object.keys(allImages)
+        selectedKey = allKeys[Math.floor(Math.random()*allKeys.length)];
     }
+
+    // const selectedImage = allImages[selectedKey]
+    const selectedImage = selectedKey
 
     // Register all media query listeners
     for (let [q, c] of Object.entries(queries)) {
         const m = window.matchMedia(q)
 
         if (m.matches) {
-            printRandomBackground($wrapper, selected, c);
+            printRandomBackground($wrapper, selectedImage, c);
         }
 
         m.addEventListener('change', e => {
             if (e.matches && (currentConstraint === undefined || currentConstraint.requiresUpdate(c))) {
-                printRandomBackground($wrapper, selected, c);
+                printRandomBackground($wrapper, selectedImage, c);
             }
         });
     }

@@ -45,7 +45,7 @@ import (
 //	i, ok := app.image.(*image)
 //	assert.True(t, ok)
 //	assert.Equal(t, processor, i.processor)
-//	assert.Equal(t, webroot+"/images", i.path)
+//	assert.Equal(t, webroot+"/img-src", i.path)
 //	assert.Equal(t, logger.WithField("handler", "image"), i.logger)
 //
 //	s, ok := app.sitemap.(*sitemap)
@@ -86,11 +86,11 @@ import (
 //		},
 //		{
 //			mock: image,
-//			url:  "/images/dubai_1.jpg",
+//			url:  "/img-src/dubai_1.jpg",
 //		},
 //		{
 //			mock: image,
-//			url:  "/images/dubai_1.jpg",
+//			url:  "/img-src/dubai_1.jpg",
 //		},
 //		{
 //			mock: sitemap,
@@ -116,8 +116,8 @@ func TestApp_Router(t *testing.T) {
 		"/",
 		"/index.html",
 		"/healthz",
-		"/images",
-		"/images/dubai_1.jpg",
+		"/img-src",
+		"/img-src/dubai_1.jpg",
 		"/sitemap.xml",
 	}
 

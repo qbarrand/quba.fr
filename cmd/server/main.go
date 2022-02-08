@@ -5,7 +5,6 @@ import (
 	"errors"
 	"flag"
 	"net/http"
-	"net/http/pprof"
 	"os"
 	"strings"
 
@@ -14,11 +13,10 @@ import (
 
 	"github.com/qbarrand/quba.fr/internal/config"
 	"github.com/qbarrand/quba.fr/internal/handlers"
-	"github.com/qbarrand/quba.fr/internal/imgpro"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
-//go:embed VERSION
+// go:embed VERSION
 var version string
 
 func main() {
@@ -40,21 +38,21 @@ func main() {
 
 	logger.SetLevel(logLevel)
 
-	var ip imgpro.Processor
-
-	switch cfg.ImageProcessor {
-	case "imagemagick":
-		ip = &imgpro.ImageMagickProcessor{}
-	case "vips":
-		ip = &imgpro.VipsProcessor{}
+	opts := &handlers.AppOptions{
+		ImagesDir:  cfg.ImagesDir,
+		LastMod:    cfg.LastMod,
+		WebrootDir: cfg.WebrootDir,
 	}
 
-	opts := handlers.AppOptions{
-		ImageProcessor: ip,
-		LastMod:        cfg.LastMod,
-	}
+	logger.
+		WithFields(logrus.Fields{
+			"img-src-dir": opts.ImagesDir,
+			"last-mod":    opts.LastMod,
+			"webroot-dir": opts.WebrootDir,
+		}).
+		Debug("Using the following configuration")
 
-	app, err := handlers.NewApp(&opts, logger)
+	app, err := handlers.NewApp(opts, logger)
 	if err != nil {
 		logger.WithError(err).Fatal("Could not initialize the app")
 	}
@@ -89,21 +87,19 @@ func main() {
 		chanErr <- runMetrics(cfg.MetricsAddr)
 	}()
 
-	go func() {
-		mux := http.NewServeMux()
+	// go func() {
+	// 	mux := http.NewServeMux()
 
-		mux.HandleFunc("/debug/pprof/", pprof.Index)
-		mux.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
-		mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
-		mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
-		mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
+	// 	mux.HandleFunc("/debug/pprof/", pprof.Index)
+	// 	mux.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+	// 	mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	// 	mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+	// 	mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
 
-		chanErr <- http.ListenAndServe("localhost:6060", mux)
-	}()
+	// 	chanErr <- http.ListenAndServe("localhost:6060", mux)
+	// }()
 
-	err = <-chanErr
-
-	logger.WithError(err).Fatal("General error caught")
+	logger.WithError(<-chanErr).Fatal("General error caught")
 }
 
 func runMetrics(addr string) error {

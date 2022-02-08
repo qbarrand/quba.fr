@@ -15,7 +15,6 @@ import (
 
 	"github.com/sirupsen/logrus"
 
-	"github.com/qbarrand/quba.fr/data/images"
 	"github.com/qbarrand/quba.fr/internal/imgpro"
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )

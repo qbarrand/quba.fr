@@ -17,7 +17,6 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/qbarrand/quba.fr/data/images"
 	"github.com/qbarrand/quba.fr/internal/generated/mock_images"
 	"github.com/qbarrand/quba.fr/internal/generated/mock_imgpro"
 	"github.com/qbarrand/quba.fr/internal/imgpro"

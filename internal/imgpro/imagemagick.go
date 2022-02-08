@@ -1,3 +1,5 @@
+// +build magick
+
 package imgpro
 
 import (
@@ -90,7 +92,7 @@ func (imp *ImageMagickProcessor) Destroy() error {
 	return nil
 }
 
-func (imp *ImageMagickProcessor) Init() error {
+func (imp *ImageMagickProcessor) Init(_ int) error {
 	imagick.Initialize()
 
 	return nil

@@ -19,6 +19,6 @@ type Processor interface {
 
 	BestFormats() []Format
 	Destroy() error
-	Init() error
+	Init(int) error
 	HandlerFromBytes([]byte) (Handler, error)
 }

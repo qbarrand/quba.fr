@@ -9,27 +9,28 @@ import (
 
 func TestParseCommandLine(t *testing.T) {
 	const (
-		addr           = "some-host:1234"
-		imageProcessor = "vips"
-		lastMod        = "2001-02-03"
-		logLevel       = "warn"
-		metricsAddr    = "some-other-host:9090"
+		addr        = "some-host:1234"
+		imagesDir   = "some-img-src-dir"
+		lastMod     = "2001-02-03"
+		logLevel    = "warn"
+		metricsAddr = "some-other-host:9090"
+		webrootDir  = "some-webroot-dir"
 	)
 
 	expected := &Config{
-		Addr:           addr,
-		ImageProcessor: imageProcessor,
-		LastMod:        lastMod,
-		LogLevel:       logLevel,
-		MetricsAddr:    metricsAddr,
+		Addr:        addr,
+		LastMod:     lastMod,
+		LogLevel:    logLevel,
+		MetricsAddr: metricsAddr,
 	}
 
 	args := []string{
 		"--addr", addr,
-		"--image-processor", imageProcessor,
+		"--img-src-dir", imagesDir,
 		"--lastmod", lastMod,
 		"--log-level", logLevel,
 		"--metrics-addr", metricsAddr,
+		"--webroot-dir", webrootDir,
 	}
 
 	cfg, err := ParseCommandLine(args)
