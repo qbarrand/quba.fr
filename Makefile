@@ -9,9 +9,10 @@ img-out: aot-images $(wildcard img-src/*)
 		-img-out-dir $@ \
 		-img-in-dir img-src \
 		-height-breakpoints 480,736,980,1280,1690 \
+		-width-breakpoints 480,736,980,1280,1690,1920,2880 \
 		-processor vips
 
-webapp:
+webapp: img-out
 	npx webpack
 
 server: $(wildcard cmd/server) go.mod go.sum

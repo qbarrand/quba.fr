@@ -6,6 +6,11 @@
 
 "use strict";
 
+import './css/style.css'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+
+import * as allImages from '../img-out/metadata.json'
+
 const p = new Promise((resolve, _) => {
     const img = new Image()
     img.onload = () => resolve(img.width > 0 && img.height > 0)
@@ -14,16 +19,19 @@ const p = new Promise((resolve, _) => {
 });
 
 class Constraint {
-    constructor(direction, n) {
+    readonly direction: string
+    readonly n: number
+
+    constructor(direction: string, n: number    ) {
         this.direction = direction
         this.n = n
     }
 
-    requiresUpdate(other) {
+    requiresUpdate(other): boolean {
         return other.direction !== this.direction || other.n > this.n
     }
 
-    toQueryString() {
+    toQueryString(): string {
         if (this.n === Infinity) {
             return ''
         }
@@ -53,15 +61,19 @@ const queries = {
 }
 
 class ImageData {
-    constructor(bloblUrl, mainColor, location, date) {
+    readonly bloblUrl: string
+    readonly mainColor: string
+    readonly location: string
+    readonly date: string
+
+
+    constructor(bloblUrl: string, mainColor: string, location: string, date: string) {
         this.bloblUrl = bloblUrl;
         this.mainColor = mainColor;
         this.location = location;
         this.date = date;
     }
 }
-
-const cache = new Map();
 
 let currentConstraint = null;
 
@@ -73,31 +85,26 @@ async function printRandomBackground(parent, imageName, constraint) {
         accept.unshift('image/webp');
     }
 
-    let imageData = cache.get(url);
+    console.debug('Fetching ' + url);
 
-    if (imageData != null) {
-        console.debug('Using cache')
-    } else {
-        console.debug('Fetching ' + url);
+    const response = await fetch(url, {
+        headers: new Headers({'Accept': accept.join(', ')})
+    })
 
-        const response = await fetch(url, {
-            headers: new Headers({'Accept': accept.join(', ')})
-        })
+    const blob = await response.blob();
 
-        const blob = await response.blob();
+    const unixSecs = parseInt(
+        response.headers.get('X-Quba-Date')
+    )
 
-        const unixSecs = response.headers.get('X-Quba-Date')
-        const date = new Date(unixSecs * 1000)
+    const date = new Date(unixSecs * 1000)
 
-        imageData = new ImageData(
-            URL.createObjectURL(blob),
-            response.headers.get('X-Quba-Main-Color'),
-            response.headers.get('X-Quba-Location'),
-            date.toLocaleDateString('en-EN', {year: 'numeric', month: 'long'})
-        );
-
-        cache.set(url, imageData);
-    }
+    const imageData = new ImageData(
+        URL.createObjectURL(blob),
+        response.headers.get('X-Quba-Main-Color'),
+        response.headers.get('X-Quba-Location'),
+        date.toLocaleDateString('en-EN', {year: 'numeric', month: 'long'})
+    );
 
     const div = document.createElement('div');
     div.style.backgroundImage = `url("${imageData.bloblUrl}")`;
@@ -128,9 +135,6 @@ async function printRandomBackground(parent, imageName, constraint) {
     const $wrapper = document.createElement('div');
     $wrapper.id = 'bg';
     $body.appendChild($wrapper);
-
-    const res = await fetch("/images/metadata.json")
-    const allImages = await res.json()
 
     let selectedKey = new URLSearchParams(window.location.search).get('img')
 

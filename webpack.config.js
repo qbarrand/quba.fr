@@ -4,7 +4,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: path.resolve(__dirname, 'web-src/app.js'),
+    entry: path.resolve(__dirname, 'web-src/app.ts'),
     plugins: [
         new FaviconsWebpackPlugin(
             path.resolve(__dirname, 'web-src/img/favicon.png')
@@ -21,13 +21,24 @@ module.exports = {
             template: path.resolve(__dirname, 'web-src/index.html'),
         })
     ],
+    // Enable sourcemaps for debugging webpack's output.
+    devtool: "source-map",
+    resolve: {
+        extensions: [".js", ".ts"],
+    },
+
     module: {
         rules: [
             {
                 test: /\.css$/i,
                 // include: path.resolve(__dirname, 'web-src/css'),
                 use: ['style-loader', 'css-loader'],
-            }
+            },
+            {
+                test: /\.ts$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
         ]
     },
     output: {
