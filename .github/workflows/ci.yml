@@ -41,6 +41,8 @@ jobs:
           node-version: '17'
           cache: 'npm'
 
+      - run: npm install
+
       - run: npm test
 
       - name: Build the webapp
