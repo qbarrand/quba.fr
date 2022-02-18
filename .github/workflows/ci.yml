@@ -3,7 +3,7 @@ name: CI
 on: pull_request
 
 jobs:
-  build:
+  test-go:
     name: Build
     runs-on: ubuntu-20.04
     steps:
@@ -19,14 +19,34 @@ jobs:
         run: sudo add-apt-repository ppa:tonimelisma/ppa
 
       - name: Install dependencies
-        run: sudo apt install libmagickwand-dev libvips-dev
+        run: sudo apt install -y libmagickwand-dev libvips-dev
 
-      - name: Test Go code
-        run: go test ./...
+      - run: go test ./...
 
-      - run: make
+      - name: Make both executables
+        run: make image-resizer server
+
+      - name: Resize all images
+        run: make img-out
+
+  test-js:
+    name: Test Javascript code
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Check out code into the Go module directory
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+
+      - run: npm test
+
+      - name: Build the webapp
+        run: make webapp
 
   container-image:
+    name: Build the container image
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -34,4 +54,3 @@ jobs:
 
       - name: Build
         run: docker build .
-

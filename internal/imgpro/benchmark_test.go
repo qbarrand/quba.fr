@@ -1,3 +1,5 @@
+// +build magick
+
 package imgpro
 
 import (
