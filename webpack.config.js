@@ -12,12 +12,12 @@ module.exports = {
         new HtmlWebpackPlugin({
             base: { target: '_blank' },
             meta: {
-                'description': 'Software Engineer working at Red Hat on OpenShift. Likes Go, Linux, containers and networking. Previously: Swisscom, CERN, SNCF Réseau.',
-                'keywords': 'software engineer infrastructure devops sre reliability networks go golang rust containers kubernetes docker linux big-o zürich switzerland',
-                'viewport': 'width=device-width, initial-scale=1',
+                description: 'Software Engineer working at Red Hat on OpenShift. Likes Go, Linux, containers and networking. Previously: Swisscom, CERN, SNCF Réseau.',
+                keywords: 'software engineer infrastructure devops sre reliability networks go golang rust containers kubernetes docker linux big-o zürich switzerland',
+                viewport: 'width=device-width, initial-scale=1',
                 'theme-color': '' // set at runtime
             },
-            title: "Quentin Barrand | Software Engineer",
+            title: 'Quentin Barrand | Software Engineer',
             template: path.resolve(__dirname, 'web-src/index.html'),
         })
     ],
@@ -31,7 +31,6 @@ module.exports = {
         rules: [
             {
                 test: /\.css$/i,
-                // include: path.resolve(__dirname, 'web-src/css'),
                 use: ['style-loader', 'css-loader'],
             },
             {

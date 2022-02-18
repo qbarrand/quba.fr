@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   test-go:
-    name: Build
+    name: Test Go code
     runs-on: ubuntu-20.04
     steps:
       - name: Set up Go 1.x
