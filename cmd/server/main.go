@@ -22,7 +22,7 @@ var version string
 func main() {
 	logger := logrus.New()
 
-	cfg, err := config.ParseCommandLine(os.Args[1:])
+	cfg, err := config.ParseCommandLine(os.Args[0], os.Args[1:])
 	if err != nil {
 		if errors.Is(err, flag.ErrHelp) {
 			return
@@ -39,14 +39,14 @@ func main() {
 	logger.SetLevel(logLevel)
 
 	opts := &handlers.AppOptions{
-		ImagesDir:  cfg.ImagesDir,
-		LastMod:    cfg.LastMod,
+		ImgOutDir:  cfg.ImgOutDir,
+		LastMod:    "2022-02-01",
 		WebrootDir: cfg.WebrootDir,
 	}
 
 	logger.
 		WithFields(logrus.Fields{
-			"img-src-dir": opts.ImagesDir,
+			"img-out-dir": opts.ImgOutDir,
 			"last-mod":    opts.LastMod,
 			"webroot-dir": opts.WebrootDir,
 		}).

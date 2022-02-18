@@ -1,22 +1,25 @@
-all: server webapp
+all: img-out server webapp
 
-aot-images: $(wildcard cmd/build/*.go)
-	go build -o $@ ./cmd/build
+image-resizer: $(wildcard cmd/image-resizer/*.go) go.mod go.sum
+	go build -o $@ ./cmd/image-resizer
 
-img-out: aot-images $(wildcard img-src/*)
+img-out: image-resizer $(wildcard img-src/*)
 	mkdir -p $@
 	./$< \
 		-img-out-dir $@ \
 		-img-in-dir img-src \
-		-height-breakpoints 480,736,980,1280,1690 \
-		-width-breakpoints 480,736,980,1280,1690,1920,2880 \
 		-processor vips
 
-webapp: img-out
-	npx webpack
+webapp:
+	npx webpack --mode production
 
-server: $(wildcard cmd/server) go.mod go.sum
+server: $(wildcard cmd/server/*.go) go.mod go.sum
 	go build -o $@ ./cmd/server
+
+run: img-out server webapp
+	./server \
+		-img-out-dir img-out \
+		-webroot-dir dist
 
 clean:
 	rm -fr img-out

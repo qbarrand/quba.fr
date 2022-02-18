@@ -2,51 +2,36 @@ package handlers
 
 import (
 	"fmt"
-	"net/http"
-
-	"github.com/sirupsen/logrus"
-
+	"github.com/qbarrand/quba.fr/internal/handlers/background"
 	"github.com/qbarrand/quba.fr/internal/handlers/healthz"
 	"github.com/qbarrand/quba.fr/internal/handlers/sitemap"
+	"github.com/sirupsen/logrus"
+	"net/http"
 )
 
+const bgImagesPath = "/images/bg/"
+
 type AppOptions struct {
-	ImagesDir  string
+	ImgOutDir  string
 	LastMod    string
 	WebrootDir string
 }
 
 type App struct {
-	healthz    *healthz.Healthz
-	imagesDir  string
-	sitemap    http.HandlerFunc
-	webRootDir string
+	healthz     *healthz.Healthz
+	bg          *background.Handler
+	bgStatic    http.Handler
+	sitemap     http.HandlerFunc
+	rootHandler http.Handler
 }
 
 func (a *App) Router() *http.ServeMux {
 	mux := http.NewServeMux()
 
-	mux.Handle(
-		"/",
-		http.FileServer(
-			http.Dir(
-				a.webRootDir,
-			),
-		),
-	)
 	mux.Handle("/healthz", a.healthz)
-
-	mux.Handle(
-		"/img-src/",
-		http.StripPrefix(
-			"/img-src/",
-			http.FileServer(
-				http.Dir(a.imagesDir),
-			),
-		),
-	)
-
-	mux.HandleFunc("/sitemap.xml", a.sitemap)
+	mux.Handle("/background", a.bg)
+	mux.Handle(bgImagesPath, a.bgStatic)
+	mux.Handle("/", a.rootHandler)
 
 	return mux
 }
@@ -57,11 +42,24 @@ func NewApp(opts *AppOptions, logger logrus.FieldLogger) (*App, error) {
 		return nil, fmt.Errorf("could not create the sitemap handler: %v", err)
 	}
 
+	bg, err := background.NewHandler(opts.ImgOutDir, bgImagesPath, logger)
+	if err != nil {
+		return nil, fmt.Errorf("could not initialize the background handler: %v", err)
+	}
+
 	app := App{
-		healthz:    healthz.New(logger),
-		imagesDir:  opts.ImagesDir,
-		sitemap:    sm,
-		webRootDir: opts.WebrootDir,
+		bg: bg,
+		bgStatic: http.StripPrefix(
+			bgImagesPath,
+			http.FileServer(
+				http.Dir(opts.ImgOutDir),
+			),
+		),
+		healthz: healthz.New(logger),
+		sitemap: sm,
+		rootHandler: http.FileServer(
+			http.Dir(opts.WebrootDir),
+		),
 	}
 
 	return &app, nil

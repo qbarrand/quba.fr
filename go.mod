@@ -3,6 +3,7 @@ module github.com/qbarrand/quba.fr
 go 1.17
 
 require (
+	github.com/Masterminds/squirrel v1.5.2
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.1 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -10,6 +11,7 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/golang/protobuf v1.4.3 // indirect
 	github.com/google/uuid v1.3.0
+	github.com/mattn/go-sqlite3 v1.14.11
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_golang v1.11.0
@@ -27,4 +29,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
 )
 
-require github.com/mattn/go-sqlite3 v1.14.11 // indirect
+require (
+	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
+	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
+)

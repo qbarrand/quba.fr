@@ -5,9 +5,10 @@ RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconf
 RUN ["mkdir", "/build"]
 WORKDIR /build
 
-RUN ["mkdir", "dist"]
+RUN ["mkdir", "/web-src"]
 
 COPY cmd/ cmd/
+COPY config/ config/
 COPY img-src/ img-src/
 COPY internal/ internal/
 COPY Makefile Makefile
@@ -26,12 +27,12 @@ WORKDIR /build
 
 RUN ["mkdir", "dist"]
 
-COPY --from=go-builder /build/img-out /build/img-out
-
-COPY Makefile Makefile
-COPY package.json package.json
-COPY package-lock.json package-lock.json
-COPY webpack.config.js webpack.config.js
+COPY config/ config/
+COPY Makefile .
+COPY package.json .
+COPY package-lock.json .
+COPY tsconfig.json .
+COPY webpack.config.js .
 COPY web-src/ web-src/
 
 RUN ["npm", "install", "."]
@@ -40,10 +41,11 @@ RUN ["make", "webapp"]
 FROM alpine
 
 COPY --from=go-builder /build/server /server
+COPY --from=go-builder /build/img-out /img-out
 COPY --from=node-builder /build/dist /dist
 
 EXPOSE 8080/tcp
 
 LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
 
-ENTRYPOINT ["/server"]
+ENTRYPOINT ["/server", "-img-out-dir", "img-out", "-webroot-dir", "dist"]
