@@ -1,17 +1,12 @@
-export class Orientation {
-    readonly name: string
-    readonly mqdim: string
+import {EventEmitter} from "events";
 
-    constructor(name: string, mqdim: string) {
-        this.name = name
-        this.mqdim = mqdim
-    }
+export enum Orientation {
+    Landscape,
+    Portrait
 }
 
-export const LANDSCAPE = new Orientation('landscape', 'width')
-export const PORTRAIT = new Orientation('portrait', 'height')
-
 export class Constraint {
+    private readonly emitter = new EventEmitter()
     readonly orientation: Orientation
     readonly low: number
     readonly high: number
@@ -20,29 +15,48 @@ export class Constraint {
         this.orientation = o
         this.low = l
         this.high = h
+
+        window.addEventListener('resize', this.processResize.bind(this))
     }
 
-    toMediaQuery(): string {
-        let mq = `(orientation: ${this.orientation.name})`
+    addEventListener(name: string, fn) {
+        this.emitter.addListener(name, fn)
+    }
 
-        if (this.low != 0) {
-            mq += ` and (min-${this.orientation.mqdim}: ${this.low}px)`
+    processResize() {
+        console.debug(`onresize triggered for ${this}`)
+
+        const scale = window.devicePixelRatio
+
+        const w = Math.floor(innerWidth * scale)
+        const h = Math.floor(innerHeight * scale)
+
+        console.debug(`innerWidth: ${innerWidth}, innerHeight: ${innerHeight}`)
+        console.debug(`w: ${w}, h: ${h}, scale: ${scale}`)
+
+        const or = w < h ? Orientation.Portrait : Orientation.Landscape
+
+        if (or != this.orientation) {
+            return
         }
 
-        if (this.high != Infinity) {
-            mq += ` and (max-${this.orientation.mqdim }: ${this.high}px)`
+        if (
+            or == this.orientation && (
+                (this.orientation == Orientation.Landscape && this.low <= w && w <= this.high) ||
+                (this.orientation == Orientation.Portrait && this.low <= h && h <= this.high)
+            )
+        ) {
+            this.emitter.emit('active', this)
         }
+    }
 
-        return mq
+    toString(): string {
+        return `${Orientation[this.orientation]}, ${this.low} -- ${this.high}`
     }
 }
 
-type MediaConstraint = {
-    [key: string]: Constraint
-}
-
-function getConstraints(o: Orientation, n: number[]): MediaConstraint {
-    const mcs: MediaConstraint = {}
+function getConstraints(o: Orientation, n: number[]): Constraint[] {
+    const mcs: Constraint[] = []
 
     let previous = 0
 
@@ -52,21 +66,26 @@ function getConstraints(o: Orientation, n: number[]): MediaConstraint {
         }
 
         const v = n[i]
-        const c = new Constraint(o, previous, v)
 
-        mcs[c.toMediaQuery()] = c
+        mcs.push(
+            new Constraint(o, previous, v)
+        )
 
         previous = v
     }
 
     if (n.length > 0) {
-        const c = new Constraint(o, previous+1, Infinity)
-        mcs[c.toMediaQuery()] = c
+        mcs.push(
+            new Constraint(o, previous+1, Infinity)
+        )
     }
 
     return mcs
 }
 
-export function generateMediaConstraints(widths: number[], heights: number[]): MediaConstraint {
-    return {...getConstraints(LANDSCAPE, widths), ...getConstraints(PORTRAIT, heights)}
+export function generateMediaConstraints(widths: number[], heights: number[]): Constraint[] {
+    return [
+        ...getConstraints(Orientation.Landscape, widths),
+        ...getConstraints(Orientation.Portrait, heights)
+    ]
 }

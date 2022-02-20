@@ -1,4 +1,9 @@
 {
+    "aurlandsfjord_1.jpg": {
+      "date": "September 2021",
+      "location": "Aurlandsfjord, Norway",
+      "main_color": "#6B7477"
+    },
      "dents_du_midi_1.jpg": {
         "date": "January 2020",
         "location": "Dents du Midi, Switzerland",
@@ -69,12 +74,17 @@
         "location": "Thun, Switzerland",
         "main_color": "#587FA4"
     },
-     "whaikiti_beach_1.jpg": {
+    "tongariro_1.jpg": {
+        "date": "January 2019",
+        "location": "Tongariro National Park, New Zealand",
+        "main_color": "#595553"
+    },
+    "whaikiti_beach_1.jpg": {
         "date": "January 2019",
         "location": "Whaikiti Beach, New Zealand",
         "main_color": "#6C8296"
     },
-     "zermatt_1.jpg": {
+    "zermatt_1.jpg": {
         "date": "February 2021",
         "location": "Zermatt, Switzerland",
         "main_color": "#3B6796"

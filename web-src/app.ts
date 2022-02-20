@@ -30,7 +30,7 @@ import {BackgroundManager} from "./ts/bgmgr";
 
     const bgmgr = new BackgroundManager(imgName)
 
-    bgmgr.on('change', ice => {
+    bgmgr.addEventListener('change', ice => {
         $wrapper.style.backgroundImage = `url(${ice.url})`
         $wrapper.style.backgroundPosition = 'center'
         $wrapper.style.backgroundSize = 'cover'
@@ -40,20 +40,11 @@ import {BackgroundManager} from "./ts/bgmgr";
         document.querySelector('meta[name=theme-color]').setAttribute('content', ice.mainColor);
     })
 
-    const mqs = generateMediaConstraints(breakpoints.widths, breakpoints.heights)
+    generateMediaConstraints(breakpoints.widths, breakpoints.heights).forEach(
+        c => c.addEventListener('active', bgmgr.updateConstraint.bind(bgmgr))
+    )
 
-    // Register all media query listeners
-    for (let [q, c] of Object.entries(mqs)) {
-        const m = window.matchMedia(q)
-
-        if (m.matches) {
-            await bgmgr.updateConstraint(c)
-        }
-
-        m.onchange = e => {
-            if (e.matches) {
-                bgmgr.updateConstraint(c)
-            }
-        }
-    }
+    dispatchEvent(
+        new Event('resize')
+    )
 })();

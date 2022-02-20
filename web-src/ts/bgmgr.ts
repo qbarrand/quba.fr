@@ -1,5 +1,5 @@
 import {EventEmitter} from 'events';
-import {Constraint, LANDSCAPE, PORTRAIT} from "./constraint";
+import {Constraint, Orientation} from "./constraint";
 
 const p = new Promise<boolean>((resolve, _) => {
     const img = new Image()
@@ -18,11 +18,13 @@ export class BackgroundManager {
 
     constructor(private name: string) {}
 
-    on(name: string, fn: (ice: ImageChangedEvent) => void) {
+    addEventListener(name: string, fn) {
         this.emitter.on(name, fn)
     }
 
     async updateConstraint(c: Constraint) {
+        console.debug(`trying to update constraint with ${c}`)
+
         if (!this.requiresUpdate(c)) {
             return
         }
@@ -35,10 +37,10 @@ export class BackgroundManager {
 
         if (c.high != Infinity) {
             switch (c.orientation) {
-                case LANDSCAPE:
+                case Orientation.Landscape:
                     params['width'] = c.high
                     break
-                case PORTRAIT:
+                case Orientation.Portrait:
                     params['height'] = c.high
                     break
             }
@@ -62,14 +64,8 @@ export class BackgroundManager {
     }
 
     private requiresUpdate(c: Constraint): boolean {
-        if (this.currentConstraint === undefined) {
-            return true
-        }
-
-        if (this.currentConstraint.orientation != c.orientation) {
-            return true
-        }
-
-        return this.currentConstraint.high < c.high;
+        return this.currentConstraint === undefined ||
+            this.currentConstraint.orientation != c.orientation ||
+            this.currentConstraint.high < c.high
     }
 }
