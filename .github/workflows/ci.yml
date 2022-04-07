@@ -9,16 +9,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
       - name: Start the CI container
-        run: docker run -d --name ci -v $PWD:/go:ro golang:1.17-alpine sleep infinity
+        run: docker run -d --name ci -v $PWD:/go golang:1.17-alpine sleep infinity
 
       - name: Install dependencies
         run: docker exec ci apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
-
-      - name: Debug
-        run: |
-          docker exec ci pwd
-          docker exec ci ls -la
 
       - name: Build
         run: docker exec ci make
