@@ -1,6 +1,6 @@
 module github.com/qbarrand/quba.fr
 
-go 1.17
+go 1.18
 
 require (
 	github.com/davidbyttow/govips/v2 v2.11.0
