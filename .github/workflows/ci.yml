@@ -13,13 +13,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Start the CI container
-        run: docker run -d --name ci -v $PWD:/go golang:1.17-alpine sleep infinity
+        run: docker run -d --name ci -v $PWD:/usr/src/app golang:1.17-alpine sleep infinity
 
       - name: Install dependencies
         run: docker exec ci apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
 
       - name: Build
-        run: docker exec ci make
+        run: docker exec -w /usr/src/app ci make
 
       - name: Run tests
-        run: docker exec ci go test ./...
+        run: docker exec -w /usr/src/app ci go test ./...
