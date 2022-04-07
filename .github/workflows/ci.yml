@@ -19,7 +19,7 @@ jobs:
         run: sudo add-apt-repository ppa:tonimelisma/ppa
 
       - name: Install dependencies
-        run: sudo apt install libmagickwand-dev libvips-dev
+        run: sudo apt install libmagickcore-dev libmagickwand-dev libvips-dev
 
       - run: make
 
