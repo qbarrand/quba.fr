@@ -2,8 +2,7 @@ FROM golang:1.17-alpine as builder
 
 RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
 
-RUN ["mkdir", "/build"]
-WORKDIR /build
+WORKDIR /usr/src/app
 
 COPY . .
 
@@ -11,7 +10,7 @@ RUN ["make"]
 
 FROM alpine
 
-COPY --from=builder /build/quba-fr /quba-fr
+COPY --from=builder /usr/src/app/quba-fr /quba-fr
 
 RUN ["apk", "add", "--no-cache", "imagemagick", "vips"]
 
