@@ -15,6 +15,11 @@ jobs:
       - name: Install dependencies
         run: docker exec ci apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
 
+      - name: Debug
+        run: |
+          docker exec ci pwd
+          docker exec ci ls -la
+
       - name: Build
         run: docker exec ci make
 
