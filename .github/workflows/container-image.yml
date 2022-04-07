@@ -3,29 +3,46 @@ name: Container image
 on:
   push:
     tags: ['*']
+  pull_request:
+    branches: [master]
 
 jobs:
   container-image:
+    name: Build and push
+
     runs-on: ubuntu-latest
+
+    permissions:
+      packages: write
+
     steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: ghcr.io/qbarrand/quba.fr
+          tags: |
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
+      - name: Check out the repo
+        uses: actions/checkout@v2
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
-          password: ${{ secrets.GH_PAT_WRITE_PACKAGES }}
-
-      - name: Check out the repo
-        uses: actions/checkout@v2
-
-      - name: Get tag
-        run: echo "TAG=${GITHUB_REF##*/}" >> $GITHUB_ENV
+          password: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ github.event_name != 'pull_request' }}
 
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          push: true
-          tags: ghcr.io/qbarrand/quba.fr:${{ env.TAG }}
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
