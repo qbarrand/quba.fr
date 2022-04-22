@@ -29,7 +29,7 @@ export class BackgroundManager {
             return
         }
 
-        const params = {format: await p ? 'webp':'jpg',}
+        const params = {format: await p ? 'webp':'jpg'}
 
         if (this.name != null) {
             params['name'] = this.name

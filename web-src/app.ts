@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import breakpoints from '../config/breakpoints.json'
 
-import {generateMediaConstraints} from "./ts/constraint";
+import {generateConstraints} from "./ts/constraint";
 import {BackgroundManager} from "./ts/bgmgr";
 
 (async function() {
@@ -40,7 +40,7 @@ import {BackgroundManager} from "./ts/bgmgr";
         document.querySelector('meta[name=theme-color]').setAttribute('content', ice.mainColor);
     })
 
-    generateMediaConstraints(breakpoints.widths, breakpoints.heights).forEach(
+    generateConstraints(breakpoints.widths, breakpoints.heights).forEach(
         c => c.addEventListener('active', bgmgr.updateConstraint.bind(bgmgr))
     )
 

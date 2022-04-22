@@ -31,14 +31,7 @@ export class Constraint {
         const w = Math.floor(innerWidth * scale)
         const h = Math.floor(innerHeight * scale)
 
-        console.debug(`innerWidth: ${innerWidth}, innerHeight: ${innerHeight}`)
-        console.debug(`w: ${w}, h: ${h}, scale: ${scale}`)
-
         const or = w < h ? Orientation.Portrait : Orientation.Landscape
-
-        if (or != this.orientation) {
-            return
-        }
 
         if (
             or == this.orientation && (
@@ -83,7 +76,7 @@ function getConstraints(o: Orientation, n: number[]): Constraint[] {
     return mcs
 }
 
-export function generateMediaConstraints(widths: number[], heights: number[]): Constraint[] {
+export function generateConstraints(widths: number[], heights: number[]): Constraint[] {
     return [
         ...getConstraints(Orientation.Landscape, widths),
         ...getConstraints(Orientation.Portrait, heights)
