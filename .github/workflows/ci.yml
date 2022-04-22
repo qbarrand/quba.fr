@@ -3,9 +3,8 @@ name: CI
 on: pull_request
 
 jobs:
-  build:
-    name: Build and test
-
+  test-go:
+    name: Build and test Go code
     runs-on: ubuntu-latest
 
     steps:
@@ -18,8 +17,51 @@ jobs:
       - name: Install dependencies
         run: docker exec ci apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
 
+      - name: Mark the directory as safe when mounted into the container
+        run: docker exec ci git config --global --add safe.directory /usr/src/app
+
       - name: Build
-        run: docker exec -w /usr/src/app ci make
+        run: docker exec -w /usr/src/app ci make server img-out
+
+      - name: Build with ImageMagick7 support
+        run: docker exec -w /usr/src/app ci make image-resizer GOTAGS='-tags magick'
 
       - name: Run tests
         run: docker exec -w /usr/src/app ci go test ./...
+
+  lint-go:
+    runs-on: ubuntu-latest
+    name: Lint Go Code
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Start the CI container
+        run: docker run -d --name ci -v $PWD:/app golangci/golangci-lint:latest-alpine sleep infinity
+
+      - name: Install dependencies
+        run: docker exec ci apk add gcc imagemagick-dev musl-dev pkgconfig vips-dev
+
+      - name: golangci-lint
+        run: docker exec -w /app ci golangci-lint run -v --timeout 3m --build-tags magick --out-format=github-actions
+
+#  test-js:
+#    name: Build and test Javascript code
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Check out code into the Go module directory
+#        uses: actions/checkout@v2
+#
+#      - uses: actions/setup-node@v2
+#        with:
+#          node-version: '17'
+#          cache: 'npm'
+#
+#      - run: npm install
+#
+#      - run: npm test
+#
+#      - name: Build the webapp
+#        run: make webapp

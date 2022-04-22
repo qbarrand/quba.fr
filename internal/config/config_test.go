@@ -9,30 +9,30 @@ import (
 
 func TestParseCommandLine(t *testing.T) {
 	const (
-		addr           = "some-host:1234"
-		imageProcessor = "vips"
-		lastMod        = "2001-02-03"
-		logLevel       = "warn"
-		metricsAddr    = "some-other-host:9090"
+		addr        = "some-host:1234"
+		imgOutDir   = "img-out-dir"
+		logLevel    = "warn"
+		metricsAddr = "some-other-host:9090"
+		webrootDir  = "some-webroot-dir"
 	)
 
 	expected := &Config{
-		Addr:           addr,
-		ImageProcessor: imageProcessor,
-		LastMod:        lastMod,
-		LogLevel:       logLevel,
-		MetricsAddr:    metricsAddr,
+		Addr:        addr,
+		ImgOutDir:   imgOutDir,
+		LogLevel:    logLevel,
+		MetricsAddr: metricsAddr,
+		WebrootDir:  webrootDir,
 	}
 
 	args := []string{
 		"--addr", addr,
-		"--image-processor", imageProcessor,
-		"--lastmod", lastMod,
+		"--img-out-dir", imgOutDir,
 		"--log-level", logLevel,
 		"--metrics-addr", metricsAddr,
+		"--webroot-dir", webrootDir,
 	}
 
-	cfg, err := ParseCommandLine(args)
+	cfg, err := ParseCommandLine("", args)
 
 	require.NoError(t, err)
 	assert.Equal(t, expected, cfg)

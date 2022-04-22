@@ -1,3 +1,6 @@
+//go:build magick
+// +build magick
+
 package imgpro
 
 import (
@@ -30,10 +33,10 @@ func BenchmarkSuite(b *testing.B) {
 	}
 
 	images := []string{
-		"../../data/images/lhc_1.jpg",
-		"../../data/images/dubai_1.jpg",
-		"../../data/images/singapore_1.jpg",
-		"../../data/images/zermatt_1.jpg",
+		"../../img-src/lhc_1.jpg",
+		"../../img-src/dubai_1.jpg",
+		"../../img-src/singapore_1.jpg",
+		"../../img-src/zermatt_1.jpg",
 	}
 
 	dimensions := []struct{ w, h int }{
@@ -43,8 +46,15 @@ func BenchmarkSuite(b *testing.B) {
 	}
 
 	for _, p := range processors {
-		p.processor.Init()
-		defer p.processor.Destroy()
+		err := p.processor.Init(1)
+		require.NoError(b, err)
+
+		defer func(proc Processor) {
+			require.NoError(
+				b,
+				proc.Destroy(),
+			)
+		}(p.processor)
 	}
 
 	for _, img := range images {
@@ -59,12 +69,21 @@ func BenchmarkSuite(b *testing.B) {
 					for i := 0; i < b.N; i++ {
 						h, err := p.processor.HandlerFromBytes(imageBytes)
 						require.NoError(b, err)
-						// Without destroying vips images, vips.Shutdown() panics
-						defer h.Destroy()
 
-						h.Resize(context.Background(), 1690, 0)
-						h.SetFormat(Webp)
-						h.StripMetadata()
+						// Without destroying vips img-src, vips.Shutdown() panics
+						defer func() {
+							err = h.Destroy()
+							require.NoError(b, err)
+						}()
+
+						err = h.Resize(context.Background(), 1690, 0)
+						require.NoError(b, err)
+
+						err = h.SetFormat(Webp)
+						require.NoError(b, err)
+
+						err = h.StripMetadata()
+						require.NoError(b, err)
 
 						res, err := h.Bytes()
 						require.NoError(b, err)

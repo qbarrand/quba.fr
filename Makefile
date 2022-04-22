@@ -1,7 +1,19 @@
-all: quba-fr
+all: img-out server webapp
 
-quba-fr: $(shell find . -type f -name '*.go') go.mod go.sum
-	go build -o $@
+image-resizer: $(shell find . -name '*.go' -type f) go.mod go.sum
+	go build -o $@ $(GOTAGS) ./cmd/image-resizer
+
+img-out: image-resizer $(wildcard img-src/*)
+	mkdir -p $@
+	./$< -img-out-dir $@ -img-in-dir img-src -processor vips
+
+webapp:
+	npx webpack --mode production
+
+server: $(shell find . -name '*.go' -type f) go.mod go.sum
+	go build -o $@ $(GOTAGS) ./cmd/server
 
 clean:
-	rm quba-fr
+	rm -fr img-out
+	rm -f aot-images
+	rm -f server
