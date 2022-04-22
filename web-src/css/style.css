@@ -1,17 +1,9 @@
 @font-face {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Roboto'), local('Roboto-Regular'), url(../webfonts/Roboto-Regular-400.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: 'Inconsolata';
+  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: local('Inconsolata Regular'), local('Inconsolata-Regular'), url(../webfonts/Inconsolata-400.woff2) format('woff2');
+  src: local('Inter'), local('Inter-Regular'), url(../webfonts/Inter-400.woff) format('woff');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -172,11 +164,11 @@ body {
 
 /* Type */
 body, input, select, textarea {
-  color: rgba(255, 255, 255, 0.75);
-  font-family: "Roboto", sans-serif;
+  color: rgb(225, 225, 225);
+  font-family: Inter, sans-serif;
   font-size: 16pt;
   font-weight: 400;
-  letter-spacing: -0.01em;
+  /* letter-spacing: -0.01em; */
   line-height: 1.65em; }
   @media screen and (max-width: 1680px) {
     body, input, select, textarea {
@@ -201,7 +193,7 @@ a {
   text-decoration: none; }
   a:hover {
     border-bottom-color: transparent;
-    color: #1cb495 !important;
+    color: #fff !important;
     text-decoration: none; }
 
 strong, b {
@@ -215,7 +207,7 @@ p {
   margin: 0 0 2em 0; }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #fff;
+  /* color: #fff; */
   font-weight: 700;
   line-height: 1em;
   margin: 0 0 1em 0; }
@@ -267,7 +259,7 @@ code {
   background: rgba(0, 0, 0, 0.300);
   border-radius: 6px;
   border: solid 2px rgba(255, 255, 255, 0.35);
-  font-family: 'Inconsolata', monospace;
+  font-family: monospace;
   font-size: 0.9em;
   padding: 0.20em 0.40em;
 }
@@ -508,9 +500,6 @@ ul.fa-ul {
   opacity: 1;
   text-shadow: 0 0 0.5em black;
 }
-
-/*footer:hover {*/
-/*}*/
 
 code {
   text-shadow: initial;
