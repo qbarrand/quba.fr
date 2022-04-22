@@ -17,7 +17,7 @@ COPY pkg/ pkg/
 
 RUN ["make", "server", "img-out"]
 
-FROM node:17-alpine as node-builder
+FROM node:18-alpine as node-builder
 
 RUN ["apk", "add", "make"]
 
