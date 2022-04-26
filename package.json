@@ -19,7 +19,7 @@
   "homepage": "https://github.com/qbarrand/quba.fr#readme",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.1.1",
-    "css-loader": "^6.6.0",
+    "css-loader": "^6.7.1",
     "favicons": "^6.2.2",
     "favicons-webpack-plugin": "^5.0.2",
     "html-webpack-plugin": "^5.5.0",
