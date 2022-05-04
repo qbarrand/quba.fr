@@ -13,30 +13,20 @@ import {generateConstraints} from "./ts/constraint";
 import {BackgroundManager} from "./ts/bgmgr";
 
 (async function() {
-    const $body = document.querySelector('body');
-
     // Play initial animations on page load.
     window.onload = () => {
         window.setTimeout(() => {
-            $body.classList.remove('is-preload');
+            document.body.classList.remove('is-preload');
         }, 100);
     }
 
-    const $wrapper = document.createElement('div');
-    $wrapper.id = 'bg';
-    $body.appendChild($wrapper);
-
     const imgName = new URLSearchParams(window.location.search).get('img')
-
     const bgmgr = new BackgroundManager(imgName)
 
     bgmgr.addEventListener('change', ice => {
-        $wrapper.style.backgroundImage = `url(${ice.url})`
-        $wrapper.style.backgroundPosition = 'center'
-        $wrapper.style.backgroundSize = 'cover'
-
-        document.querySelector('#where').innerHTML = ice.location;
-        document.querySelector('#when').innerHTML = ice.date;
+        document.getElementById('bg').style.backgroundImage = `url(${ice.url})`
+        document.getElementById('where').innerHTML = ice.location;
+        document.getElementById('when').innerHTML = ice.date;
         document.querySelector('meta[name=theme-color]').setAttribute('content', ice.mainColor);
     })
 
