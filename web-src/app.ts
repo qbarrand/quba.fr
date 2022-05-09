@@ -5,7 +5,9 @@
 */
 
 import './css/style.css'
-import '@fortawesome/fontawesome-free/css/all.min.css'
+import './css/fontawesome.css'
+import './css/fontawesome-brands.css'
+import './css/fontawesome-solid.css'
 
 import breakpoints from '../config/breakpoints.json'
 

@@ -1,10 +1,6 @@
 FROM golang:1.18-alpine as go-builder
 
-RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
-
 WORKDIR /usr/src/app
-
-RUN ["mkdir", "/web-src"]
 
 COPY cmd/ cmd/
 COPY config/ config/
@@ -15,18 +11,23 @@ COPY go.mod go.mod
 COPY go.sum go.sum
 COPY pkg/ pkg/
 
+RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
 RUN ["make", "server", "img-out"]
 
-FROM node:18-alpine as node-builder
+FROM python:3 as python-builder
 
-RUN ["apk", "add", "make"]
+COPY fa-src/ fa-src/
+
+RUN ["pip", "install", "fonttools[woff]"]
+RUN ["make", "-C", "fa-src"]
+
+FROM node:18-alpine as node-builder
 
 RUN ["mkdir", "/build"]
 WORKDIR /build
 
-RUN ["mkdir", "dist"]
-
 COPY config/ config/
+COPY fa-src/ fa-src/
 COPY Makefile .
 COPY package.json .
 COPY package-lock.json .
@@ -34,7 +35,14 @@ COPY tsconfig.json .
 COPY webpack.config.js .
 COPY web-src/ web-src/
 
+RUN ["mkdir", "dist"]
+
+COPY --from=python-builder /fa-src/fa-brands.woff2 fa-src/
+COPY --from=python-builder /fa-src/fa-solid.woff2 fa-src/
+
 RUN ["npm", "install", "."]
+
+RUN ["apk", "add", "make"]
 RUN ["make", "webapp"]
 
 FROM alpine
@@ -44,7 +52,5 @@ COPY --from=go-builder /usr/src/app/img-out /img-out
 COPY --from=node-builder /build/dist /dist
 
 EXPOSE 8080/tcp
-
-LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
 
 ENTRYPOINT ["/server", "-img-out-dir", "img-out", "-webroot-dir", "dist"]
