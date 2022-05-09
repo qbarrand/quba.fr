@@ -266,7 +266,7 @@ func main() {
 	go func() {
 		defer wg.Done()
 
-		for baseName, _ := range meta {
+		for baseName := range meta {
 			fullPath := filepath.Join(imgInDir, baseName)
 
 			b, err := os.ReadFile(fullPath)
