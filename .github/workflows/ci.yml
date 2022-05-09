@@ -43,6 +43,9 @@ jobs:
       - name: Install dependencies
         run: docker exec ci apk add gcc imagemagick-dev musl-dev pkgconfig vips-dev
 
+      - name: Mark the directory as safe when mounted into the container
+        run: docker exec ci git config --global --add safe.directory /app
+
       - name: golangci-lint
         run: docker exec -w /app ci golangci-lint run -v --timeout 3m --build-tags magick --out-format=github-actions
 
