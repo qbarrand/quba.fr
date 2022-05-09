@@ -2,6 +2,119 @@
 <html translate="no">
 	<head>
 		<title><%= htmlWebpackPlugin.options.title %></title>
+
+		<script type="application/ld+json">
+			{
+				"@context": "http://schema.org/",
+				"@type": "Person",
+				"alumniOf": [
+					{
+					"@type": "OrganizationRole",
+					"alumniOf": {
+						"@type": "CollegeOrUniversity",
+						"name": "ENSIIE Paris",
+						"sameAs": "https://www.ensiie.fr"
+					},
+					"startDate": "2013",
+					"endDate": "2016"
+					},
+					{
+					"@type": "OrganizationRole",
+					"alumniOf": {
+						"@type": "CollegeOrUniversity",
+						"name": "Télécom SudParis",
+						"sameAs": "https://www.telecom-sudparis.eu"
+					},
+					"startDate": "2015",
+					"endDate": "2016"
+					},
+					{
+					"@type": "EmployeeRole",
+					"alumniOf": {
+						"@type": "Organization",
+						"name": "CERN",
+						"sameAs": "https://home.cern"
+					},
+					"startDate": "2016",
+					"endDate": "2019"
+					},
+					{
+					"@type": "EmployeeRole",
+					"alumniOf": {
+						"@type": "Corporation",
+						"name": "Swisscom",
+						"sameAs": "https://swisscom.com"
+					},
+					"startDate": "2019",
+					"endDate": "2021"
+					}
+				],
+				"familyName": "Barrand",
+				"givenName": "Quentin",
+				"hasOccupation": {
+					"@type": "Occupation",
+					"name": "Software Engineer"
+				},
+				"homeLocation": {
+					"@type": "Place",
+					"address": {
+						"addressCountry": {
+						"@type": "Country",
+						"name": "Switzerland"
+					},
+					"addressLocality": "Zürich",
+					"addressRegion": "Zürich"
+					}
+				},
+				"jobTitle": "Senior Software Engineer",
+				"knowsAbout": [
+					{
+					"@type": "ComputerLanguage",
+					"name": "Go",
+					"sameAs": "https://go.dev"
+					},
+					{
+					"@type": "ComputerLanguage",
+					"name": "Python",
+					"sameAs": "https://www.python.org"
+					},
+					{
+					"@type": "Thing",
+					"name": "Kubernetes",
+					"sameAs": "https://kubernetes.io"
+					}
+				],
+				"knowsLanguage": [
+					{
+						"@type": "Language",
+						"name": "French",
+						"alternateName": "fr"
+					},
+					{
+						"@type": "Language",
+						"name": "English",
+						"alternateName": "en"
+					},
+					{
+						"@type": "Language",
+						"name": "Spanish",
+						"alternateName": "es"
+					}
+				],
+				"name": "Quentin Barrand",
+				"sameAs": [
+					"https://twitter.com/qbarrand",
+					"https://github.com/qbarrand",
+					"https://www.linkedin.com/in/quentinbarrand"
+				],
+				"url": "https://quba.dev",
+				"worksFor": {
+					"@type": "Corporation",
+					"name": "Red Hat, Inc.",
+					"sameAs": "https://www.redhat.com/"
+				}
+			}
+		</script>
 	</head>
 
 	<body class="is-preload">
