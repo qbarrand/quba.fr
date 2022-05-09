@@ -43,7 +43,7 @@ func (h *Healthz) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		Debug("Checking duration since last lookup")
 
 	now := time.Now()
-	elapsed := time.Now().Sub(h.cache.lastCheck)
+	elapsed := time.Since(h.cache.lastCheck)
 
 	if elapsed < interval {
 		h.logger.WithField("elapsed", elapsed).Debug("Using cache")
