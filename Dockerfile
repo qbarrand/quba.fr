@@ -27,6 +27,7 @@ RUN ["mkdir", "/build"]
 WORKDIR /build
 
 COPY config/ config/
+COPY fa-src/ fa-src/
 COPY Makefile .
 COPY package.json .
 COPY package-lock.json .

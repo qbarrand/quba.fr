@@ -7,7 +7,7 @@ img-out: image-resizer $(wildcard img-src/*)
 	mkdir -p $@
 	./$< -img-out-dir $@ -img-in-dir img-src -processor vips
 
-fontawesome-subsets: web-src/webfonts/fa-brands.woff2 web-src/webfonts/fa-solid.woff2
+fontawesome-subsets:
 	make -C fa-src
 	mv fa-src/fa-brands.woff2 fa-src/fa-solid.woff2 web-src/webfonts/
 
