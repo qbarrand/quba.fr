@@ -373,7 +373,8 @@ header h6 + p {
   .icon.solid:before {
     font-weight: 900; }
   .icon.brands:before {
-    font-family: 'Font Awesome 5 Brands'; }
+    font-family: 'Font Awesome 5 Brands';
+  }
 
 /* List */
 ol {
@@ -548,4 +549,12 @@ code {
   background-size: cover;
   background-position: center center;
   z-index: -1;
+}
+
+.icon:before {
+  font-family: 'Font Awesome 6 Free';
+}
+
+.icon.brands:before {
+  font-family: 'Font Awesome 6 Brands';
 }

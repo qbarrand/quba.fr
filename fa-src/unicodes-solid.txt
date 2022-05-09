@@ -1,0 +1,12 @@
+# cogs --> gears
+f085
+# history --> clock-rotate-left
+f1da
+# graduation-cap
+f19d
+# heart
+f004
+# envelope
+f0e0
+# camera
+f030
