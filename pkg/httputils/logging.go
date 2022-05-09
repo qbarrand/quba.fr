@@ -10,7 +10,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const requestIDKey = "request-id"
+var requestIDKey = struct{}{}
 
 func GetRequestID(r *http.Request) string {
 	v := r.Context().Value(requestIDKey)
