@@ -1,0 +1,6 @@
+# Python virtualenv
+.venv/
+
+# compiled assets
+fa-brands.woff2
+fa-solid.woff2

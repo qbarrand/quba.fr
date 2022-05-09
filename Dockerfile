@@ -17,6 +17,13 @@ COPY pkg/ pkg/
 
 RUN ["make", "server", "img-out"]
 
+FROM python3 as python-builder
+
+COPY fa-src/ fa-src/
+
+RUN ["pip", "install", "fonttools[woff]"]
+RUN ["make", "-C", "fa-src"]
+
 FROM node:18-alpine as node-builder
 
 RUN ["apk", "add", "make"]
@@ -34,6 +41,9 @@ COPY tsconfig.json .
 COPY webpack.config.js .
 COPY web-src/ web-src/
 
+COPY --from=python-builder /fa-src/fa-brands.woff2 web-src/webfonts/
+COPY --from=python-builder /fa-src/fa-solid.woff2 web-src/webfonts/
+
 RUN ["npm", "install", "."]
 RUN ["make", "webapp"]
 
@@ -44,7 +54,5 @@ COPY --from=go-builder /usr/src/app/img-out /img-out
 COPY --from=node-builder /build/dist /dist
 
 EXPOSE 8080/tcp
-
-LABEL org.opencontainers.image.source https://github.com/qbarrand/quba.fr
 
 ENTRYPOINT ["/server", "-img-out-dir", "img-out", "-webroot-dir", "dist"]
