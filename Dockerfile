@@ -35,7 +35,7 @@ COPY tsconfig.json .
 COPY webpack.config.js .
 COPY web-src/ web-src/
 
-RUN ["mkdir", "dist", "fa-src"]
+RUN ["mkdir", "dist"]
 
 COPY --from=python-builder /fa-src/fa-brands.woff2 fa-src/
 COPY --from=python-builder /fa-src/fa-solid.woff2 fa-src/
