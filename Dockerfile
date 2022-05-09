@@ -1,7 +1,5 @@
 FROM golang:1.18-alpine as go-builder
 
-RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
-
 WORKDIR /usr/src/app
 
 COPY cmd/ cmd/
@@ -13,6 +11,7 @@ COPY go.mod go.mod
 COPY go.sum go.sum
 COPY pkg/ pkg/
 
+RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
 RUN ["make", "server", "img-out"]
 
 FROM python:3 as python-builder
@@ -24,12 +23,8 @@ RUN ["make", "-C", "fa-src"]
 
 FROM node:18-alpine as node-builder
 
-RUN ["apk", "add", "make"]
-
 RUN ["mkdir", "/build"]
 WORKDIR /build
-
-RUN ["mkdir", "dist"]
 
 COPY config/ config/
 COPY Makefile .
@@ -39,10 +34,14 @@ COPY tsconfig.json .
 COPY webpack.config.js .
 COPY web-src/ web-src/
 
-COPY --from=python-builder /fa-src/fa-brands.woff2 web-src/webfonts/
-COPY --from=python-builder /fa-src/fa-solid.woff2 web-src/webfonts/
+RUN ["mkdir", "dist", "fa-src"]
+
+COPY --from=python-builder /fa-src/fa-brands.woff2 fa-src/
+COPY --from=python-builder /fa-src/fa-solid.woff2 fa-src/
 
 RUN ["npm", "install", "."]
+
+RUN ["apk", "add", "make"]
 RUN ["make", "webapp"]
 
 FROM alpine
