@@ -4,8 +4,6 @@ RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconf
 
 WORKDIR /usr/src/app
 
-RUN ["mkdir", "/web-src"]
-
 COPY cmd/ cmd/
 COPY config/ config/
 COPY img-src/ img-src/
@@ -17,7 +15,7 @@ COPY pkg/ pkg/
 
 RUN ["make", "server", "img-out"]
 
-FROM python3 as python-builder
+FROM python:3 as python-builder
 
 COPY fa-src/ fa-src/
 
