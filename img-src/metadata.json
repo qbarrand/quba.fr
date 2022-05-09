@@ -4,22 +4,22 @@
       "location": "Aurlandsfjord, Norway",
       "main_color": "#6B7477"
     },
-     "dents_du_midi_1.jpg": {
+    "dents_du_midi_1.jpg": {
         "date": "January 2020",
         "location": "Dents du Midi, Switzerland",
         "main_color": "#4279AC"
     },
-     "dubai_1.jpg": {
+    "dubai_1.jpg": {
         "date": "June 2017",
         "location": "Dubai, UAE",
         "main_color": "#4F4C42"
     },
-     "fuji_1.jpg": {
+    "fuji_1.jpg": {
         "date": "October 2017",
         "location": "Mount Fuji, Japan",
         "main_color": "#68809E"
     },
-     "geneva_1.jpg": {
+    "geneva_1.jpg": {
         "date": "June 2016",
         "location": "Geneva, Switzerland",
         "main_color": "#717D85"
@@ -29,52 +29,57 @@
         "location": "Grindelwald, Switzerland",
         "main_color": "#568AB2"
     },
-     "kyoto_1.jpg": {
+    "kyoto_1.jpg": {
         "date": "October 2017",
         "location": "Kyoto, Japan",
         "main_color": "#B34B2C"
     },
-     "lhc_1.jpg": {
+    "lhc_1.jpg": {
         "date": "August 2019",
         "location": "LHC, France / Switzerland",
         "main_color": "#827366"
     },
-     "malibu_1.jpg": {
+    "malibu_1.jpg": {
         "date": "March 2019",
         "location": "Malibu, USA",
         "main_color": "#744930"
     },
-     "montreux_1.jpg": {
+    "montreux_1.jpg": {
         "date": "October 2016",
         "location": "Montreux, Switzerland",
         "main_color": "#768692"
     },
-     "new_delhi_1.jpg": {
+    "nantes_1.jpg": {
+        "date": "December 2019",
+        "location": "Nantes, France",
+        "main_color": "#807B66"
+    },
+    "new_delhi_1.jpg": {
         "date": "June 2017",
         "location": "New Delhi, India",
         "main_color": "#807B66"
     },
-     "newyork_2.jpg": {
+    "newyork_2.jpg": {
         "date": "August 2015",
         "location": "New York, USA",
         "main_color": "#7F8B8E"
     },
-     "nuggets_point_1.jpg": {
+    "nuggets_point_1.jpg": {
         "date": "January 2019",
         "location": "Nuggets Point, New Zealand",
         "main_color": "#526F7F"
     },
-     "shenzhen_1.jpg": {
+    "shenzhen_1.jpg": {
         "date": "August 2014",
         "location": "Shenzhen, China",
         "main_color": "#5C0C1A"
     },
-     "singapore_1.jpg": {
+    "singapore_1.jpg": {
         "date": "January 2019",
         "location": "Singapore",
         "main_color": "#483D39"
     },
-     "thun_1.jpg": {
+    "thun_1.jpg": {
         "date": "May 2016",
         "location": "Thun, Switzerland",
         "main_color": "#587FA4"
