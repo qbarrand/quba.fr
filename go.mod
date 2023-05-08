@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
-	github.com/davidbyttow/govips/v2 v2.11.0
+	github.com/davidbyttow/govips/v2 v2.13.0
 	github.com/google/uuid v1.3.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/prometheus/client_golang v1.15.1
