@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Start the CI container
         run: docker run -d --name ci -v $PWD:/usr/src/app golang:1.18-alpine sleep infinity
@@ -35,7 +35,7 @@ jobs:
 
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Start the CI container
         run: docker run -d --name ci -v $PWD:/app golangci/golangci-lint:latest-alpine sleep infinity
