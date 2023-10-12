@@ -1,8 +1,10 @@
-# Red Hat
-f7bc
 # GitHub
 f09b
-# Twitter
-f099
 # LinkedIn
 f08c
+# Mastodon
+f4f6
+# Red Hat
+f7bc
+# X
+e61b

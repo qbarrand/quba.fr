@@ -22,6 +22,7 @@
     "favicons": "^7.1.4",
     "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.5.3",
+    "npx": "^10.2.2",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.0",
     "typescript": "^5.2.2",
