@@ -21,7 +21,7 @@ COPY fa-src/ fa-src/
 RUN ["pip", "install", "fonttools[woff]"]
 RUN ["make", "-C", "fa-src"]
 
-FROM node:20-alpine as node-builder
+FROM node:21-alpine as node-builder
 
 RUN ["mkdir", "/build"]
 WORKDIR /build
