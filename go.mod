@@ -1,6 +1,6 @@
 module github.com/qbarrand/quba.fr
 
-go 1.18
+go 1.20
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
