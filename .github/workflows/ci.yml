@@ -15,11 +15,11 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
 
+      - name: Add path to git safe directories
+        run: git config --global --add safe.directory $(pwd)
+
       - name: Build
-        run: |
-          pwd
-          git config --global --list
-          make server img-out
+        run: make server img-out
 
       - name: Build with ImageMagick7 support
         run: make image-resizer GOTAGS='-tags magick'
@@ -38,6 +38,9 @@ jobs:
 
       - name: Check out the repo
         uses: actions/checkout@v4
+
+      - name: Add path to git safe directories
+        run: git config --global --add safe.directory $(pwd)
 
       - name: golangci-lint
         run: golangci-lint run -v --timeout 3m --build-tags magick --out-format=github-actions
