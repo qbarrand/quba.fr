@@ -8,29 +8,24 @@ jobs:
     runs-on: ubuntu-latest
     container: golang:1.22-alpine
 
-    steps:    
+    steps:
       - name: Install dependencies
         run: apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
 
-      - name: Create the working directory
-        run: mkdir -p /usr/src/app
-
       - name: Check out the repo
         uses: actions/checkout@v4
-        with:
-          path: /usr/src/app
+
+      - name: Add path to git safe directories
+        run: git config --global --add safe.directory $(pwd)
 
       - name: Build
         run: make server img-out
-        working-directory: /usr/src/app
 
       - name: Build with ImageMagick7 support
         run: make image-resizer GOTAGS='-tags magick'
-        working-directory: /usr/src/app
 
       - name: Run tests
         run: go test ./...
-        working-directory: /usr/src/app
 
   lint-go:
     runs-on: ubuntu-latest
@@ -43,6 +38,9 @@ jobs:
 
       - name: Check out the repo
         uses: actions/checkout@v4
+
+      - name: Add path to git safe directories
+        run: git config --global --add safe.directory $(pwd)
 
       - name: golangci-lint
         run: golangci-lint run -v --timeout 3m --build-tags magick --out-format=github-actions
