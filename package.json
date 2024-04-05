@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/qbarrand/quba.fr#readme",
   "dependencies": {
-    "css-loader": "^6.11.0",
+    "css-loader": "^7.0.0",
     "favicons": "^7.2.0",
     "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.5.4",
