@@ -1,5 +1,7 @@
-# cogs --> gears
-f085
+# ethernet
+f796
+# building
+f1ad
 # history --> clock-rotate-left
 f1da
 # graduation-cap
