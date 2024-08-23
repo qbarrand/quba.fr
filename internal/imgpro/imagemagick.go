@@ -1,3 +1,4 @@
+//go:build magick
 // +build magick
 
 package imgpro
@@ -14,7 +15,7 @@ type ImageMagickHandler struct {
 }
 
 func (imh *ImageMagickHandler) Bytes() ([]byte, error) {
-	return imh.mw.GetImageBlob(), nil
+	return imh.mw.GetImageBlob()
 }
 
 func (imh *ImageMagickHandler) Destroy() error {
