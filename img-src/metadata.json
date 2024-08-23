@@ -4,6 +4,11 @@
       "location": "Aurlandsfjord, Norway",
       "main_color": "#6B7477"
     },
+    "chicago_1.jpg": {
+        "date": "November 2023",
+        "location": "Chicago, USA",
+        "main_color": "#77838A"
+    },
     "dents_du_midi_1.jpg": {
         "date": "January 2020",
         "location": "Dents du Midi, Switzerland",
@@ -29,10 +34,15 @@
         "location": "Grindelwald, Switzerland",
         "main_color": "#568AB2"
     },
-    "kyoto_1.jpg": {
-        "date": "October 2017",
+    "kawaguchiko_1.jpg": {
+        "date": "December 2023",
+        "location": "Kawaguchi-ko, Japan",
+        "main_color": "#7299B2"
+    },
+    "kyoto_2.jpg": {
+        "date": "April 2023",
         "location": "Kyoto, Japan",
-        "main_color": "#B34B2C"
+        "main_color": "#BC5B1E"
     },
     "lhc_1.jpg": {
         "date": "August 2019",
@@ -44,10 +54,20 @@
         "location": "Malibu, USA",
         "main_color": "#744930"
     },
+    "marseille_1.jpg": {
+        "date": "March 2023",
+        "location": "Marseille, France",
+        "main_color": "#497C88"
+    },
     "montreux_1.jpg": {
         "date": "October 2016",
         "location": "Montreux, Switzerland",
         "main_color": "#768692"
+    },
+    "monument_valley_1.jpg": {
+        "date": "May 2022",
+        "location": "Monument Valley, USA",
+        "main_color": "#514745"
     },
     "nantes_1.jpg": {
         "date": "December 2019",
@@ -64,15 +84,40 @@
         "location": "New York, USA",
         "main_color": "#464240"
     },
+    "newyork_4.jpg": {
+        "date": "October 2023",
+        "location": "New York, USA",
+        "main_color": "#587C7E"
+    },
+    "newyork_5.jpg": {
+        "date": "October 2023",
+        "location": "New York, USA",
+        "main_color": "#3A342D"
+    },
     "nuggets_point_1.jpg": {
         "date": "January 2019",
         "location": "Nuggets Point, New Zealand",
         "main_color": "#526F7F"
     },
+    "reine_1.jpg": {
+        "date": "September 2021",
+        "location": "Reine, Norway",
+        "main_color": "#7C8D9A"
+    },
+    "san_francisco_1.jpg": {
+        "date": "June 2022",
+        "location": "San Francisco, USA",
+        "main_color": "#789DA4"
+    },
     "shenzhen_1.jpg": {
         "date": "August 2014",
         "location": "Shenzhen, China",
         "main_color": "#5C0C1A"
+    },
+    "shikotsuko_1.jpg": {
+        "date": "April 2023",
+        "location": "Shikotsu-ko, Japan",
+        "main_color": "#7D8996"
     },
     "singapore_1.jpg": {
         "date": "January 2019",
@@ -84,19 +129,44 @@
         "location": "Thun, Switzerland",
         "main_color": "#587FA4"
     },
+    "tokyo_1.jpg": {
+        "date": "April 2023",
+        "location": "Tokyo, Japan",
+        "main_color": "#A4A7A7"
+    },
+    "tokyo_2.jpg": {
+        "date": "April 2023",
+        "location": "Tokyo, Japan",
+        "main_color": "#898D83"
+    },
     "tongariro_1.jpg": {
         "date": "January 2019",
         "location": "Tongariro National Park, New Zealand",
         "main_color": "#595553"
+    },
+    "touffailles_1.jpg": {
+        "date": "August 2023",
+        "location": "Touffailles, France",
+        "main_color": "#776F5B"
     },
     "whaikiti_beach_1.jpg": {
         "date": "January 2019",
         "location": "Whaikiti Beach, New Zealand",
         "main_color": "#6C8296"
     },
+    "yosemite_1.jpg": {
+        "date": "May 2022",
+        "location": "Yosemite National Park, USA",
+        "main_color": "#445C68"
+    },
     "zermatt_1.jpg": {
         "date": "February 2021",
         "location": "Zermatt, Switzerland",
         "main_color": "#3B6796"
+    },
+    "zurich_1.jpg": {
+        "date": "August 2023",
+        "location": "Zürich, Switzerland",
+        "main_color": "#4F5E5D"
     }
 }
