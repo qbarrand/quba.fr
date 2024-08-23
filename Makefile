@@ -15,7 +15,7 @@ webapp: fontawesome-subsets
 	npx webpack --mode production
 
 server: $(shell find . -name '*.go' -type f) go.mod go.sum
-	go build -o $@ $(GOTAGS) ./cmd/server
+	go build -ldflags="-X main.version=$(shell cat VERSION)" -o $@ $(GOTAGS) ./cmd/server
 
 clean:
 	rm -fr img-out

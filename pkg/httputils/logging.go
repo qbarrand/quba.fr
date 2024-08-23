@@ -10,10 +10,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var requestIDKey = struct{}{}
+type requestIDKey struct{}
+
+var reqIDKey = requestIDKey{}
 
 func GetRequestID(r *http.Request) string {
-	v := r.Context().Value(requestIDKey)
+	v := r.Context().Value(reqIDKey)
 
 	if v == nil {
 		return "<nil>"
@@ -53,7 +55,7 @@ func LoggingMiddleware(logger logrus.FieldLogger, next http.Handler) http.Handle
 			}).
 			Info("New request")
 
-		ctx := context.WithValue(r.Context(), requestIDKey, id)
+		ctx := context.WithValue(r.Context(), reqIDKey, id)
 
 		scrw := NewStatusCodeResponseWriter(w)
 

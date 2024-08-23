@@ -22,7 +22,7 @@ func TestGetRequestID(t *testing.T) {
 		req = req.WithContext(
 			context.WithValue(
 				req.Context(),
-				requestIDKey,
+				reqIDKey,
 				struct{ Value int }{Value: 12345},
 			),
 		)
@@ -35,7 +35,7 @@ func TestGetRequestID(t *testing.T) {
 		req = req.WithContext(
 			context.WithValue(
 				req.Context(),
-				requestIDKey,
+				reqIDKey,
 				12345,
 			),
 		)
@@ -48,7 +48,7 @@ func TestGetRequestID(t *testing.T) {
 		req = req.WithContext(
 			context.WithValue(
 				req.Context(),
-				requestIDKey,
+				reqIDKey,
 				"12345",
 			),
 		)

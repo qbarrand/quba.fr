@@ -16,7 +16,6 @@ import (
 	"github.com/qbarrand/quba.fr/pkg/httputils"
 )
 
-// go:embed VERSION
 var version string
 
 func main() {
