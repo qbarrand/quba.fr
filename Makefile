@@ -5,7 +5,7 @@ image-resizer: $(shell find . -name '*.go' -type f) go.mod go.sum
 
 img-out: image-resizer $(wildcard img-src/*)
 	mkdir -p $@
-	./$< -img-out-dir $@ -img-in-dir img-src -processor vips
+	./$< -img-out-dir $@ -img-in-dir img-src
 
 fontawesome-subsets:
 	make -C fa-src

@@ -10,7 +10,6 @@ require (
 	github.com/prometheus/client_golang v1.20.2
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
-	gopkg.in/gographics/imagick.v3 v3.7.0
 )
 
 require (
