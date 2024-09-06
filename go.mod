@@ -7,7 +7,7 @@ require (
 	github.com/davidbyttow/govips/v2 v2.15.0
 	github.com/google/uuid v1.6.0
 	github.com/mattn/go-sqlite3 v1.14.23
-	github.com/prometheus/client_golang v1.20.2
+	github.com/prometheus/client_golang v1.20.3
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
 	gopkg.in/gographics/imagick.v3 v3.7.0
