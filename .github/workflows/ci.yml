@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
+        run: apk add gcc git make musl-dev pkgconfig vips-dev
 
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -21,8 +21,8 @@ jobs:
       - name: Build
         run: make server img-out
 
-      - name: Build with ImageMagick7 support
-        run: make image-resizer GOTAGS='-tags magick'
+      - name: Build
+        run: make image-resizer
 
       - name: Run tests
         run: go test ./...
@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: apk add gcc imagemagick-dev musl-dev pkgconfig vips-dev
+        run: apk add gcc musl-dev pkgconfig vips-dev
 
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -43,7 +43,7 @@ jobs:
         run: git config --global --add safe.directory $(pwd)
 
       - name: golangci-lint
-        run: golangci-lint run -v --timeout 3m --build-tags magick --out-format=github-actions
+        run: golangci-lint run -v --timeout 3m --out-format=github-actions
 
 #  test-js:
 #    name: Build and test Javascript code

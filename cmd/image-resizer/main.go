@@ -11,15 +11,10 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"sync"
 
-	"github.com/qbarrand/quba.fr/internal/imgpro"
+	"github.com/davidbyttow/govips/v2/vips"
 	"github.com/qbarrand/quba.fr/internal/metadata"
 )
-
-var processorMap = map[string]imgpro.Processor{
-	"vips": &imgpro.VipsProcessor{},
-}
 
 type breakpoints struct {
 	Heights []int `json:"heights"`
@@ -38,154 +33,135 @@ func readBreakpointsFromFile(path string) (*breakpoints, error) {
 	return bp, json.NewDecoder(fd).Decode(bp)
 }
 
-type resizer struct {
-	proc imgpro.Processor
-}
+const (
+	formatJPEG = "jpg"
+	formatWebp = "webp"
+)
 
-func (r *resizer) getResizedBytes(ctx context.Context, inBytes []byte, f imgpro.Format, h, w int) (outBytes []byte, err error) {
-	handler, err := r.proc.HandlerFromBytes(inBytes)
-	if err != nil {
-		return nil, fmt.Errorf("could not create a new handler: %v", err)
-	}
-	defer func() {
-		if derr := handler.Destroy(); derr != nil {
-			derr = fmt.Errorf("error destroying the handler: %v", derr)
-
-			if err != nil {
-				err = fmt.Errorf("%v, original error: %w", derr, err)
-			} else {
-				err = derr
-			}
-		}
-	}()
-
-	if err = handler.StripMetadata(); err != nil {
-		return nil, fmt.Errorf("could not strip metadata: %v", err)
-	}
-
-	if err = handler.SetFormat(f); err != nil {
-		return nil, fmt.Errorf("could not set the %s format: %v", f, err)
-	}
-
-	if err = handler.Resize(ctx, w, h); err != nil {
-		return nil, fmt.Errorf("could not resize to %dx%d: %v", w, h, err)
-	}
-
-	return handler.Bytes()
+type processor struct {
+	mdb *metadata.DB
 }
 
 type formatWithExt struct {
 	ext  string
-	f    imgpro.Format
 	name string
 }
 
 var formats = []formatWithExt{
-	{ext: "jpg", f: imgpro.JPEG, name: "jpg"},
-	{ext: "webp", f: imgpro.Webp, name: "webp"},
+	{ext: "jpg", name: formatJPEG},
+	{ext: "webp", name: formatWebp},
 }
 
-type job struct {
+type params struct {
 	baseName string
 	format   formatWithExt
 	height   int
 	outDir   string
-	rs       *resizer
-	srcBytes []byte
+	ref      *vips.ImageRef
 	width    int
 }
 
-type outVars struct {
-	filename  string
-	format    string
-	height    int
-	imageName string
-	width     int
-}
+func (r *processor) resize(ctx context.Context, p *params) error {
+	var (
+		dimension    string
+		err          error
+		shouldResize bool
+	)
 
-func (j *job) run(ctx context.Context) (*outVars, error) {
-	ext := filepath.Ext(j.baseName)
-
-	dimension := ""
-
-	if j.height != 0 {
-		dimension = fmt.Sprintf("_h%d", j.height)
-	} else if j.width != 0 {
-		dimension = fmt.Sprintf("_w%d", j.width)
+	if p.height != 0 {
+		dimension = fmt.Sprintf("_h%d", p.height)
+		shouldResize = true
+	} else if p.width != 0 {
+		dimension = fmt.Sprintf("_w%d", p.width)
+		shouldResize = true
 	}
 
-	b, err := j.rs.getResizedBytes(ctx, j.srcBytes, j.format.f, j.height, j.width)
+	if shouldResize {
+		var scale float64 = 1
+
+		if p.width != 0 {
+			scale = float64(p.width) / float64(p.ref.Width())
+		} else if p.height != 0 {
+			scale = float64(p.height) / float64(p.ref.Height())
+		}
+
+		if scale <= 1 {
+			if err = p.ref.Resize(scale, vips.KernelAuto); err != nil {
+				return fmt.Errorf("error resizing %s to h=%d w=%d: %v", p.baseName, p.height, p.width, err)
+			}
+		}
+	}
+
+	var b []byte
+
+	switch p.format.name {
+	case formatJPEG:
+		ep := vips.NewJpegExportParams()
+		ep.StripMetadata = true
+		b, _, err = p.ref.ExportJpeg(ep)
+	case formatWebp:
+		ep := vips.NewWebpExportParams()
+		ep.ReductionEffort = 6
+		ep.StripMetadata = true
+		b, _, err = p.ref.ExportWebp(ep)
+	}
+
 	if err != nil {
-		return nil, fmt.Errorf("could not get the resized bytes: %v", err)
+		return fmt.Errorf("could not export as %s: %v", p.format, err)
 	}
 
 	hash := fnv.New32a()
 
 	if _, err = hash.Write(b); err != nil {
-		return nil, fmt.Errorf("could not write image bytes to the hasher: %v", err)
+		return fmt.Errorf("could not write image bytes to the hasher: %v", err)
 	}
+
+	ext := filepath.Ext(p.baseName)
 
 	dstFilename := fmt.Sprintf(
 		"%s%s_%s_%s.%s",
-		j.baseName[:len(j.baseName)-len(ext)],
+		p.baseName[:len(p.baseName)-len(ext)],
 		dimension,
-		j.format.name,
+		p.format.name,
 		hex.EncodeToString(hash.Sum(nil)),
-		j.format.ext,
+		p.format.ext,
 	)
 
-	ov := &outVars{
-		filename:  dstFilename,
-		format:    j.format.name,
-		height:    j.height,
-		imageName: j.baseName,
-		width:     j.width,
+	if err = os.WriteFile(filepath.Join(p.outDir, dstFilename), b, 0644); err != nil {
+		return fmt.Errorf("could not write image %s: %v", dstFilename, err)
 	}
 
-	return ov, os.WriteFile(filepath.Join(j.outDir, dstFilename), b, 0644)
+	if err = r.mdb.AddWebImage(ctx, dstFilename, p.baseName, p.width, p.height, p.format.name); err != nil {
+		return fmt.Errorf("error adding the image %s to the database: %v", dstFilename, err)
+	}
+
+	return nil
 }
 
 func main() {
 	var (
 		breakpointsFile string
+		concurrency     int
 		imgInDir        string
 		outDir          string
-		proc            imgpro.Processor
-		workers         int
 	)
 
 	flag.StringVar(&imgInDir, "img-in-dir", "img-src", "directory in which source images are stored")
 	flag.StringVar(&outDir, "img-out-dir", "img-out", "directory in which images are generated")
 	flag.StringVar(&breakpointsFile, "bp-file", "config/breakpoints.json", "file in which breakpoints are defined")
-	flag.IntVar(&workers, "parallel", runtime.NumCPU(), "the number of parallel goroutines in the processing pool")
-	flag.Func("processor", "the image processor to use to prepare images", func(s string) error {
-		var ok bool
-
-		proc, ok = processorMap[s]
-		if !ok {
-			return fmt.Errorf("%s: invalid processor", s)
-		}
-
-		return nil
-	})
+	flag.IntVar(&concurrency, "concurrency", runtime.NumCPU(), "the VIPS concurrency level")
 
 	flag.Parse()
-
-	log.Printf("Using processor %q", proc)
 
 	bp, err := readBreakpointsFromFile(breakpointsFile)
 	if err != nil {
 		log.Fatalf("could not read breakpoints: %v", err)
 	}
 
-	if err = proc.Init(workers); err != nil {
-		log.Fatalf("Could not initialize processor: %v", err)
-	}
-	defer func() {
-		if err := proc.Destroy(); err != nil {
-			log.Fatalf("Error while destroying the processor: %v", err)
-		}
-	}()
+	log.Printf("Using up to %d VIPS threads", concurrency)
+
+	vips.Startup(&vips.Config{ConcurrencyLevel: concurrency})
+	defer vips.Shutdown()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -224,119 +200,67 @@ func main() {
 		}
 	}
 
-	var wg sync.WaitGroup
+	rs := &processor{mdb: mdb}
 
-	jobs := make(chan *job)
+	for baseName := range meta {
+		log.Printf("Processing %s", baseName)
 
-	log.Printf("Using %d goroutines", workers)
+		fullPath := filepath.Join(imgInDir, baseName)
 
-	// create workers
-	for i := 0; i < workers; i++ {
-		go func() {
-			for {
-				select {
-				case <-ctx.Done():
-					return
-				case j := <-jobs:
-					ov, err := j.run(ctx)
-					if err != nil {
-						cancel()
-						log.Fatalf("Error running a job for %s: %v", j.baseName, err)
-					}
+		origImg, err := vips.LoadImageFromFile(fullPath, vips.NewImportParams())
+		if err != nil {
+			log.Fatalf("Could not load image %s", fullPath)
+		}
 
-					if err = mdb.AddWebImage(ctx, ov.filename, ov.imageName, ov.width, ov.height, ov.format); err != nil {
-						cancel()
-						log.Fatalf("Error adding the image to the database: %v", err)
-					}
+		for _, format := range formats {
+			var copyImg *vips.ImageRef
 
-					wg.Done()
-				}
-			}
-		}()
-	}
-
-	rs := &resizer{proc: proc}
-
-	// Without this, the goroutine that runs wg.Wait() returns before even one
-	// job has been sent on jobs.
-	// Done() deferred to the end of the producing goroutine
-	wg.Add(1)
-
-	// Producer goroutine
-	go func() {
-		defer wg.Done()
-
-		for baseName := range meta {
-			fullPath := filepath.Join(imgInDir, baseName)
-
-			b, err := os.ReadFile(fullPath)
+			// First, one job that does not resize images to use native resolution
+			copyImg, err = origImg.Copy()
 			if err != nil {
-				cancel()
-				log.Fatalf("Could not read %s: %v", fullPath, err)
+				log.Fatalf("Could not copy image: %v", err)
 			}
 
-			for _, format := range formats {
-				// First, one job that does not resize images to use native resolution
-				j := &job{
-					baseName: baseName,
-					format:   format,
-					outDir:   outDir,
-					rs:       rs,
-					srcBytes: b,
+			p := params{
+				baseName: baseName,
+				format:   format,
+				outDir:   outDir,
+				ref:      copyImg,
+			}
+
+			if err = rs.resize(ctx, &p); err != nil {
+				log.Fatalf("Could not write the image with native resolution :%v", err)
+			}
+
+			for _, h := range bp.Heights {
+				p.ref, err = origImg.Copy()
+				if err != nil {
+					log.Fatalf("Could not copy image: %v", err)
 				}
 
-				select {
-				case jobs <- j:
-					wg.Add(1)
-				case <-ctx.Done():
-					return
+				p.height = h
+
+				if err = rs.resize(ctx, &p); err != nil {
+					log.Fatalf("Could not write the image with height=%d resolution :%v", h, err)
+				}
+			}
+
+			p.height = 0
+
+			for _, w := range bp.Widths {
+				p.ref, err = origImg.Copy()
+				if err != nil {
+					log.Fatalf("Could not copy image: %v", err)
 				}
 
-				for _, h := range bp.Heights {
-					j := &job{
-						baseName: baseName,
-						format:   format,
-						height:   h,
-						outDir:   outDir,
-						rs:       rs,
-						srcBytes: b,
-					}
+				p.width = w
 
-					select {
-					case jobs <- j:
-						wg.Add(1)
-					case <-ctx.Done():
-						return
-					}
-				}
-
-				for _, w := range bp.Widths {
-					j := &job{
-						baseName: baseName,
-						format:   format,
-						width:    w,
-						outDir:   outDir,
-						rs:       rs,
-						srcBytes: b,
-					}
-
-					select {
-					case jobs <- j:
-						wg.Add(1)
-					case <-ctx.Done():
-						return
-					}
+				if err = rs.resize(ctx, &p); err != nil {
+					log.Fatalf("Could not write the image with width=%d resolution :%v", w, err)
 				}
 			}
 		}
-	}()
-
-	go func() {
-		wg.Wait()
-		cancel()
-	}()
-
-	<-ctx.Done()
+	}
 
 	if err != nil {
 		log.Fatalf("Processing error: %v", err)
