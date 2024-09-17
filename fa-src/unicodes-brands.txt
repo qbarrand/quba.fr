@@ -4,7 +4,5 @@ f09b
 f08c
 # Mastodon
 f4f6
-# X
-e61b
 # Bluesky
 e671
