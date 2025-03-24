@@ -21,14 +21,18 @@ type breakpoints struct {
 	Widths  []int `json:"widths"`
 }
 
-func readBreakpointsFromFile(path string) (*breakpoints, error) {
-	bp := &breakpoints{}
+func readBreakpointsFromFile(path string) (bp *breakpoints, err error) {
+	bp = &breakpoints{}
 
 	fd, err := os.Open(path)
 	if err != nil {
 		return nil, fmt.Errorf("could not read the breakpoints file: %v", err)
 	}
-	defer fd.Close()
+	defer func() {
+		if cerr := fd.Close(); cerr != nil && err == nil {
+			err = fmt.Errorf("could not close the breakpoints file: %v", cerr)
+		}
+	}()
 
 	return bp, json.NewDecoder(fd).Decode(bp)
 }
@@ -187,7 +191,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("Could not create the database: %v", err)
 	}
-	defer mdb.Close()
+	defer func() {
+		if err := mdb.Close(); err != nil {
+			log.Fatalf("Could not close the database: %v", err)
+		}
+	}()
 
 	if err = mdb.Init(ctx); err != nil {
 		log.Fatalf("Could not initialize the database: %v", err)
