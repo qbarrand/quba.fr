@@ -1,172 +1,138 @@
 {
     "aurlandsfjord_1.jpg": {
       "date": "September 2021",
-      "location": "Aurlandsfjord, Norway",
-      "main_color": "#6B7477"
+      "location": "Aurlandsfjord, Norway"
     },
     "chicago_1.jpg": {
         "date": "November 2023",
-        "location": "Chicago, USA",
-        "main_color": "#77838A"
+        "location": "Chicago, USA"
     },
     "dents_du_midi_1.jpg": {
         "date": "January 2020",
-        "location": "Dents du Midi, Switzerland",
-        "main_color": "#4279AC"
+        "location": "Dents du Midi, Switzerland"
     },
     "dubai_1.jpg": {
         "date": "June 2017",
-        "location": "Dubai, UAE",
-        "main_color": "#4F4C42"
+        "location": "Dubai, UAE"
     },
     "fuji_1.jpg": {
         "date": "October 2017",
-        "location": "Mount Fuji, Japan",
-        "main_color": "#68809E"
+        "location": "Mount Fuji, Japan"
     },
     "geneva_1.jpg": {
         "date": "June 2016",
-        "location": "Geneva, Switzerland",
-        "main_color": "#717D85"
+        "location": "Geneva, Switzerland"
     },
     "grindelwald_1.jpg": {
         "date": "August 2021",
-        "location": "Grindelwald, Switzerland",
-        "main_color": "#568AB2"
+        "location": "Grindelwald, Switzerland"
     },
     "kawaguchiko_1.jpg": {
         "date": "December 2023",
-        "location": "Kawaguchi-ko, Japan",
-        "main_color": "#7299B2"
+        "location": "Kawaguchi-ko, Japan"
     },
     "kyoto_2.jpg": {
         "date": "April 2023",
-        "location": "Kyoto, Japan",
-        "main_color": "#BC5B1E"
+        "location": "Kyoto, Japan"
     },
     "lhc_1.jpg": {
         "date": "August 2019",
-        "location": "LHC, France / Switzerland",
-        "main_color": "#827366"
+        "location": "LHC, France / Switzerland"
     },
     "malibu_1.jpg": {
         "date": "March 2019",
-        "location": "Malibu, USA",
-        "main_color": "#744930"
+        "location": "Malibu, USA"
     },
     "marseille_1.jpg": {
         "date": "March 2023",
-        "location": "Marseille, France",
-        "main_color": "#497C88"
+        "location": "Marseille, France"
     },
     "montreux_1.jpg": {
         "date": "October 2016",
-        "location": "Montreux, Switzerland",
-        "main_color": "#768692"
+        "location": "Montreux, Switzerland"
     },
     "monument_valley_1.jpg": {
         "date": "May 2022",
-        "location": "Monument Valley, USA",
-        "main_color": "#514745"
+        "location": "Monument Valley, USA"
     },
     "nantes_1.jpg": {
         "date": "December 2019",
-        "location": "Nantes, France",
-        "main_color": "#807B66"
+        "location": "Nantes, France"
     },
     "new_delhi_1.jpg": {
         "date": "June 2017",
-        "location": "New Delhi, India",
-        "main_color": "#807B66"
+        "location": "New Delhi, India"
     },
     "newyork_3.jpg": {
         "date": "October 2023",
-        "location": "New York, USA",
-        "main_color": "#464240"
+        "location": "New York, USA"
     },
     "newyork_4.jpg": {
         "date": "October 2023",
-        "location": "New York, USA",
-        "main_color": "#587C7E"
+        "location": "New York, USA"
     },
     "newyork_5.jpg": {
         "date": "October 2023",
-        "location": "New York, USA",
-        "main_color": "#3A342D"
+        "location": "New York, USA"
     },
     "nuggets_point_1.jpg": {
         "date": "January 2019",
-        "location": "Nuggets Point, New Zealand",
-        "main_color": "#526F7F"
+        "location": "Nuggets Point, New Zealand"
     },
     "reine_1.jpg": {
         "date": "September 2021",
-        "location": "Reine, Norway",
-        "main_color": "#7C8D9A"
+        "location": "Reine, Norway"
     },
     "san_francisco_1.jpg": {
         "date": "June 2022",
-        "location": "San Francisco, USA",
-        "main_color": "#789DA4"
+        "location": "San Francisco, USA"
     },
     "shenzhen_1.jpg": {
         "date": "August 2014",
-        "location": "Shenzhen, China",
-        "main_color": "#5C0C1A"
+        "location": "Shenzhen, China"
     },
     "shikotsuko_1.jpg": {
         "date": "April 2023",
-        "location": "Shikotsu-ko, Japan",
-        "main_color": "#7D8996"
+        "location": "Shikotsu-ko, Japan"
     },
     "singapore_1.jpg": {
         "date": "January 2019",
-        "location": "Singapore",
-        "main_color": "#483D39"
+        "location": "Singapore"
     },
     "thun_1.jpg": {
         "date": "May 2016",
-        "location": "Thun, Switzerland",
-        "main_color": "#587FA4"
+        "location": "Thun, Switzerland"
     },
     "tokyo_1.jpg": {
         "date": "April 2023",
-        "location": "Tokyo, Japan",
-        "main_color": "#A4A7A7"
+        "location": "Tokyo, Japan"
     },
     "tokyo_2.jpg": {
         "date": "April 2023",
-        "location": "Tokyo, Japan",
-        "main_color": "#898D83"
+        "location": "Tokyo, Japan"
     },
     "tongariro_1.jpg": {
         "date": "January 2019",
-        "location": "Tongariro National Park, New Zealand",
-        "main_color": "#595553"
+        "location": "Tongariro National Park, New Zealand"
     },
     "touffailles_1.jpg": {
         "date": "August 2023",
-        "location": "Touffailles, France",
-        "main_color": "#776F5B"
+        "location": "Touffailles, France"
     },
     "whaikiti_beach_1.jpg": {
         "date": "January 2019",
-        "location": "Whaikiti Beach, New Zealand",
-        "main_color": "#6C8296"
+        "location": "Whaikiti Beach, New Zealand"
     },
     "yosemite_1.jpg": {
         "date": "May 2022",
-        "location": "Yosemite National Park, USA",
-        "main_color": "#445C68"
+        "location": "Yosemite National Park, USA"
     },
     "zermatt_1.jpg": {
         "date": "February 2021",
-        "location": "Zermatt, Switzerland",
-        "main_color": "#3B6796"
+        "location": "Zermatt, Switzerland"
     },
     "zurich_1.jpg": {
         "date": "August 2023",
-        "location": "Zürich, Switzerland",
-        "main_color": "#4F5E5D"
+        "location": "Zürich, Switzerland"
     }
 }

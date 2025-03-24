@@ -1,6 +1,8 @@
 module github.com/qbarrand/quba.fr
 
-go 1.20
+go 1.24
+
+toolchain go1.24.1
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
@@ -29,5 +31,6 @@ require (
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
 	google.golang.org/protobuf v1.34.2 // indirect
+	gopkg.in/gographics/imagick.v3 v3.7.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
