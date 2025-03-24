@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: apk add gcc musl-dev pkgconfig vips-dev
+        run: apk add gcc musl-dev pkgconfig tar vips-dev
 
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -43,7 +43,9 @@ jobs:
         run: git config --global --add safe.directory $(pwd)
 
       - name: golangci-lint
-        run: golangci-lint run -v --timeout 3m --out-format=github-actions
+        uses: golangci/golangci-lint-action@v7
+        with:
+          install-mode: none
 
 #  test-js:
 #    name: Build and test Javascript code
