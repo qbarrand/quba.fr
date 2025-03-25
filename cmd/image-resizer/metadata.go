@@ -8,11 +8,10 @@ import (
 )
 
 type ImageMetadata struct {
-	Date      string   `json:"date"`
-	Formats   []string `json:"formats"`
-	Heights   []int    `json:"heights"`
-	Location  string   `json:"location"`
-	MainColor string   `json:"main_color"`
+	Date     string   `json:"date"`
+	Formats  []string `json:"formats"`
+	Heights  []int    `json:"heights"`
+	Location string   `json:"location"`
 }
 
 type Metadata map[string]*ImageMetadata

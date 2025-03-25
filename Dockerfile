@@ -11,7 +11,7 @@ COPY go.mod go.mod
 COPY go.sum go.sum
 COPY pkg/ pkg/
 
-RUN ["apk", "add", "gcc", "git", "make", "musl-dev", "pkgconfig", "vips-dev"]
+RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
 RUN ["make", "server", "img-out"]
 
 FROM python:3 as python-builder

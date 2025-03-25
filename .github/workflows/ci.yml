@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: apk add gcc git make musl-dev pkgconfig vips-dev
+        run: apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
 
       - name: Check out the repo
         uses: actions/checkout@v4
@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: apk add gcc musl-dev pkgconfig tar vips-dev
+        run: apk add gcc imagemagick-dev musl-dev pkgconfig tar vips-dev
 
       - name: Check out the repo
         uses: actions/checkout@v4

@@ -14,6 +14,7 @@ import (
 
 	"github.com/davidbyttow/govips/v2/vips"
 	"github.com/qbarrand/quba.fr/internal/metadata"
+	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
 type breakpoints struct {
@@ -142,6 +143,34 @@ func (r *processor) resize(ctx context.Context, p *params) error {
 	return nil
 }
 
+func mainColor(fullPath string) (string, error) {
+	mw := imagick.NewMagickWand()
+	defer mw.Destroy()
+
+	if err := mw.ReadImage(fullPath); err != nil {
+		return "", fmt.Errorf("could not read image %s: %v", fullPath, err)
+	}
+
+	if err := mw.SetDepth(8); err != nil {
+		return "", fmt.Errorf("could not set image depth: %v", err)
+	}
+
+	if err := mw.QuantizeImage(1, imagick.COLORSPACE_UNDEFINED, 0, imagick.DITHER_METHOD_FLOYD_STEINBERG, false); err != nil {
+		return "", fmt.Errorf("error quantizing image: %v", err)
+	}
+
+	colors, pws := mw.GetImageHistogram()
+	if colors != 1 {
+		return "", fmt.Errorf("expected 1 color, got %d", colors)
+	}
+
+	red := uint(pws[0].GetRed() * 256)
+	green := uint(pws[0].GetGreen() * 256)
+	blue := uint(pws[0].GetBlue() * 256)
+
+	return fmt.Sprintf("#%X%X%X", red, green, blue), nil
+}
+
 func main() {
 	var (
 		breakpointsFile string
@@ -166,6 +195,9 @@ func main() {
 
 	vips.Startup(&vips.Config{ConcurrencyLevel: concurrency})
 	defer vips.Shutdown()
+
+	imagick.Initialize()
+	defer imagick.Terminate()
 
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -201,19 +233,23 @@ func main() {
 		log.Fatalf("Could not initialize the database: %v", err)
 	}
 
-	// Add image metadata
-	for k, v := range meta {
-		if err = mdb.AddImage(ctx, k, v.Date, v.Location, v.MainColor); err != nil {
-			log.Fatalf("Could not add %s to the metadata DB: %v", k, err)
-		}
-	}
-
 	rs := &processor{mdb: mdb}
 
-	for baseName := range meta {
+	for baseName, m := range meta {
 		log.Printf("Processing %s", baseName)
 
 		fullPath := filepath.Join(imgInDir, baseName)
+
+		log.Printf("Getting main color")
+
+		mainColor, err := mainColor(fullPath)
+		if err != nil {
+			log.Fatalf("Could not get the main color: %v", err)
+		}
+
+		if err = mdb.AddImage(ctx, baseName, m.Date, m.Location, mainColor); err != nil {
+			log.Fatalf("Could not add %s to the metadata DB: %v", baseName, err)
+		}
 
 		origImg, err := vips.LoadImageFromFile(fullPath, vips.NewImportParams())
 		if err != nil {
