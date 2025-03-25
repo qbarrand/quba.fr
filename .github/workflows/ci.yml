@@ -10,13 +10,10 @@ jobs:
 
     steps:
       - name: Install dependencies
-        run: apk add gcc git imagemagick-dev make musl-dev pkgconfig vips-dev
+        run: apk add gcc imagemagick-dev make musl-dev pkgconfig vips-dev
 
       - name: Check out the repo
         uses: actions/checkout@v4
-
-      - name: Add path to git safe directories
-        run: git config --global --add safe.directory $(pwd)
 
       - name: Build
         run: make server img-out
