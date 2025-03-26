@@ -35,8 +35,6 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap'); */
-
 /*
 	Eventually by HTML5 UP
 	html5up.net | @ajlkn
@@ -92,9 +90,6 @@ input::-moz-focus-inner {
   padding: 0; }
 
 input, select, textarea {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -ms-appearance: none;
   appearance: none; }
 
 /* Basic */
@@ -124,14 +119,8 @@ html, body {
       min-height: 100%; } }
 
 body {
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: -ms-flex;
   display: flex;
   flex-direction: column;
-  /*-moz-justify-content: center;*/
-  /*-webkit-justify-content: center;*/
-  /*-ms-justify-content: center;*/
   justify-content: center;
   background-color: #000;
   padding: 6em 4em 4em 4em; }
@@ -156,7 +145,6 @@ body {
   transition: opacity 2s ease-in-out;
   height: 100%;
   left: 0;
-  /* opacity: 0.375; */
   opacity: 0.5;
   position: fixed;
   top: 0;
@@ -171,8 +159,7 @@ body {
     position: absolute;
     top: 0;
     visibility: hidden;
-    /* width: 150%; */
-    width: 100%;
+    width: 110%;
   }
     #bg div.visible {
       animation: bg 45s linear infinite;
@@ -191,6 +178,12 @@ body {
       animation-direction: alternate !important; }
   body.is-preload #bg {
     opacity: 0; }
+
+@keyframes bg {
+  0% {
+    transform: translateX(0); }
+  100% {
+    transform: translateX(-25%); } }
 
 /* Type */
 body, input, select, textarea {
@@ -428,39 +421,6 @@ ul.icons {
   #header {
     margin: 0 0 1em 0; } }
 
-/* Signup Form */
-#signup-form {
-  display: -moz-flex;
-  display: -webkit-flex;
-  display: -ms-flex;
-  display: flex;
-  position: relative; }
-  #signup-form input[type="text"],
-  #signup-form input[type="password"],
-  #signup-form input[type="email"] {
-    width: 18em; }
-  #signup-form > * {
-    margin: 0 0 0 1em; }
-  #signup-form > :first-child {
-    margin: 0 0 0 0; }
-  @media screen and (max-width: 480px) {
-    #signup-form {
-      flex-direction: column; }
-      #signup-form input[type="type"],
-      #signup-form input[type="password"],
-      #signup-form input[type="email"] {
-        width: 100%; }
-      #signup-form > * {
-        margin: 1.25em 0 0 0; }
-      #signup-form .message {
-        bottom: -1.5em;
-        font-size: 0.9em;
-        height: 1em;
-        left: 0;
-        line-height: inherit;
-        margin-top: 0;
-        position: absolute; } }
-
 /* Footer */
 #footer {
   transition: opacity 0.5s ease-in-out;
@@ -545,10 +505,14 @@ code {
   padding-left: 0;
 }
 
-#bg {
-  background-size: cover;
-  background-position: center center;
-  z-index: -1;
+#bg div {
+  background-position: center;
+}
+
+@media (orientation: portrait) {
+  #bg div {
+    width: 130%;
+  }
 }
 
 .icon:before {
