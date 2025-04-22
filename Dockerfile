@@ -3,16 +3,13 @@ FROM golang:1.24.2-alpine as go-builder
 WORKDIR /usr/src/app
 
 COPY cmd/ cmd/
-COPY config/ config/
 COPY img-src/ img-src/
-COPY internal/ internal/
 COPY Makefile Makefile
 COPY go.mod go.mod
 COPY go.sum go.sum
-COPY pkg/ pkg/
 
-RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
-RUN ["make", "server", "img-out"]
+RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev"]
+RUN ["make", "backgrounds"]
 
 FROM python:3 as python-builder
 
@@ -26,7 +23,6 @@ FROM node:23-alpine as node-builder
 RUN ["mkdir", "/build"]
 WORKDIR /build
 
-COPY config/ config/
 COPY fa-src/ fa-src/
 COPY Makefile .
 COPY package.json .
@@ -45,12 +41,7 @@ RUN ["npm", "install", "."]
 RUN ["apk", "add", "make"]
 RUN ["make", "webapp"]
 
-FROM alpine
+FROM scratch
 
-COPY --from=go-builder /usr/src/app/server /server
-COPY --from=go-builder /usr/src/app/img-out /img-out
-COPY --from=node-builder /build/dist /dist
-
-EXPOSE 8080/tcp
-
-ENTRYPOINT ["/server", "-img-out-dir", "img-out", "-webroot-dir", "dist"]
+COPY --from=node-builder /build/dist /
+COPY --from=go-builder /usr/src/app/backgrounds /backgrounds

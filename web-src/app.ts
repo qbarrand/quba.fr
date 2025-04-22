@@ -17,15 +17,8 @@ import './css/fontawesome.css'
 import './css/fontawesome-brands.css'
 import './css/fontawesome-solid.css'
 
-import bg from '../img-out/backgrounds.json'
+import bg from '../backgrounds/backgrounds.json'
 const backgrounds: Picture[] = bg
-
-import cfg from '../config.json'
-const config: Config = cfg
-
-class Config {
-    overflowPercent: number
-}
 
 class Source {
     filename: string
@@ -127,7 +120,7 @@ async function main() {
             }
         }
 
-        const p = fetch('/img-out/' + src)
+        const p = fetch('/backgrounds/' + src)
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');

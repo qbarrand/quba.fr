@@ -1,23 +1,19 @@
-all: img-out server webapp
+all: backgrounds webapp
 
-image-resizer: $(shell find . -name '*.go' -type f) go.mod go.sum
-	go build -o $@ $(GOTAGS) ./cmd/image-resizer
+imgen: $(shell find . -name '*.go' -type f) go.mod go.sum
+	go build -o $@ ./cmd/imgen
 
-img-out: image-resizer $(wildcard img-src/*)
+backgrounds: imgen
 	mkdir -p $@
-	./$< -img-out-dir $@ -img-in-dir img-src
+	./$< -out-dir $@ -in-dir img-src
 
 fontawesome-subsets:
 	make -C fa-src
 	mv fa-src/fa-brands.woff2 fa-src/fa-solid.woff2 web-src/webfonts/
 
-webapp: fontawesome-subsets
+webapp: fontawesome-subsets backgrounds
 	npx webpack --mode production
-
-server: $(shell find . -name '*.go' -type f) go.mod go.sum
-	go build -ldflags="-X main.version=$(shell cat VERSION)" -o $@ $(GOTAGS) ./cmd/server
+	cp -r backgrounds dist/backgrounds
 
 clean:
-	rm -fr img-out
-	rm -f aot-images
-	rm -f server
+	rm -fr imgen img-out

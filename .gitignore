@@ -5,10 +5,9 @@
 .idea/
 
 # built files
-image-resizer
-server
+imgen
 dist/
-img-out
+backgrounds/
 
 # Node stuff
 node_modules

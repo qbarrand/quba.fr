@@ -20,14 +20,12 @@ import (
 	"gopkg.in/gographics/imagick.v3/imagick"
 )
 
-func slogFatal(msg string, args ...any) {
+func slogFatal(err error, msg string, args ...any) {
 	slog.Error(msg, args...)
 	os.Exit(1)
 }
 
 type runtimeConfig struct {
-	*Config
-
 	inDir  string
 	outDir string
 }
@@ -43,6 +41,8 @@ type orientation string
 const (
 	orientationLandscape orientation = "landscape"
 	orientationPortrait  orientation = "portrait"
+
+	overflowPercent = 130
 )
 
 type Source struct {
@@ -263,7 +263,7 @@ func (p *pool) processImage(mw *imagick.MagickWand, ii *InputImage) (*Picture, e
 	pic := NewPicture(ii.Date, ii.Location, mainColor)
 
 	for _, w := range widths {
-		ofWidth := (w * p.rc.OverflowPercent) / 100
+		ofWidth := (w * overflowPercent) / 100
 
 		for _, format := range formats {
 			mw := mw.Clone()
@@ -383,7 +383,6 @@ func (p *pool) worker(ctx context.Context, i int) {
 
 func main() {
 	var (
-		configPath      string
 		inDir           string
 		imagesToProcess iter.Seq[string]
 		logLevel        slog.Level
@@ -391,7 +390,6 @@ func main() {
 		workers         int
 	)
 
-	flag.StringVar(&configPath, "config", "config.json", "path to the configuration file")
 	flag.StringVar(&inDir, "in-dir", "img-src", "directory in which source images are stored")
 	flag.TextVar(&logLevel, "log-level", slog.LevelInfo, "log level")
 	flag.StringVar(&outDir, "out-dir", "img-out", "directory in which images are generated")
@@ -412,17 +410,8 @@ func main() {
 
 	m, err := ReadFromFile(metadataFilePath)
 	if err != nil {
-		slogFatal("Error reading metadata file", "err", err)
+		slogFatal(err, "Error reading metadata file", "path", metadataFilePath)
 	}
-
-	slog.Info("Reading config file", "path", metadataFilePath)
-
-	cfg, err := ReadConfigFile(configPath)
-	if err != nil {
-		slogFatal("Could not read config", "err", err)
-	}
-
-	slog.Info("Using overflow width", "value", cfg.OverflowPercent)
 
 	if flag.NArg() > 0 {
 		imagesToProcess = slices.Values(flag.Args())
@@ -437,7 +426,6 @@ func main() {
 	defer mw.Destroy()
 
 	rc := runtimeConfig{
-		Config: cfg,
 		inDir:  inDir,
 		outDir: outDir,
 	}
@@ -499,7 +487,7 @@ func main() {
 
 	fd, err := os.Create(backgroundsFilePath)
 	if err != nil {
-		slogFatal("Error creating backgrounds file", "path", backgroundsFilePath, "err", err)
+		slogFatal(err, "Error creating backgrounds file", "path", backgroundsFilePath)
 	}
 	defer fd.Close()
 
@@ -507,6 +495,6 @@ func main() {
 	encoder.SetIndent("", "  ")
 
 	if err := encoder.Encode(pictures); err != nil {
-		slogFatal("Error encoding backgrounds file into JSON", "err", err)
+		slogFatal(err, "Error encoding backgrounds file into JSON")
 	}
 }

@@ -1,11 +1,23 @@
 const path = require('path');
 
+const CompressionPlugin = require("compression-webpack-plugin");
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const zlib = require("zlib");
 
 module.exports = {
     entry: path.resolve(__dirname, 'web-src/app.ts'),
     plugins: [
+        new CompressionPlugin(), // gzip by default
+        new CompressionPlugin({
+            filename: "[path][base].br",
+            algorithm: "brotliCompress",
+            compressionOptions: {
+                params: {
+                    [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+                },
+            },
+        }),
         new FaviconsWebpackPlugin(
             path.resolve(__dirname, 'web-src/img/favicon.png')
         ),
@@ -21,12 +33,6 @@ module.exports = {
             template: path.resolve(__dirname, 'web-src/index.html'),
         })
     ],
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
-    resolve: {
-        extensions: [".js", ".ts"],
-    },
-
     module: {
         rules: [
             {
