@@ -4,8 +4,7 @@
   "description": "quba.fr web application",
   "private": true,
   "scripts": {
-    "start": "webpack serve --open",
-    "test": "jest"
+    "start": "webpack serve --open"
   },
   "repository": {
     "type": "git",
@@ -17,21 +16,13 @@
     "url": "https://github.com/qbarrand/quba.fr/issues"
   },
   "homepage": "https://github.com/qbarrand/quba.fr#readme",
-  "dependencies": {
+  "devDependencies": {
+    "compression-webpack-plugin": "^11.1.0",
     "css-loader": "^7.1.2",
-    "favicons": "^7.2.0",
     "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.6.3",
     "style-loader": "^4.0.0",
-    "ts-loader": "^9.5.2",
-    "typescript": "^5.8.3",
     "webpack": "^5.99.6",
     "webpack-cli": "^6.0.1"
-  },
-  "devDependencies": {
-    "@types/jest": "^29.5.14",
-    "compression-webpack-plugin": "^11.1.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.3.2"
   }
 }

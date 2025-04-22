@@ -489,7 +489,11 @@ func main() {
 	if err != nil {
 		slogFatal(err, "Error creating backgrounds file", "path", backgroundsFilePath)
 	}
-	defer fd.Close()
+	defer func() {
+		if cerr := fd.Close(); cerr != nil {
+			slogFatal(cerr, "Error closing backgrounds file", "path", backgroundsFilePath)
+		}
+	}()
 
 	encoder := json.NewEncoder(fd)
 	encoder.SetIndent("", "  ")

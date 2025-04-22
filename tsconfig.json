@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "alwaysStrict": true,
-    "esModuleInterop": true,
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "target": "es2021"
-  }
-}
