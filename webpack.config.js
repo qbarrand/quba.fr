@@ -1,11 +1,24 @@
 const path = require('path');
-
+const CompressionPlugin = require("compression-webpack-plugin");
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const zlib = require("zlib");
+
+const DIST_DIR_NAME = 'dist'
 
 module.exports = {
-    entry: path.resolve(__dirname, 'web-src/app.ts'),
+    entry: path.resolve(__dirname, 'web-src/app.js'),
     plugins: [
+        new CompressionPlugin(), // gzip by default
+        new CompressionPlugin({
+            filename: "[path][base].br",
+            algorithm: "brotliCompress",
+            compressionOptions: {
+                params: {
+                    [zlib.constants.BROTLI_PARAM_QUALITY]: 11,
+                },
+            },
+        }),
         new FaviconsWebpackPlugin(
             path.resolve(__dirname, 'web-src/img/favicon.png')
         ),
@@ -21,27 +34,20 @@ module.exports = {
             template: path.resolve(__dirname, 'web-src/index.html'),
         })
     ],
-    // Enable sourcemaps for debugging webpack's output.
-    devtool: "source-map",
-    resolve: {
-        extensions: [".js", ".ts"],
-    },
-
     module: {
         rules: [
             {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.ts$/,
-                use: 'ts-loader',
-                exclude: /node_modules/,
-            },
+            }
         ]
     },
     output: {
+        clean: { keep: /backgrounds/},
         filename: '[name].[contenthash].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, DIST_DIR_NAME),
     },
+    optimization: {
+        minimize: true,
+    }
 };

@@ -1,23 +1,16 @@
-all: img-out server webapp
+FONTS := $(addprefix web-src/webfonts/,fa-brands.woff2 fa-solid.woff2)
 
-image-resizer: $(shell find . -name '*.go' -type f) go.mod go.sum
-	go build -o $@ $(GOTAGS) ./cmd/image-resizer
+all: $(FONTS) backgrounds/backgrounds.json
+	mkdir -p dist
+	npx webpack --mode production
+	cp -r backgrounds dist/backgrounds
 
-img-out: image-resizer $(wildcard img-src/*)
-	mkdir -p $@
-	./$< -img-out-dir $@ -img-in-dir img-src
-
-fontawesome-subsets:
+$(FONTS):
 	make -C fa-src
 	mv fa-src/fa-brands.woff2 fa-src/fa-solid.woff2 web-src/webfonts/
 
-webapp: fontawesome-subsets
-	npx webpack --mode production
-
-server: $(shell find . -name '*.go' -type f) go.mod go.sum
-	go build -ldflags="-X main.version=$(shell cat VERSION)" -o $@ $(GOTAGS) ./cmd/server
-
+.PHONY: clean
 clean:
-	rm -fr img-out
-	rm -f aot-images
-	rm -f server
+	rm -fr imgen img-out
+
+include backgrounds.mk

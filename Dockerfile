@@ -2,17 +2,14 @@ FROM golang:1.24.2-alpine as go-builder
 
 WORKDIR /usr/src/app
 
+COPY backgrounds.mk .
 COPY cmd/ cmd/
-COPY config/ config/
 COPY img-src/ img-src/
-COPY internal/ internal/
-COPY Makefile Makefile
-COPY go.mod go.mod
-COPY go.sum go.sum
-COPY pkg/ pkg/
+COPY go.mod .
+COPY go.sum .
 
-RUN ["apk", "add", "gcc", "git", "imagemagick-dev", "make", "musl-dev", "pkgconfig", "vips-dev"]
-RUN ["make", "server", "img-out"]
+RUN ["apk", "add", "gcc", "imagemagick-dev", "imagemagick-heic", "imagemagick-jpeg", "imagemagick-webp", "make", "musl-dev"]
+RUN ["make", "-f", "backgrounds.mk", "backgrounds/backgrounds.json"]
 
 FROM python:3 as python-builder
 
@@ -23,34 +20,23 @@ RUN ["make", "-C", "fa-src"]
 
 FROM node:23-alpine as node-builder
 
-RUN ["mkdir", "/build"]
+COPY --from=go-builder /usr/src/app /build
 WORKDIR /build
 
-COPY config/ config/
-COPY fa-src/ fa-src/
+COPY fa-src fa-src
 COPY Makefile .
 COPY package.json .
 COPY package-lock.json .
-COPY tsconfig.json .
+COPY web-src web-src
 COPY webpack.config.js .
-COPY web-src/ web-src/
-
-RUN ["mkdir", "dist"]
 
 COPY --from=python-builder /fa-src/fa-brands.woff2 fa-src/
 COPY --from=python-builder /fa-src/fa-solid.woff2 fa-src/
 
 RUN ["npm", "install", "."]
-
 RUN ["apk", "add", "make"]
-RUN ["make", "webapp"]
+RUN ["make"]
 
-FROM alpine
+FROM scratch
 
-COPY --from=go-builder /usr/src/app/server /server
-COPY --from=go-builder /usr/src/app/img-out /img-out
-COPY --from=node-builder /build/dist /dist
-
-EXPOSE 8080/tcp
-
-ENTRYPOINT ["/server", "-img-out-dir", "img-out", "-webroot-dir", "dist"]
+COPY --from=node-builder /build/dist /
