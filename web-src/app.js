@@ -54,11 +54,28 @@ let bgDivs = []
 
 const wrapper = document.getElementById('bg');
 
-backgrounds.sort(() => Math.random() - 0.5);
+// Shuffle the array of backgrounds.
+let currentIndex = backgrounds.length;
+
+// While there remain elements to shuffle...
+while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [backgrounds[currentIndex], backgrounds[randomIndex]] = [
+    backgrounds[randomIndex], backgrounds[currentIndex]];
+}
+
+let numberOfBackgrounds = 5
 
 if (!('connection' in navigator) || navigator.connection.saveData) {
-    backgrounds = backgrounds.slice(0, 3)
+    numberOfBackgrounds = 3
 }
+
+backgrounds = backgrounds.slice(0, numberOfBackgrounds)
 
 const avif = await supportsAvif;
 const webp = await supportsWebp;
