@@ -5,7 +5,7 @@
 .idea/
 
 # built files
-imgen
+./imgen
 dist/
 backgrounds/
 

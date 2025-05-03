@@ -21,7 +21,7 @@ import (
 )
 
 func slogFatal(err error, msg string, args ...any) {
-	slog.Error(msg, args...)
+	slog.Error(msg, append(args, "err", err)...)
 	os.Exit(1)
 }
 
