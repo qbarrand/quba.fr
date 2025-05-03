@@ -111,6 +111,7 @@ for (const b of backgrounds) {
     }
 
     img.src = '/backgrounds/' + src
+    img.alt = `${b.location}, ${b.date}`
 }
 
 function mainLoop() {
