@@ -111,14 +111,14 @@ for (const b of backgrounds) {
         sources = sm.landscape
     }
 
-    let src
+    let src = sources[0].filename
 
-    for (const s of sources) {
-        src = s.filename
-        
+    for (const s of sources.slice(1)) {
         if (screenLength <= s.length) {
             break
         }
+
+        src = s.filename
     }
 
     img.onload = () => {
