@@ -25,7 +25,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             base: { target: '_blank' },
             meta: {
-                description: 'Software Engineer working at Red Hat on OpenShift. Likes Go, Linux, containers and networking. Previously: Swisscom, CERN, SNCF Réseau.',
+                description: 'Software Engineer working at NVIDA on Software-Defined Networking. Likes Go, Linux, containers and networking. Previously: Red Hat, Swisscom, CERN, SNCF Réseau.',
                 keywords: 'software engineer infrastructure devops sre reliability networks go golang rust containers kubernetes docker linux big-o zürich switzerland',
                 viewport: 'width=device-width, initial-scale=1',
                 'theme-color': '' // set at runtime
