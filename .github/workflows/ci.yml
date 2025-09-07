@@ -13,7 +13,7 @@ jobs:
         run: apk add gcc imagemagick-dev make musl-dev pkgconfig
 
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Build
         run: make imgen
@@ -31,7 +31,7 @@ jobs:
         run: apk add gcc imagemagick-dev musl-dev pkgconfig tar
 
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Add path to git safe directories
         run: git config --global --add safe.directory $(pwd)
