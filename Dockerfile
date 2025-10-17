@@ -18,7 +18,7 @@ COPY fa-src/ fa-src/
 RUN ["pip", "install", "fonttools[woff]"]
 RUN ["make", "-C", "fa-src"]
 
-FROM node:24-alpine as node-builder
+FROM node:25-alpine as node-builder
 
 COPY --from=go-builder /usr/src/app /build
 WORKDIR /build
