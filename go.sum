@@ -1,2 +1,2 @@
-gopkg.in/gographics/imagick.v3 v3.7.2 h1:PmsYCf60YS/7f1omBTDaoS6yp4817Wv61S0JpWH4cMc=
-gopkg.in/gographics/imagick.v3 v3.7.2/go.mod h1:7I4S9VWdwr88yzYi7g+ZL4H8oZuH9cmSQI7GsZCcYFM=
+gopkg.in/gographics/imagick.v3 v3.7.3 h1:Hy2MbJKLJ/9T3ZuV1zwBOy09O9prf2MCCVpM7bcZdpY=
+gopkg.in/gographics/imagick.v3 v3.7.3/go.mod h1:7I4S9VWdwr88yzYi7g+ZL4H8oZuH9cmSQI7GsZCcYFM=
