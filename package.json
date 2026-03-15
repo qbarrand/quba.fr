@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/qbarrand/quba.fr#readme",
   "devDependencies": {
-    "compression-webpack-plugin": "^11.1.0",
+    "compression-webpack-plugin": "^12.0.0",
     "css-loader": "^7.1.4",
     "favicons-webpack-plugin": "^6.0.1",
     "html-webpack-plugin": "^5.6.6",
